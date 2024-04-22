@@ -30,7 +30,11 @@ class OrganisationController extends AbstractController
         $pagination = $paginationService->getPagination($request, Organisation::class);
 
         return $this->json(
-            $pagination,
+            [
+                'items' => $pagination,
+                'pageCount' => $pagination->getPageCount(),
+                'totalItemCount' => $pagination->getTotalItemCount()
+            ],
             context: ["groups" => ["organisation:read"]]
         );
     }
