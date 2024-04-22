@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -46,6 +47,7 @@ class RegionController extends AbstractController
     }
 
     #[Route('/', name: 'new', methods: ['POST'])]
+    #[IsGranted("ROLE_ADMIN")]
     public function new(
         SerializerInterface    $serializer,
         Request                $request,
@@ -71,6 +73,7 @@ class RegionController extends AbstractController
     }
 
     #[Route('/{id}', name: 'edit', methods: ['PUT'])]
+    #[IsGranted("ROLE_ADMIN")]
     public function edit(
         SerializerInterface    $serializer,
         Request                $request,
