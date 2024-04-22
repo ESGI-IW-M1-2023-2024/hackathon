@@ -1,23 +1,5 @@
-# Installer Vite
-
-Aller dans le service `vite`, puis lancer la commande suivante :
+# Lancer le projet
 
 ```bash
-npm create vite ./
-```
-
-Puis suivez les instructions...
-
-Une fois l'installation terminé, modifier le fichier `package.json` en changeant le script `dev` en mettant comme valeur :
-
-```text
-vite --host 0.0.0.0
-```
-
-# Installer Symfony
-
-Aller dans le service `symfony-php`, puis lancer les commandes suivantes :
-
-```bash
-composer create-project symfony/skeleton:"6.4.*" . && composer require webapp
+docker compose up -d
 ```
