@@ -24,7 +24,7 @@ class ApiToken
     #[ORM\Column(length: 255)]
     private ?string $token = null;
 
-    public function isValid()
+    public function isValid(): bool
     {
         return $this->expiredAt !== null && $this->expiredAt > new DateTimeImmutable();
     }
