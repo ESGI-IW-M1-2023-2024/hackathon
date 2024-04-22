@@ -2,24 +2,26 @@
 
 namespace App\Controller\Api;
 
+use App\Entity\Organisation;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-#[Route('/users', name: 'users_')]
-class UserController extends AbstractController
+#[Route('/organisations', name: 'organisations')]
+class OrganisationController extends AbstractController
 {
     #[Route('/', name: 'list', methods: ["GET"])]
     public function index(EntityManagerInterface $em, PaginatorInterface $paginator, Request $request): JsonResponse
     {
-        $queryBuilder = $em->getRepository(User::class)->getBaseQueryBuilder();
+        $queryBuilder = $em->getRepository(Organisation::class)->getBaseQueryBuilder();
 
         $pagination = $paginator->paginate(
             $queryBuilder, /* query NOT result */
@@ -29,7 +31,7 @@ class UserController extends AbstractController
 
         return $this->json(
             $pagination,
-            context: ["groups" => ["user:read"]]
+            context: ["groups" => ["organisation:read"]]
         );
     }
 
@@ -53,7 +55,7 @@ class UserController extends AbstractController
     {
         $user = $serializer->deserialize($request->getContent(), User::class, 'json');
 
-        $violations = $validator->validate($user, groups: ["user:new"]);
+        $violations = $validator->validate($user, groups: ["organisation:new"]);
 
         if ($violations->count() > 0) {
             return $this->json($violations);
@@ -74,7 +76,7 @@ class UserController extends AbstractController
         $em->persist($user);
         $em->flush();
 
-        return $this->json($user, context: ["groups" => ["user:read"]]);
+        return $this->json($user, context: ["groups" => ["organisation:read"]]);
     }
 
     #[Route('/{id}', name: 'update', methods: ["PUT"])]
@@ -110,7 +112,7 @@ class UserController extends AbstractController
 
             if (!empty($userExist)) {
                 return $this->json([
-                   "message" => "User already exist.",
+                    "message" => "User already exist.",
                 ]);
             }
         }
@@ -121,6 +123,6 @@ class UserController extends AbstractController
 
         $em->flush();
 
-        return $this->json($user, context: ["groups" => "user:read"]);
+        return $this->json($user, context: ["groups" => "organisation:read"]);
     }
 }
