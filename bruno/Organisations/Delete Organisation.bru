@@ -1,0 +1,17 @@
+meta {
+  name: Delete Organisations
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{baseUrl}}/api/organisations/201
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "label": "Ynov campus"
+  }
+}

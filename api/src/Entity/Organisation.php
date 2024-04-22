@@ -6,19 +6,27 @@ use App\Repository\OrganisationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: OrganisationRepository::class)]
+#[UniqueEntity(["label"], groups: ["organisation:new", "organisation:edit"])]
 class Organisation
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["organisation:read"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["organisation:read"])]
+    #[Assert\NotBlank(groups: ["organisation:new"])]
     private ?string $label = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["organisation:read"])]
     private ?string $logoFilename = null;
 
     /**
@@ -26,6 +34,10 @@ class Organisation
      */
     #[ORM\OneToMany(targetEntity: Workshop::class, mappedBy: 'organisation')]
     private Collection $workshops;
+
+    #[ORM\Column]
+    #[Groups(["organisation:read"])]
+    private ?bool $isArchived = null;
 
     public function __construct()
     {
@@ -87,6 +99,18 @@ class Organisation
                 $workshop->setOrganisation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isArchived(): ?bool
+    {
+        return $this->isArchived;
+    }
+
+    public function setArchived(bool $isArchived): static
+    {
+        $this->isArchived = $isArchived;
 
         return $this;
     }
