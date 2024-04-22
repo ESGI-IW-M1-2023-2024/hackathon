@@ -1,0 +1,18 @@
+meta {
+  name: New Region
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/regions/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "label": "Rhônes-Alpes",
+    "country": "FR"
+  }
+}
