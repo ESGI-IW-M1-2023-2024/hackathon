@@ -3,6 +3,7 @@
 namespace App\Controller\Api;
 
 use App\Entity\User;
+use App\Service\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,15 +18,12 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class UserController extends AbstractController
 {
     #[Route('/', name: 'list', methods: ["GET"])]
-    public function index(EntityManagerInterface $em, PaginatorInterface $paginator, Request $request): JsonResponse
+    public function index(
+        Request $request,
+        PaginationService $paginationService
+    ): JsonResponse
     {
-        $queryBuilder = $em->getRepository(User::class)->getBaseQueryBuilder();
-
-        $pagination = $paginator->paginate(
-            $queryBuilder, /* query NOT result */
-            $request->query->getInt('page', 1), /*page number*/
-            10 /*limit per page*/
-        );
+        $pagination = $paginationService->getPagination($request, User::class);
 
         return $this->json(
             $pagination,
@@ -59,14 +57,6 @@ class UserController extends AbstractController
             return $this->json($violations);
         }
 
-        $userExist = $em->getRepository(User::class)->findOneByEmail($user->getEmail());
-
-        if ($userExist) {
-            return $this->json([
-                "message" => "User already exist.",
-            ]);
-        }
-
         $user->setRoles(["ROLE_ADMIN"]);
         $user->setPassword($userPasswordHasher->hashPassword($user, $user->plainPassword));
         $user->eraseCredentials();
@@ -89,7 +79,7 @@ class UserController extends AbstractController
     {
         $userRequest = $serializer->deserialize($request->getContent(), User::class, 'json');
 
-        $violations = $validator->validate($userRequest);
+        $violations = $validator->validate($userRequest, groups: ["user:edit"]);
 
         if ($violations->count() > 0) {
             return $this->json($violations);
@@ -105,14 +95,6 @@ class UserController extends AbstractController
 
         if (!empty($userRequest->getEmail())) {
             $user->setEmail($userRequest->getEmail());
-
-            $userExist = $em->getRepository(User::class)->findOneByEmail($user->getEmail());
-
-            if (!empty($userExist)) {
-                return $this->json([
-                   "message" => "User already exist.",
-                ]);
-            }
         }
 
         if (!empty($userRequest->plainPassword)) {

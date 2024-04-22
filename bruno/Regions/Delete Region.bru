@@ -1,0 +1,18 @@
+meta {
+  name: Delete Region
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{baseUrl}}/api/regions/201
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "label": "Nord Pas-de-Calais",
+    "country": "FR"
+  }
+}

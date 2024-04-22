@@ -1,0 +1,18 @@
+meta {
+  name: Edit Region
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/api/regions/201
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "label": "Nord Pas-de-Calais",
+    "country": "FR"
+  }
+}
