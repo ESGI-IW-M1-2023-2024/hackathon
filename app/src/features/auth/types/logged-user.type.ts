@@ -1,6 +1,14 @@
+interface User {
+  email: string;
+  firstname: string;
+  id: number;
+  lastname: string;
+  roles: string[];
+}
+
 export interface LoggedUser {
-  user: string;
   token: string;
+  user: User;
 }
 
 export interface UserCredentials {

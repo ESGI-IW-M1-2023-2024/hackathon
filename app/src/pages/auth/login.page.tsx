@@ -38,7 +38,7 @@ const Login = () => {
       const response = await loginUser(formData).unwrap();
       dispatch(setUser(response));
       dispatch(openSnackBar({ message: 'Connexion réussi', severity: 'success' }));
-      navigate('/');
+      navigate('/admin');
     } catch (error: unknown) {
       console.log(error);
       dispatch(openSnackBar({ message: 'Echec de la connexion', severity: 'error' }));
