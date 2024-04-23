@@ -21,42 +21,42 @@ class Workshop
 
     #[ORM\Column(length: 255)]
     #[Groups(["workshop:read"])]
-    #[Assert\NotBlank(groups: ["workshop:new", "workshop:edit"])]
+    #[Assert\NotBlank(groups: ["workshop:new"])]
     private ?string $label = null;
 
     #[ORM\Column]
     #[Groups(["workshop:read"])]
-    #[Assert\NotBlank(groups: ["workshop:new", "workshop:edit"])]
+    #[Assert\NotBlank(groups: ["workshop:new"])]
     private ?\DateTimeImmutable $dateStart = null;
 
     #[ORM\Column]
     #[Groups(["workshop:read"])]
-    #[Assert\NotBlank(groups: ["workshop:new", "workshop:edit"])]
+    #[Assert\NotBlank(groups: ["workshop:new"])]
     private ?int $length = null;
 
     #[ORM\Column]
     #[Groups(["workshop:read"])]
-    #[Assert\NotBlank(groups: ["workshop:new", "workshop:edit"])]
+    #[Assert\NotBlank(groups: ["workshop:new"])]
     private ?int $maxPerson = null;
 
     #[ORM\Column(length: 255)]
     #[Groups(["workshop:read"])]
-    #[Assert\NotBlank(groups: ["workshop:new", "workshop:edit"])]
+    #[Assert\NotBlank(groups: ["workshop:new"])]
     private ?string $location = null;
 
     #[ORM\Column(length: 255, enumType: \WorkshopStatus::class)]
     #[Groups(["workshop:read"])]
-    #[Assert\NotBlank(groups: ["workshop:new", "workshop:edit"])]
+    #[Assert\NotBlank(groups: ["workshop:new"])]
     private ?\WorkshopStatus $status = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     #[Groups(["workshop:read"])]
-    #[Assert\NotBlank(groups: ["workshop:new", "workshop:edit"])]
+    #[Assert\NotBlank(groups: ["workshop:new"])]
     private ?\DateTimeImmutable $maxBookingDate = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Groups(["workshop:read"])]
-    #[Assert\NotBlank(groups: ["workshop:new", "workshop:edit"])]
+    #[Assert\NotBlank(groups: ["workshop:new"])]
     private ?string $content = null;
 
     #[ORM\ManyToOne(inversedBy: 'workshops')]

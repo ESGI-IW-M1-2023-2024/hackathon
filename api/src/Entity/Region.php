@@ -17,16 +17,16 @@ class Region
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["region:read", "workshop:read"])]
+    #[Groups(["region:read", "wine:read"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["region:read", "workshop:read"])]
+    #[Groups(["region:read", "wine:read"])]
     #[Assert\NotBlank(groups: ["region:new"])]
     private ?string $label = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["region:read", "workshop:read"])]
+    #[Groups(["region:read", "wine:read"])]
     #[Assert\NotBlank(groups: ["region:new"])]
     #[Assert\Country(groups: ["region:new", "region:edit"])]
     private ?string $country = null;

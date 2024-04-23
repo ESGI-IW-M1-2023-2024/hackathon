@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\WineBottleSize;
 use App\Repository\WineRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -9,54 +10,65 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+
 #[ORM\Entity(repositoryClass: WineRepository::class)]
 class Wine
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["workshop:read"])]
+
+    #[Groups(["wine:read"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["workshop:read"])]
+    #[Groups(["wine:read"])]
+    #[Assert\NotBlank(groups: ["wine:new"])]
     private ?string $label = null;
 
     #[ORM\Column]
-    #[Groups(["workshop:read"])]
+    #[Groups(["wine:read"])]
     private ?int $productYear = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["workshop:read"])]
+    #[Groups(["wine:read"])]
+    #[Assert\NotBlank(groups: ["wine:new"])]
     private ?string $producer = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["workshop:read"])]
+    #[Groups(["wine:read"])]
+    #[Assert\NotBlank(groups: ["wine:new"])]
     private ?string $grapeVariety = null;
 
     #[ORM\Column]
-    #[Groups(["workshop:read"])]
+    #[Groups(["wine:read"])]
     private ?float $alcoholLevel = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["workshop:read"])]
+    #[Groups(["wine:read"])]
+    #[Assert\NotBlank(groups: ["wine:new"])]
+    #[Assert\CssColor(groups: ["wine:new", "wine:edit"])]
     private ?string $color = null;
 
     #[ORM\Column]
-    #[Groups(["workshop:read"])]
+    #[Groups(["wine:read"])]
+    #[Assert\NotNull(groups: ["wine:new"])]
     private ?int $quantity = null;
 
-    #[ORM\Column(length: 255)]
-    #[Groups(["workshop:read"])]
-    private ?string $bottleSize = null;
+    #[ORM\Column(length: 255, enumType: WineBottleSize::class)]
+    #[Groups(["wine:read"])]
+    private ?WineBottleSize $bottleSize = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups(["workshop:read"])]
+    #[Groups(["wine:read"])]
     private ?string $comments = null;
 
     #[ORM\ManyToOne(inversedBy: 'wines')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["workshop:read"])]
+    #[Groups(["wine:read", "workshop:read"])]
+    #[Assert\NotNull(groups: ["wine:new"])]
     private ?Region $region = null;
 
     /**
@@ -69,6 +81,20 @@ class Wine
     {
         $this->workshops = new ArrayCollection();
     }
+
+    #[Assert\Callback(groups: ["wine:new", "wine:edit"])]
+    public function validate(ExecutionContextInterface $context): void
+    {
+        if (false === in_array($this->getBottleSize(), WineBottleSize::cases()) && !empty($this->getBottleSize())) {
+            $context->buildViolation("The specified bottle size does not exist.")
+                ->atPath("bottleSize")
+                ->addViolation();
+        }
+    }
+
+    /********************************/
+    /* CONTENT AUTO GENERATED BELOW */
+    /********************************/
 
     public function getId(): ?int
     {
@@ -159,12 +185,12 @@ class Wine
         return $this;
     }
 
-    public function getBottleSize(): ?string
+    public function getBottleSize(): ?WineBottleSize
     {
         return $this->bottleSize;
     }
 
-    public function setBottleSize(string $bottleSize): static
+    public function setBottleSize(WineBottleSize $bottleSize): static
     {
         $this->bottleSize = $bottleSize;
 
