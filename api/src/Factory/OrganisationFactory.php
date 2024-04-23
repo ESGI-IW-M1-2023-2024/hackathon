@@ -47,7 +47,7 @@ final class OrganisationFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
-            'isArchived' => self::faker()->boolean(),
+            'archived' => self::faker()->boolean(),
             'label' => self::faker()->text(10),
         ];
     }

@@ -37,7 +37,7 @@ class Organisation
 
     #[ORM\Column]
     #[Groups(["organisation:read"])]
-    private ?bool $isArchived = null;
+    private ?bool $isArchived = false;
 
     public function __construct()
     {
