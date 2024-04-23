@@ -16,7 +16,6 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 #[Route('/organisations', name: 'organisations_')]
 class OrganisationController extends AbstractController
 {
-
     public function __construct(
         private EntityManagerInterface $em
     ) {}
@@ -44,7 +43,7 @@ class OrganisationController extends AbstractController
     {
         return $this->json(
             $organisation,
-            context: ["groups" => ["organisation:list"]]
+            context: ["groups" => ["organisation:detail"]]
         );
     }
 

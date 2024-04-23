@@ -9,7 +9,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
-
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
@@ -19,53 +18,53 @@ class Wine
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["wine:list", "workshop:list"])]
+    #[Groups(["wine:list", "wine:detail"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["wine:list", "workshop:list"])]
+    #[Groups(["wine:list", "wine:detail"])]
     #[Assert\NotBlank(groups: ["wine:new"])]
     private ?string $label = null;
 
     #[ORM\Column]
-    #[Groups(["wine:list", "workshop:list"])]
+    #[Groups(["wine:list", "wine:detail"])]
     #[Assert\NotBlank(groups: ["wine:new"])]
     private ?int $productYear = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["wine:list", "workshop:list"])]
+    #[Groups(["wine:list", "wine:detail"])]
     #[Assert\NotBlank(groups: ["wine:new"])]
     private ?string $producer = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["workshop:list"])]
+    #[Groups(["wine:detail"])]
     #[Assert\NotBlank(groups: ["wine:new"])]
     private ?string $grapeVariety = null;
 
     #[ORM\Column]
-    #[Groups(["workshop:list"])]
+    #[Groups(["wine:detail"])]
     private ?float $alcoholLevel = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["workshop:list"])]
+    #[Groups(["wine:detail"])]
     #[Assert\NotBlank(groups: ["wine:new"])]
     private ?string $color = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(["wine:list", "workshop:list"])]
+    #[Groups(["wine:list", "wine:detail"])]
     private ?int $quantity = null;
 
     #[ORM\Column(length: 255, enumType: WineBottleSize::class)]
-    #[Groups(["wine:list", "workshop:list"])]
+    #[Groups(["wine:list", "wine:detail"])]
     private ?WineBottleSize $bottleSize = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups(["workshop:list"])]
+    #[Groups(["wine:detail"])]
     private ?string $comments = null;
 
     #[ORM\ManyToOne(inversedBy: 'wines')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["wine:list", "workshop:list"])]
+    #[Groups(["wine:list", "wine:detail"])]
     #[Assert\NotNull(groups: ["wine:new"])]
     private ?Region $region = null;
 
@@ -76,45 +75,58 @@ class Wine
     private Collection $workshops;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(["wine:detail"])]
     private ?float $servingTemperature = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["wine:detail"])]
     private ?string $storage = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["wine:detail"])]
     private ?string $upTo = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["wine:detail"])]
     private ?string $taste = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["wine:detail"])]
     private ?string $byTaste = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["wine:detail"])]
     private ?string $byEye = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["wine:detail"])]
     private ?string $onTheNose = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["wine:detail"])]
     private ?string $inTheMouth = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["wine:detail"])]
     private ?string $winePairing = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["wine:detail"])]
     private ?string $recommandedPairing = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(["wine:detail"])]
     private ?string $content = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["wine:detail"])]
     private ?string $imageFilename = null;
 
     #[Assert\NotBlank(groups: ["resource:new"])]
     public ?string $file = null;
 
     #[ORM\Column]
+    #[Groups(["wine:list", "wine:detail"])]
     private bool $archived = false;
 
     public function __construct()

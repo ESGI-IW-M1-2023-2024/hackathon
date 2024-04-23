@@ -44,7 +44,7 @@ class ResourceController extends AbstractController
     {
         return $this->json(
             $resource,
-            context: ["groups" => ["resource:list"]]
+            context: ["groups" => ["resource:detail"]]
         );
     }
 

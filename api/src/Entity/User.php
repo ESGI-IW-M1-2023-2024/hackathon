@@ -21,20 +21,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["user:list"])]
+    #[Groups(["user:list", "user:detail"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
     #[Assert\NotBlank(groups: ["user:new"])]
     #[Assert\Email()]
-    #[Groups(["user:list"])]
+    #[Groups(["user:list", "user:detail"])]
     private ?string $email = null;
 
     /**
      * @var list<string> The user roles
      */
     #[ORM\Column]
-    #[Groups(["user:list"])]
+    #[Groups(["user:list", "user:detail"])]
     private array $roles = [];
 
     /**
@@ -57,12 +57,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(groups: ["user:new"])]
-    #[Groups(["user:list"])]
+    #[Groups(["user:list", "user:detail"])]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(groups: ["user:new"])]
-    #[Groups(["user:list"])]
+    #[Groups(["user:list", "user:detail"])]
     private ?string $lastname = null;
 
     public function __construct()

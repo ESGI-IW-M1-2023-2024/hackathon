@@ -42,7 +42,7 @@ class WineController extends AbstractController
     {
         return $this->json(
             $wine,
-            context: ["groups" => ["wine:list"]]
+            context: ["groups" => ["wine:detail"]]
         );
     }
 

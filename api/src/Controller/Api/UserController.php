@@ -36,7 +36,7 @@ class UserController extends AbstractController
     {
         return $this->json(
             $user,
-            context: ["groups" => ["user:list"]]
+            context: ["groups" => ["user:detail"]]
         );
     }
 

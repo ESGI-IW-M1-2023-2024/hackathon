@@ -42,7 +42,7 @@ class RegionController extends AbstractController
     {
         return $this->json(
             $region,
-            context: ["groups" => ["region:list"]]
+            context: ["groups" => ["region:detail"]]
         );
     }
 

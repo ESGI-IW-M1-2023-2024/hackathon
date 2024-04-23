@@ -45,7 +45,7 @@ class WorkshopController extends AbstractController
     {
         return $this->json(
             $workshop,
-            context: ["groups" => ["workshop:list"]]
+            context: ["groups" => ["workshop:list", "workshop:detail"]]
         );
     }
     #[Route('/{id}/finished', name: 'get_finished', methods: ["GET"])]

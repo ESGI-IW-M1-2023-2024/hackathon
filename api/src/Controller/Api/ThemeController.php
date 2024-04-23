@@ -77,7 +77,7 @@ class ThemeController extends AbstractController
 
         return $this->json(
             $theme,
-            context: ["groups" => ["theme:list"]]
+            context: ["groups" => ["theme:detail"]]
         );
     }
 
