@@ -17,16 +17,16 @@ class Organisation
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["organisation:read"])]
+    #[Groups(["organisation:read", "workshop:read"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Groups(["organisation:read"])]
-    #[Assert\NotBlank(groups: ["organisation:new"])]
+    #[Assert\NotBlank(groups: ["organisation:new", "workshop:read"])]
     private ?string $label = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["organisation:read"])]
+    #[Groups(["organisation:read", "workshop:read"])]
     private ?string $logoFilename = null;
 
     /**
@@ -36,7 +36,7 @@ class Organisation
     private Collection $workshops;
 
     #[ORM\Column]
-    #[Groups(["organisation:read"])]
+    #[Groups(["organisation:read", "workshop:read"])]
     private ?bool $isArchived = false;
 
     public function __construct()

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ResourceRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: ResourceRepository::class)]
 class Resource
@@ -11,12 +12,15 @@ class Resource
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["workshop:read"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["workshop:read"])]
     private ?string $label = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["workshop:read"])]
     private ?string $filename = null;
 
     #[ORM\ManyToOne(inversedBy: 'resources')]

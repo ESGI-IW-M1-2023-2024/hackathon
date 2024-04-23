@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\BookingRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: BookingRepository::class)]
 class Booking
@@ -11,24 +12,31 @@ class Booking
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["workshop:read"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["workshop:read"])]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["workshop:read"])]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["workshop:read"])]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["workshop:read"])]
     private ?string $schoolClass = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["workshop:read"])]
     private ?string $status = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["workshop:read"])]
     private ?string $reference = null;
 
     #[ORM\ManyToOne(inversedBy: 'bookings')]

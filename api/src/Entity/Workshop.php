@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: WorkshopRepository::class)]
 class Workshop
@@ -14,54 +16,77 @@ class Workshop
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["workshop:read"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["workshop:read"])]
+    #[Assert\NotBlank(groups: ["workshop:new", "workshop:edit"])]
     private ?string $label = null;
 
     #[ORM\Column]
+    #[Groups(["workshop:read"])]
+    #[Assert\NotBlank(groups: ["workshop:new", "workshop:edit"])]
     private ?\DateTimeImmutable $dateStart = null;
 
     #[ORM\Column]
+    #[Groups(["workshop:read"])]
+    #[Assert\NotBlank(groups: ["workshop:new", "workshop:edit"])]
     private ?int $length = null;
 
     #[ORM\Column]
+    #[Groups(["workshop:read"])]
+    #[Assert\NotBlank(groups: ["workshop:new", "workshop:edit"])]
     private ?int $maxPerson = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["workshop:read"])]
+    #[Assert\NotBlank(groups: ["workshop:new", "workshop:edit"])]
     private ?string $location = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $status = null;
+    #[ORM\Column(length: 255, enumType: \WorkshopStatus::class)]
+    #[Groups(["workshop:read"])]
+    #[Assert\NotBlank(groups: ["workshop:new", "workshop:edit"])]
+    private ?\WorkshopStatus $status = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    #[Groups(["workshop:read"])]
+    #[Assert\NotBlank(groups: ["workshop:new", "workshop:edit"])]
     private ?\DateTimeImmutable $maxBookingDate = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(["workshop:read"])]
+    #[Assert\NotBlank(groups: ["workshop:new", "workshop:edit"])]
     private ?string $content = null;
 
     #[ORM\ManyToOne(inversedBy: 'workshops')]
+    #[ORM\JoinColumn(nullable: true)]
+    #[Groups(["workshop:read"])]
     private ?Organisation $organisation = null;
 
     #[ORM\ManyToOne(inversedBy: 'workshops')]
+    #[Groups(["workshop:read"])]
     private ?Theme $theme = null;
 
     /**
      * @var Collection<int, Resource>
      */
     #[ORM\OneToMany(targetEntity: Resource::class, mappedBy: 'workshop', orphanRemoval: true)]
+    #[Groups(["workshop:read"])]
     private Collection $resources;
 
     /**
      * @var Collection<int, Booking>
      */
     #[ORM\OneToMany(targetEntity: Booking::class, mappedBy: 'workshop')]
+    #[Groups(["workshop:read"])]
     private Collection $bookings;
 
     /**
      * @var Collection<int, Wine>
      */
     #[ORM\ManyToMany(targetEntity: Wine::class, mappedBy: 'workshops')]
+    #[Groups(["workshop:read:status:finished"])]
     private Collection $wines;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -139,12 +164,12 @@ class Workshop
         return $this;
     }
 
-    public function getStatus(): ?string
+    public function getStatus(): ?\WorkshopStatus
     {
         return $this->status;
     }
 
-    public function setStatus(string $status): static
+    public function setStatus(\WorkshopStatus $status): static
     {
         $this->status = $status;
 

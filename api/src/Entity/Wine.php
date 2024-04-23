@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
+
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
@@ -18,6 +19,7 @@ class Wine
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+
     #[Groups(["wine:read"])]
     private ?int $id = null;
 
@@ -65,7 +67,7 @@ class Wine
 
     #[ORM\ManyToOne(inversedBy: 'wines')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["wine:read"])]
+    #[Groups(["wine:read", "workshop:read")]
     #[Assert\NotNull(groups: ["wine:new"])]
     private ?Region $region = null;
 

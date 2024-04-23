@@ -38,7 +38,7 @@ class Region
     private Collection $wines;
 
     #[ORM\Column]
-    #[Groups(["region:read", "wine:read"])]
+    #[Groups(["region:read" , "workshop:read"])]
     private bool $archived = false;
 
     public function __construct()
