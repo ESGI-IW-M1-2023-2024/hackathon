@@ -30,23 +30,23 @@ class Theme
     private Collection $workshops;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Groups(["workshop:list", "workshop:detail", "theme:detail"])]
+    #[Groups(["workshop:detail", "theme:detail"])]
     #[Assert\NotBlank(groups: ["theme:new"])]
     private ?string $content = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["theme:list", "theme:detail", "workshop:list", "workshop:detail"])]
+    #[Groups(["theme:list", "theme:detail", "workshop:detail"])]
     private ?string $subtitle = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["theme:list", "theme:detail", "workshop:list", "workshop:detail"])]
+    #[Groups(["theme:list", "theme:detail", "workshop:detail"])]
     private ?string $headerFilename = null;
 
     #[Assert\NotBlank(groups: ["theme:new"])]
     public ?string $file = null;
 
     #[ORM\Column]
-    #[Groups(["theme:list", "theme:detail", "workshop:list", "workshop:detail"])]
+    #[Groups(["theme:list", "theme:detail", "workshop:detail"])]
     private bool $archived = false;
 
     public function __construct()

@@ -55,14 +55,14 @@ class Workshop
     private ?Organisation $organisation = null;
 
     #[ORM\ManyToOne(inversedBy: 'workshops')]
-    #[Groups(["workshop:list", "workshop:detail"])]
+    #[Groups(["workshop:detail"])]
     private ?Theme $theme = null;
 
     /**
      * @var Collection<int, Resource>
      */
     #[ORM\OneToMany(targetEntity: Resource::class, mappedBy: 'workshop', orphanRemoval: true)]
-    #[Groups(["workshop:list", "workshop:detail"])]
+    #[Groups(["workshop:detail"])]
     private Collection $resources;
 
     /**
