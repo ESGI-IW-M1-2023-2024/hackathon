@@ -4,7 +4,7 @@ import { useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 
-const Navbar = () => {
+const Navbar = (props: any) => {
     const { palette } = useTheme()
 
     return (
@@ -15,8 +15,9 @@ const Navbar = () => {
             alignItems="center"
             padding={2}
             sx={{
-                backgroundColor: palette.secondary.main,
+                backgroundColor: props.transparent ? palette.secondary.main : "transparent",
                 color: palette.secondary.contrastText,
+                width: '100%',
             }}
         >
             <Box
