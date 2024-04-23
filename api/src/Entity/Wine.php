@@ -19,54 +19,53 @@ class Wine
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["wine:read", "workshop:read"])]
+    #[Groups(["wine:list", "workshop:list"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["wine:read", "workshop:read"])]
+    #[Groups(["wine:list", "workshop:list"])]
     #[Assert\NotBlank(groups: ["wine:new"])]
     private ?string $label = null;
 
     #[ORM\Column]
-    #[Groups(["wine:read", "workshop:read"])]
+    #[Groups(["wine:list", "workshop:list"])]
     #[Assert\NotBlank(groups: ["wine:new"])]
     private ?int $productYear = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["wine:read", "workshop:read"])]
+    #[Groups(["wine:list", "workshop:list"])]
     #[Assert\NotBlank(groups: ["wine:new"])]
     private ?string $producer = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["wine:read", "workshop:read"])]
+    #[Groups(["workshop:list"])]
     #[Assert\NotBlank(groups: ["wine:new"])]
     private ?string $grapeVariety = null;
 
     #[ORM\Column]
-    #[Groups(["wine:read", "workshop:read"])]
+    #[Groups(["workshop:list"])]
     private ?float $alcoholLevel = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["wine:read", "workshop:read"])]
+    #[Groups(["workshop:list"])]
     #[Assert\NotBlank(groups: ["wine:new"])]
-    #[Assert\CssColor(groups: ["wine:new", "wine:edit"])]
     private ?string $color = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(["wine:read", "workshop:read"])]
+    #[Groups(["wine:list", "workshop:list"])]
     private ?int $quantity = null;
 
     #[ORM\Column(length: 255, enumType: WineBottleSize::class)]
-    #[Groups(["wine:read", "workshop:read"])]
+    #[Groups(["wine:list", "workshop:list"])]
     private ?WineBottleSize $bottleSize = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups(["wine:read", "workshop:read"])]
+    #[Groups(["workshop:list"])]
     private ?string $comments = null;
 
     #[ORM\ManyToOne(inversedBy: 'wines')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["wine:read", "workshop:read"])]
+    #[Groups(["wine:list", "workshop:list"])]
     #[Assert\NotNull(groups: ["wine:new"])]
     private ?Region $region = null;
 
@@ -110,7 +109,13 @@ class Wine
     private ?string $content = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $image = null;
+    private ?string $imageFilename = null;
+
+    #[Assert\NotBlank(groups: ["resource:new"])]
+    public ?string $file = null;
+
+    #[ORM\Column]
+    private bool $archived = false;
 
     public function __construct()
     {
@@ -412,14 +417,26 @@ class Wine
         return $this;
     }
 
-    public function getImage(): ?string
+    public function getImageFilename(): ?string
     {
-        return $this->image;
+        return $this->imageFilename;
     }
 
-    public function setImage(?string $image): static
+    public function setImageFilename(?string $imageFileName): static
     {
-        $this->image = $image;
+        $this->imageFilename = $imageFileName;
+
+        return $this;
+    }
+
+    public function isArchived(): bool
+    {
+        return $this->archived;
+    }
+
+    public function setArchived(bool $archived): static
+    {
+        $this->archived = $archived;
 
         return $this;
     }

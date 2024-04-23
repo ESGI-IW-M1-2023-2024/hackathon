@@ -12,31 +12,31 @@ class Booking
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["workshop:read"])]
+    #[Groups(["workshop:list"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["workshop:read"])]
+    #[Groups(["workshop:list"])]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["workshop:read"])]
+    #[Groups(["workshop:list"])]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["workshop:read"])]
+    #[Groups(["workshop:list"])]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["workshop:read"])]
+    #[Groups(["workshop:list"])]
     private ?string $schoolClass = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["workshop:read"])]
+    #[Groups(["workshop:list"])]
     private ?string $status = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["workshop:read"])]
+    #[Groups(["workshop:list"])]
     private ?string $reference = null;
 
     #[ORM\ManyToOne(inversedBy: 'bookings')]

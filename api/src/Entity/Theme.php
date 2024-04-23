@@ -16,11 +16,11 @@ class Theme
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["workshop:read", "theme:read"])]
+    #[Groups(["workshop:list", "theme:list"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["workshop:read", "theme:read"])]
+    #[Groups(["workshop:list", "theme:list"])]
     #[Assert\NotBlank(groups: ["theme:new"])]
     private ?string $label = null;
     /**
@@ -30,16 +30,16 @@ class Theme
     private Collection $workshops;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Groups(["workshop:read", "theme:read"])]
+    #[Groups(["workshop:list", "theme:list"])]
     #[Assert\NotBlank(groups: ["theme:new"])]
     private ?string $content = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["theme:read", "workshop:read"])]
+    #[Groups(["theme:list", "workshop:list"])]
     private ?string $subtitle = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["theme:read", "workshop:read"])]
+    #[Groups(["theme:list", "workshop:list"])]
     private ?string $headerFilename = null;
 
     #[Assert\NotBlank(groups: ["theme:new"])]
@@ -91,7 +91,7 @@ class Theme
     public function removeWorkshop(Workshop $workshop): static
     {
         if ($this->workshops->removeElement($workshop)) {
-            // set the owning side to null (unless already changed)
+            // set the owning side to null (unless allisty changed)
             if ($workshop->getTheme() === $this) {
                 $workshop->setTheme(null);
             }

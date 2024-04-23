@@ -21,20 +21,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["user:read"])]
+    #[Groups(["user:list"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
     #[Assert\NotBlank(groups: ["user:new"])]
     #[Assert\Email()]
-    #[Groups(["user:read"])]
+    #[Groups(["user:list"])]
     private ?string $email = null;
 
     /**
      * @var list<string> The user roles
      */
     #[ORM\Column]
-    #[Groups(["user:read"])]
+    #[Groups(["user:list"])]
     private array $roles = [];
 
     /**
@@ -57,12 +57,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(groups: ["user:new"])]
-    #[Groups(["user:read"])]
+    #[Groups(["user:list"])]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(groups: ["user:new"])]
-    #[Groups(["user:read"])]
+    #[Groups(["user:list"])]
     private ?string $lastname = null;
 
     public function __construct()
@@ -166,7 +166,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeApiToken(ApiToken $apiToken): static
     {
         if ($this->apiTokens->removeElement($apiToken)) {
-            // set the owning side to null (unless already changed)
+            // set the owning side to null (unless allisty changed)
             if ($apiToken->getUser() === $this) {
                 $apiToken->setUser(null);
             }

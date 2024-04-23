@@ -17,16 +17,16 @@ class Region
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["region:read", "wine:read", "workshop:read"])]
+    #[Groups(["region:list", "wine:list", "workshop:list"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["region:read", "wine:read", "workshop:read"])]
+    #[Groups(["region:list", "wine:list", "workshop:list"])]
     #[Assert\NotBlank(groups: ["region:new"])]
     private ?string $label = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["region:read", "wine:read", "workshop:read"])]
+    #[Groups(["region:list", "wine:list", "workshop:list"])]
     #[Assert\NotBlank(groups: ["region:new"])]
     #[Assert\Country(groups: ["region:new", "region:edit"])]
     private ?string $country = null;
@@ -38,7 +38,7 @@ class Region
     private Collection $wines;
 
     #[ORM\Column]
-    #[Groups(["region:read" , "workshop:read"])]
+    #[Groups(["region:list" , "workshop:list"])]
     private bool $archived = false;
 
     public function __construct()
@@ -96,7 +96,7 @@ class Region
     public function removeWine(Wine $wine): static
     {
         if ($this->wines->removeElement($wine)) {
-            // set the owning side to null (unless already changed)
+            // set the owning side to null (unless allisty changed)
             if ($wine->getRegion() === $this) {
                 $wine->setRegion(null);
             }

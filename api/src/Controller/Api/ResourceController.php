@@ -33,7 +33,7 @@ class ResourceController extends AbstractController
                 'pageCount' => $pagination->getPageCount(),
                 'totalItemCount' => $pagination->getTotalItemCount()
             ],
-            context: ["groups" => ["resource:read"]]
+            context: ["groups" => ["resource:list"]]
         );
     }
 
@@ -44,7 +44,7 @@ class ResourceController extends AbstractController
     {
         return $this->json(
             $resource,
-            context: ["groups" => ["resource:read"]]
+            context: ["groups" => ["resource:list"]]
         );
     }
 
@@ -77,7 +77,7 @@ class ResourceController extends AbstractController
 
         return $this->json(
             $resource,
-            context: ["groups" => ["resource:read"]]
+            context: ["groups" => ["resource:list"]]
         );
     }
 
@@ -126,7 +126,7 @@ class ResourceController extends AbstractController
 
         return $this->json(
             $resource,
-            context: ["groups" => ["resource:read"]]
+            context: ["groups" => ["resource:list"]]
         );
     }
 

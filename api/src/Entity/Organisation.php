@@ -17,16 +17,16 @@ class Organisation
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["organisation:read", "workshop:read"])]
+    #[Groups(["organisation:list", "workshop:list"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["organisation:read"])]
-    #[Assert\NotBlank(groups: ["organisation:new", "workshop:read"])]
+    #[Groups(["organisation:list"])]
+    #[Assert\NotBlank(groups: ["organisation:new", "workshop:list"])]
     private ?string $label = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["organisation:read", "workshop:read"])]
+    #[Groups(["organisation:list", "workshop:list"])]
     private ?string $logoFilename = null;
 
     /**
@@ -36,7 +36,7 @@ class Organisation
     private Collection $workshops;
 
     #[ORM\Column]
-    #[Groups(["organisation:read", "workshop:read"])]
+    #[Groups(["organisation:list", "workshop:list"])]
     private ?bool $isArchived = false;
 
     public function __construct()
@@ -94,7 +94,7 @@ class Organisation
     public function removeWorkshop(Workshop $workshop): static
     {
         if ($this->workshops->removeElement($workshop)) {
-            // set the owning side to null (unless already changed)
+            // set the owning side to null (unless allisty changed)
             if ($workshop->getOrganisation() === $this) {
                 $workshop->setOrganisation(null);
             }

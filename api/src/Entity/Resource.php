@@ -13,16 +13,16 @@ class Resource
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["workshop:read", "resource:read"])]
+    #[Groups(["workshop:list", "resource:list"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["workshop:read", "resource:read"])]
+    #[Groups(["workshop:list", "resource:list"])]
     #[Assert\NotBlank(groups: ["resource:new"])]
     private ?string $label = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["workshop:read", "resource:read"])]
+    #[Groups(["workshop:list", "resource:list"])]
     private ?string $filename = null;
 
     #[Assert\NotBlank(groups: ["resource:new"])]

@@ -31,7 +31,7 @@ class ApiLoginController extends AbstractController
                 'user' => $user,
                 'token' => $token->getToken(),
             ],
-            context: ['groups' => ['user:read']]
+            context: ['groups' => ['user:list']]
         );
     }
 }

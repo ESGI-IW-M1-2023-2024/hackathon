@@ -33,7 +33,7 @@ class ThemeController extends AbstractController
                 'pageCount' => $pagination->getPageCount(),
                 'totalItemCount' => $pagination->getTotalItemCount()
             ],
-            context: ["groups" => ["theme:read"]]
+            context: ["groups" => ["theme:list"]]
         );
     }
 
@@ -44,7 +44,7 @@ class ThemeController extends AbstractController
     {
         return $this->json(
             $theme,
-            context: ["groups" => ["theme:read"]]
+            context: ["groups" => ["theme:list"]]
         );
     }
 
@@ -77,7 +77,7 @@ class ThemeController extends AbstractController
 
         return $this->json(
             $theme,
-            context: ["groups" => ["theme:read"]]
+            context: ["groups" => ["theme:list"]]
         );
     }
 
@@ -127,7 +127,7 @@ class ThemeController extends AbstractController
 
         return $this->json(
             $theme,
-            context: ["groups" => ["theme:read"]]
+            context: ["groups" => ["theme:list"]]
         );
     }
 
