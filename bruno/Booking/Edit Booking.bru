@@ -1,0 +1,21 @@
+meta {
+  name: Edit Bookings
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/api/bookings/201
+  body: json
+  auth: none
+}
+
+auth:bearer {
+  token: cbed8fb3ff907a0e7fc598a6f6976460e814716608e338ab49876ea04156fe16
+}
+
+body:json {
+  {
+    "status": "PAID"
+  }
+}

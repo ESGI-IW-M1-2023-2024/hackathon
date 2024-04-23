@@ -1,0 +1,25 @@
+meta {
+  name: New Booking
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/bookings/
+  body: json
+  auth: none
+}
+
+auth:bearer {
+  token: cbed8fb3ff907a0e7fc598a6f6976460e814716608e338ab49876ea04156fe16
+}
+
+body:json {
+  {
+    "firstname": "John",
+    "lastname": "Doe",
+    "email": "john.doe@gamil.com",
+    "schoolClass": "M1 IW",
+    "workshopId": "1"
+  }
+}

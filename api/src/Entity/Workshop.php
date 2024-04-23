@@ -16,42 +16,42 @@ class Workshop
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["workshop:list", "workshop:detail"])]
+    #[Groups(["workshop:list", "workshop:detail", "booking:list"])]
     private ?int $id = null;
 
     #[ORM\Column]
-    #[Groups(["workshop:list", "workshop:detail"])]
+    #[Groups(["workshop:list", "workshop:detail", "booking:list"])]
     #[Assert\NotBlank(groups: ["workshop:new"])]
     private ?\DateTimeImmutable $dateStart = null;
 
     #[ORM\Column]
-    #[Groups(["workshop:list", "workshop:detail"])]
+    #[Groups(["workshop:list", "workshop:detail", "booking:list"])]
     #[Assert\NotBlank(groups: ["workshop:new"])]
     private ?int $length = null;
 
     #[ORM\Column]
-    #[Groups(["workshop:list", "workshop:detail"])]
+    #[Groups(["workshop:list", "workshop:detail", "booking:list"])]
     #[Assert\NotBlank(groups: ["workshop:new"])]
     private ?int $maxPerson = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["workshop:list", "workshop:detail"])]
+    #[Groups(["workshop:list", "workshop:detail", "booking:list"])]
     #[Assert\NotBlank(groups: ["workshop:new"])]
     private ?string $location = null;
 
     #[ORM\Column(length: 255, enumType: \WorkshopStatus::class)]
-    #[Groups(["workshop:list", "workshop:detail"])]
+    #[Groups(["workshop:list", "workshop:detail", "booking:list"])]
     #[Assert\NotBlank(groups: ["workshop:new"])]
     private ?\WorkshopStatus $status = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
-    #[Groups(["workshop:list", "workshop:detail"])]
+    #[Groups(["workshop:list", "workshop:detail", "booking:list"])]
     #[Assert\NotBlank(groups: ["workshop:new"])]
     private ?\DateTimeImmutable $maxBookingDate = null;
 
     #[ORM\ManyToOne(inversedBy: 'workshops')]
     #[ORM\JoinColumn(nullable: true)]
-    #[Groups(["workshop:list", "workshop:detail"])]
+    #[Groups(["workshop:list", "workshop:detail", "booking:list"])]
     private ?Organisation $organisation = null;
 
     #[ORM\ManyToOne(inversedBy: 'workshops')]
@@ -80,7 +80,7 @@ class Workshop
     private Collection $wines;
 
     #[ORM\Column]
-    #[Groups(["workshop:list", "workshop:detail"])]
+    #[Groups(["workshop:list", "workshop:detail", "booking:list"])]
     #[Assert\NotBlank(groups: ["workshop:new", "workshop:edit"])]
     #[Assert\PositiveOrZero(groups: ["workshop:new", "workshop:edit"])]
     private ?float $price = null;
