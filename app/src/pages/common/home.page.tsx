@@ -22,7 +22,7 @@ const Home = () => {
                 alignItems="center"
                 sx={{
                     color: "white",
-                    '& h1': {
+                    '& > h1': {
                         fontSize: "3rem",
                         fontWeight: "bold",
                         textShadow: "2px 2px 4px rgba(0,0,0,0.5)"
