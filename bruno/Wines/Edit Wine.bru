@@ -1,0 +1,26 @@
+meta {
+  name: Edit Wine
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/api/wines/93
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "label": "fdq",
+    "productYear": 2020,
+    "producer": "Mathis ROME",
+    "grapeVariety": "grape",
+    "alcoholLevel": 57689,
+    "color": "#345678",
+    "quantity": 2,
+    "bottleSize": "half",
+    "comments": "commentaires",
+    "regionId": 674
+  }
+}

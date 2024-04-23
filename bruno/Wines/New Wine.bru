@@ -1,0 +1,28 @@
+meta {
+  name: New Wine
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/wines/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "label": "",
+    "productYear": 2020,
+    "producer": "Mathis ROME",
+    "grapeVariety": "grape",
+    "alcoholLevel": 57689,
+    "color": "#345678",
+    "quantity": 2,
+    "bottleSize": "half",
+    "comments": "commentaires",
+    "region": {
+      "id": 674
+    }
+  }
+}
