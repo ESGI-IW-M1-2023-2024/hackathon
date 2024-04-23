@@ -1,0 +1,20 @@
+meta {
+  name: DELETE Theme
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{baseUrl}}/api/themes/10
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: b9782711a17eb3c087f5144e5619723ea0868a9f100ec60e1c257ea1e712878d
+}
+
+body:multipart-form {
+  label: test
+  file: @file(/Users/mathisrome/PersonalProject/esgi/quatrieme_annee/hackathon/Makefile)
+}

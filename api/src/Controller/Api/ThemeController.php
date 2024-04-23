@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -128,5 +129,18 @@ class ThemeController extends AbstractController
             $theme,
             context: ["groups" => ["theme:read"]]
         );
+    }
+
+    #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
+    #[IsGranted("ROLE_ADMIN")]
+    public function delete(
+        EntityManagerInterface $em,
+        Theme $theme
+    ): JsonResponse
+    {
+        $theme->setArchived(true);
+        $em->flush();
+
+        return $this->json('', Response::HTTP_NO_CONTENT);
     }
 }
