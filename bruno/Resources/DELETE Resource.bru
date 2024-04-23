@@ -1,0 +1,20 @@
+meta {
+  name: DELETE Resource
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{baseUrl}}/api/resources/10
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: 13437061efb986098de67daf0c1f40290e84fcb940fd04627cc34441d733303c
+}
+
+body:multipart-form {
+  label: test
+  file: @file(/Users/mathisrome/PersonalProject/esgi/quatrieme_annee/hackathon/Makefile)
+}

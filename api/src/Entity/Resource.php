@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ResourceRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ResourceRepository::class)]
 class Resource
@@ -12,20 +13,26 @@ class Resource
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["workshop:read"])]
+    #[Groups(["workshop:read", "resource:read"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["workshop:read"])]
+    #[Groups(["workshop:read", "resource:read"])]
+    #[Assert\NotBlank(groups: ["resource:new"])]
     private ?string $label = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["workshop:read"])]
+    #[Groups(["workshop:read", "resource:read"])]
+    #[Assert\NotBlank(groups: ["resource:new"])]
     private ?string $filename = null;
 
     #[ORM\ManyToOne(inversedBy: 'resources')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(groups: ["resource:new"])]
     private ?Workshop $workshop = null;
+
+    #[ORM\Column]
+    private bool $archived = false;
 
     public function getId(): ?int
     {
@@ -64,6 +71,18 @@ class Resource
     public function setWorkshop(?Workshop $workshop): static
     {
         $this->workshop = $workshop;
+
+        return $this;
+    }
+
+    public function isArchived(): bool
+    {
+        return $this->archived;
+    }
+
+    public function setArchived(bool $archived): static
+    {
+        $this->archived = $archived;
 
         return $this;
     }
