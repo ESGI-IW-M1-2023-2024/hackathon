@@ -67,7 +67,7 @@ class Wine
 
     #[ORM\ManyToOne(inversedBy: 'wines')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["wine:read", "workshop:read")]
+    #[Groups(["wine:read", "workshop:read"])]
     #[Assert\NotNull(groups: ["wine:new"])]
     private ?Region $region = null;
 

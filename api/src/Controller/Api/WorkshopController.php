@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -85,6 +86,7 @@ class WorkshopController extends AbstractController
         Request                             $request,
         SerializerInterface                 $serializer,
         ValidatorInterface                  $validator,
+        PropertyAccessorInterface $propertyAccessor
     ): JsonResponse
     {
         $workshopRequest = $serializer->deserialize($request->getContent(), Workshop::class, 'json');
@@ -95,25 +97,14 @@ class WorkshopController extends AbstractController
             return $this->json($violations);
         }
 
-        if (!empty($workshopRequest->getLabel())) {
-            $workshop->setLabel($workshopRequest->getLabel());
-        }
-        if (!empty($workshopRequest->getDateStart())) {
-            $workshop->setDateStart($workshopRequest->getDateStart());
-        }
-        if (!empty($workshopRequest->getLength())) {
-            $workshop->setLength($workshopRequest->getLength());
-        }
-        if (!empty($workshopRequest->getMaxPerson())) {
-            $workshop->setMaxPerson($workshopRequest->getMaxPerson());
-        }
-        if (!empty($workshopRequest->getLocation())) {
-            $workshop->setLocation($workshopRequest->getLocation());
-        }
-        if (!empty($workshopRequest->getStatus())) {
-            $workshop->setStatus($workshopRequest->getStatus());
-        }
+        $reflect = new \ReflectionClass($workshopRequest);
+        $props = $reflect->getProperties(\ReflectionProperty::IS_PRIVATE);
 
+        foreach ($props as $prop) {
+            if ($prop->getName() !== "id" && !empty($prop->getValue($workshopRequest))) {
+                $propertyAccessor->setValue($workshop, $prop->getName(), $prop->getValue($workshopRequest));
+            }
+        }
 
         $this->em->flush();
 
