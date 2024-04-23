@@ -1,14 +1,13 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { AutoCompleteFieldOpts, CheckboxField, ChoiceField, SimpleField } from '@/types/formField.types';
 import { Controller, ControllerFieldState, ControllerRenderProps, FieldValues } from 'react-hook-form';
-import { CheckboxField, ChoiceField, SimpleField } from '../../../../types/formField.types';
-import { CustomCheckboxField, CustomSelect, CustomTextField } from '../utils/formFieldsDeclaration';
+import { CustomAutocomplete, CustomCheckboxField, CustomSelect, CustomTextField } from '../utils/formFieldsDeclaration';
 
 export interface CustomFormFieldProps {
   control: any;
   controlName: string;
-  options: SimpleField | CheckboxField | ChoiceField;
+  options: SimpleField | CheckboxField | ChoiceField | AutoCompleteFieldOpts;
   props?: { [key: string]: any };
-  childrenComponentType: 'TEXT_FIELD' | 'CHECKBOX' | 'SELECT';
+  childrenComponentType: 'TEXT_FIELD' | 'CHECKBOX' | 'SELECT' | 'AUTOCOMPLETE';
   label?: string;
 }
 
@@ -27,6 +26,10 @@ const CustomFormField = ({ control, controlName, options, childrenComponentType,
       case 'SELECT': {
         const opts = options as ChoiceField;
         return CustomSelect(field, fieldState, opts, props || {});
+      }
+      case 'AUTOCOMPLETE': {
+        const opts = options as AutoCompleteFieldOpts;
+        return CustomAutocomplete(field, opts, props || {});
       }
     }
   };

@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ControllerFieldState, ControllerRenderProps, FieldValues } from 'react-hook-form';
 import {
+  Autocomplete,
+  Box,
   Checkbox,
   FormControl,
   FormControlLabel,
@@ -10,7 +12,10 @@ import {
   Select,
   TextField,
 } from '@mui/material';
-import { CheckboxField, ChoiceField, SimpleField } from '../../../../types/formField.types';
+import { HTMLAttributes } from 'react';
+import { AutoCompleteFieldOpts, CheckboxField, ChoiceField, SimpleField } from '@/types/formField.types';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
 
 export const CustomTextField = (
   field: ControllerRenderProps<FieldValues, string>,
@@ -69,5 +74,81 @@ export const CustomSelect = (
       </Select>
       <FormHelperText>{fieldState.error?.message}</FormHelperText>
     </FormControl>
+  );
+};
+
+export const CustomAutocomplete = (
+  field: ControllerRenderProps<FieldValues, string>,
+  options: AutoCompleteFieldOpts,
+  props: { [key: string]: any } = {},
+): JSX.Element => {
+  const renderOption = (props: HTMLAttributes<HTMLLIElement>, option: any, selected: boolean) => {
+    if (options.checkbox) {
+      return (
+        <Box component='li' {...props} key={option.id}>
+          <Checkbox
+            icon={<CheckBoxOutlineBlankIcon fontSize='small' />}
+            checkedIcon={<CheckBoxIcon fontSize='small' />}
+            style={{ marginRight: 8 }}
+            checked={selected}
+          />
+          {option.label}
+        </Box>
+      );
+    }
+    return (
+      <Box component='li' {...props} key={option.id}>
+        {option.label}
+      </Box>
+    );
+  };
+
+  return (
+    <Autocomplete
+      {...field}
+      options={options.items || []}
+      getOptionLabel={(option) => option.label ?? ''}
+      value={field.value}
+      slotProps={{
+        popper: {
+          modifiers: [
+            {
+              name: 'flip',
+              enabled: false,
+            },
+          ],
+        },
+      }}
+      ListboxProps={{
+        style: {
+          maxHeight: '250px',
+        },
+      }}
+      onChange={(_event, data: AutoCompleteFieldOpts['items']) => {
+        const selectAll = data?.find((option) => option.id === 0);
+        if (data && selectAll) {
+          return field.onChange(options.items.filter((obj) => obj.id !== selectAll.id));
+        }
+
+        if (data) {
+          return field.onChange(data);
+        }
+      }}
+      {...props}
+      noOptionsText={options.noOptionsText}
+      isOptionEqualToValue={(option, value) => option.id === value.id}
+      renderOption={(props, option, { selected }) => renderOption(props, option, selected)}
+      renderInput={(params) => {
+        return (
+          <TextField
+            {...params}
+            required={options.required ?? false}
+            label={options.inputLabel}
+            margin='dense'
+            fullWidth
+          />
+        );
+      }}
+    />
   );
 };
