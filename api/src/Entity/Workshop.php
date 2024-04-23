@@ -64,6 +64,9 @@ class Workshop
     #[ORM\ManyToMany(targetEntity: Wine::class, mappedBy: 'workshops')]
     private Collection $wines;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $subtitle = null;
+
     public function __construct()
     {
         $this->resources = new ArrayCollection();
@@ -279,6 +282,18 @@ class Workshop
         if ($this->wines->removeElement($wine)) {
             $wine->removeWorkshop($this);
         }
+
+        return $this;
+    }
+
+    public function getSubtitle(): ?string
+    {
+        return $this->subtitle;
+    }
+
+    public function setSubtitle(string $subtitle): static
+    {
+        $this->subtitle = $subtitle;
 
         return $this;
     }
