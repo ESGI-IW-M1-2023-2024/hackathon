@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -45,6 +46,7 @@ class WineController extends AbstractController
     }
 
     #[Route('/', name: 'new', methods: ["POST"])]
+    #[IsGranted("ROLE_ADMIN")]
     public function new(
         Request                $request,
         SerializerInterface    $serializer,
@@ -70,6 +72,7 @@ class WineController extends AbstractController
     }
 
     #[Route('/{id}', name: 'edit', methods: ["PUT"])]
+    #[IsGranted("ROLE_ADMIN")]
     public function edit(
         Request             $request,
         SerializerInterface $serializer,
@@ -105,6 +108,7 @@ class WineController extends AbstractController
     }
 
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
+    #[IsGranted("ROLE_ADMIN")]
     public function delete(
         EntityManagerInterface $em,
         Wine $wine
