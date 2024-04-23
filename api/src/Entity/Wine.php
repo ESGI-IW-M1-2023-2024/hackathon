@@ -29,6 +29,7 @@ class Wine
 
     #[ORM\Column]
     #[Groups(["wine:read", "workshop:read"])]
+    #[Assert\NotBlank(groups: ["wine:new"])]
     private ?int $productYear = null;
 
     #[ORM\Column(length: 255)]

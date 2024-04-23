@@ -23,8 +23,10 @@ class Resource
 
     #[ORM\Column(length: 255)]
     #[Groups(["workshop:read", "resource:read"])]
-    #[Assert\NotBlank(groups: ["resource:new"])]
     private ?string $filename = null;
+
+    #[Assert\NotBlank(groups: ["resource:new"])]
+    public ?string $file = null;
 
     #[ORM\ManyToOne(inversedBy: 'resources')]
     #[ORM\JoinColumn(nullable: false)]

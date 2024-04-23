@@ -2,7 +2,7 @@
 
 namespace App\Controller\Api;
 
-use App\Entity\Resource;
+use App\Entity\Theme;
 use App\Service\ApiUploadFileService;
 use App\Service\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,16 +16,16 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-#[Route('/resources', name: 'resources_')]
-class ResourceController extends AbstractController
+#[Route('/themes', name: 'themes_')]
+class ThemeController extends AbstractController
 {
     #[Route('/', name: 'list', methods: ["GET"])]
     public function index(
-        PaginationService $paginationService,
-        Request           $request
+        Request           $request,
+        PaginationService $paginationService
     ): JsonResponse
     {
-        $pagination = $paginationService->getPagination($request, Resource::class);
+        $pagination = $paginationService->getPagination($request, Theme::class);
 
         return $this->json(
             [
@@ -33,18 +33,18 @@ class ResourceController extends AbstractController
                 'pageCount' => $pagination->getPageCount(),
                 'totalItemCount' => $pagination->getTotalItemCount()
             ],
-            context: ["groups" => ["resource:read"]]
+            context: ["groups" => ["theme:read"]]
         );
     }
 
     #[Route('/{id}', name: 'get', methods: ["GET"])]
     public function get(
-        Resource $resource,
+        Theme $theme,
     ): JsonResponse
     {
         return $this->json(
-            $resource,
-            context: ["groups" => ["resource:read"]]
+            $theme,
+            context: ["groups" => ["theme:read"]]
         );
     }
 
@@ -55,12 +55,12 @@ class ResourceController extends AbstractController
         Request                $request,
         ValidatorInterface     $validator,
         EntityManagerInterface $em,
-        ApiUploadFileService $apiUploadFileService
+        ApiUploadFileService   $apiUploadFileService
     ): JsonResponse
     {
-        $resource = $serializer->deserialize($request->getContent(), Resource::class, 'json');
+        $theme = $serializer->deserialize($request->getContent(), Theme::class, 'json');
 
-        $violations = $validator->validate($resource, groups: ["resource:new"]);
+        $violations = $validator->validate($theme, groups: ["theme:new"]);
 
         if ($violations->count() > 0) {
             return $this->json($violations);
@@ -69,64 +69,65 @@ class ResourceController extends AbstractController
         $data = json_decode($request->getContent());
         $file = $data->file;
 
-        $filename = $apiUploadFileService->uploadFile($file, "resources_directory", $resource?->getFilename());
-        $resource->setFilename($filename);
+        $filename = $apiUploadFileService->uploadFile($file, "themes_directory", $theme->getHeaderFilename());
+        $theme->setHeaderFilename($filename);
 
-        $em->persist($resource);
+        $em->persist($theme);
         $em->flush();
 
         return $this->json(
-            $resource,
-            context: ["groups" => ["resource:read"]]
+            $theme,
+            context: ["groups" => ["theme:read"]]
         );
     }
 
     #[Route('/{id}', name: 'edit', methods: ["PUT"])]
     #[IsGranted("ROLE_ADMIN")]
     public function edit(
-        Request             $request,
-        SerializerInterface $serializer,
-        ValidatorInterface  $validator,
-        EntityManagerInterface $em,
+        Request                   $request,
+        SerializerInterface       $serializer,
+        ValidatorInterface        $validator,
+        EntityManagerInterface    $em,
         PropertyAccessorInterface $propertyAccessor,
-        ApiUploadFileService $apiUploadFileService,
-        Resource $resource
+        ApiUploadFileService      $apiUploadFileService,
+        Theme                     $theme
     ): JsonResponse
     {
-        $resourceRequest = $serializer->deserialize(
+        $themeRequest = $serializer->deserialize(
             $request->getContent(),
-            Resource::class,
+            Theme::class,
             'json',
-            ["resource" => $resource]
+            ["theme" => $theme]
         );
 
-        $violations = $validator->validate($resourceRequest, groups: ["resource:edit"]);
+        $violations = $validator->validate($themeRequest, groups: ["theme:edit"]);
 
         if ($violations->count() > 0) {
             return $this->json($violations);
         }
 
-        $reflect = new \ReflectionClass($resourceRequest);
+        $data = json_decode($request->getContent());
+
+        if (!empty($data->file)) {
+            $file = $data->file;
+            $filename = $apiUploadFileService->uploadFile($file, "themes_directory", $theme->getHeaderFilename());
+            $theme->setHeaderFilename($filename);
+        }
+
+        $reflect = new \ReflectionClass($themeRequest);
         $props = $reflect->getProperties(\ReflectionProperty::IS_PRIVATE);
 
         foreach ($props as $prop) {
-            if ($prop->getName() !== "id" && !empty($prop->getValue($resourceRequest))) {
-                $propertyAccessor->setValue($resource, $prop->getName(), $prop->getValue($resourceRequest));
+            if ($prop->getName() !== "id" && !empty($prop->getValue($themeRequest))) {
+                $propertyAccessor->setValue($theme, $prop->getName(), $prop->getValue($themeRequest));
             }
-        }
-
-        $data = json_decode($request->getContent());
-        if (!empty($data->file)) {
-            $file = $data->file;
-            $filename = $apiUploadFileService->uploadFile($file, "resources_directory", $resource?->getFilename());
-            $resource->setFilename($filename);
         }
 
         $em->flush();
 
         return $this->json(
-            $resource,
-            context: ["groups" => ["resource:read"]]
+            $theme,
+            context: ["groups" => ["theme:read"]]
         );
     }
 
@@ -134,10 +135,10 @@ class ResourceController extends AbstractController
     #[IsGranted("ROLE_ADMIN")]
     public function delete(
         EntityManagerInterface $em,
-        Resource $resource
+        Theme $theme
     ): JsonResponse
     {
-        $resource->setArchived(true);
+        $theme->setArchived(true);
         $em->flush();
 
         return $this->json('', Response::HTTP_NO_CONTENT);

@@ -16,12 +16,12 @@ class Theme
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["workshop:read"])]
+    #[Groups(["workshop:read", "theme:read"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["workshop:read"])]
-    #[Assert\NotBlank(groups: ["theme:new", "theme:edit"])]
+    #[Groups(["workshop:read", "theme:read"])]
+    #[Assert\NotBlank(groups: ["theme:new"])]
     private ?string $label = null;
     /**
      * @var Collection<int, Workshop>
@@ -30,8 +30,8 @@ class Theme
     private Collection $workshops;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Groups(["workshop:read"])]
-    #[Assert\NotBlank(groups: ["theme:new", "theme:edit"])]
+    #[Groups(["workshop:read", "theme:read"])]
+    #[Assert\NotBlank(groups: ["theme:new"])]
     private ?string $content = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -39,7 +39,14 @@ class Theme
     private ?string $subtitle = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["theme:read", "workshop:read"])]
     private ?string $headerFilename = null;
+
+    #[Assert\NotBlank(groups: ["theme:new"])]
+    public ?string $file = null;
+
+    #[ORM\Column]
+    private bool $archived = false;
 
     public function __construct()
     {
@@ -125,6 +132,18 @@ class Theme
     public function setHeaderFilename(string $headerFilename): static
     {
         $this->headerFilename = $headerFilename;
+
+        return $this;
+    }
+
+    public function isArchived(): bool
+    {
+        return $this->archived;
+    }
+
+    public function setArchived(bool $archived): static
+    {
+        $this->archived = $archived;
 
         return $this;
     }
