@@ -94,7 +94,7 @@ class Organisation
     public function removeWorkshop(Workshop $workshop): static
     {
         if ($this->workshops->removeElement($workshop)) {
-            // set the owning side to null (unless allisty changed)
+            // set the owning side to null (unless already changed)
             if ($workshop->getOrganisation() === $this) {
                 $workshop->setOrganisation(null);
             }

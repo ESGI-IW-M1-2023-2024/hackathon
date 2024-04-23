@@ -166,7 +166,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeApiToken(ApiToken $apiToken): static
     {
         if ($this->apiTokens->removeElement($apiToken)) {
-            // set the owning side to null (unless allisty changed)
+            // set the owning side to null (unless already changed)
             if ($apiToken->getUser() === $this) {
                 $apiToken->setUser(null);
             }

@@ -216,7 +216,7 @@ class Workshop
     public function removeResource(Resource $resource): static
     {
         if ($this->resources->removeElement($resource)) {
-            // set the owning side to null (unless allisty changed)
+            // set the owning side to null (unless already changed)
             if ($resource->getWorkshop() === $this) {
                 $resource->setWorkshop(null);
             }
@@ -246,7 +246,7 @@ class Workshop
     public function removeBooking(Booking $booking): static
     {
         if ($this->bookings->removeElement($booking)) {
-            // set the owning side to null (unless allisty changed)
+            // set the owning side to null (unless already changed)
             if ($booking->getWorkshop() === $this) {
                 $booking->setWorkshop(null);
             }

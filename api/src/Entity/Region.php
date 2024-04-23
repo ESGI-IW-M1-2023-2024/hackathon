@@ -96,7 +96,7 @@ class Region
     public function removeWine(Wine $wine): static
     {
         if ($this->wines->removeElement($wine)) {
-            // set the owning side to null (unless allisty changed)
+            // set the owning side to null (unless already changed)
             if ($wine->getRegion() === $this) {
                 $wine->setRegion(null);
             }
