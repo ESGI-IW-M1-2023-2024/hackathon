@@ -8,6 +8,8 @@ import { useForm } from 'react-hook-form';
 import { customErrorMap } from '../../utils/customZodErrorMap';
 import { zodResolver } from '@hookform/resolvers/zod';
 import CustomFormField from '../../features/UI/custom-mui-components/components/custom-form-field.component';
+import { setUser } from '../../redux/slices/user.slice';
+import { useNavigate } from 'react-router-dom';
 
 const zodSchema = () =>
   z.object({
@@ -17,6 +19,7 @@ const zodSchema = () =>
 
 const Login = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const [loginUser] = apiSlice.useLoginUserMutation();
 
@@ -32,9 +35,10 @@ const Login = () => {
 
   const handleFormSubmit = async (formData: UserCredentials): Promise<void> => {
     try {
-      await loginUser(formData).unwrap();
-      console.log('ok');
+      const response = await loginUser(formData).unwrap();
+      dispatch(setUser(response));
       dispatch(openSnackBar({ message: 'Connexion réussi', severity: 'success' }));
+      navigate('/');
     } catch (error: unknown) {
       console.log(error);
       dispatch(openSnackBar({ message: 'Echec de la connexion', severity: 'error' }));
