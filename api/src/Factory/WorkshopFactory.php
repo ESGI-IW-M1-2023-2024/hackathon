@@ -48,15 +48,15 @@ final class WorkshopFactory extends ModelFactory
     {
         $date = self::faker()->dateTimeThisMonth();
         return [
-            'content' => self::faker()->text(),
             'dateStart' => \DateTimeImmutable::createFromMutable($date),
-            'label' => self::faker()->text(10),
             'length' => self::faker()->randomNumber(3),
             'location' => self::faker()->text(30),
             'maxBookingDate' => \DateTimeImmutable::createFromMutable($date->modify('-7 day')),
             'maxPerson' => self::faker()->randomNumber(2),
             'status' => self::faker()->randomElement(\WorkshopStatus::cases()),
-            'subtitle' => self::faker()->text(20),
+            'theme' => ThemeFactory::random(),
+            'organisation' => OrganisationFactory::random(),
+            'price' => self::faker()->randomFloat(2, 0, 100),
         ];
     }
 

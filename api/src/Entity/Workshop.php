@@ -19,11 +19,6 @@ class Workshop
     #[Groups(["workshop:read"])]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    #[Groups(["workshop:read"])]
-    #[Assert\NotBlank(groups: ["workshop:new"])]
-    private ?string $label = null;
-
     #[ORM\Column]
     #[Groups(["workshop:read"])]
     #[Assert\NotBlank(groups: ["workshop:new"])]
@@ -53,11 +48,6 @@ class Workshop
     #[Groups(["workshop:read"])]
     #[Assert\NotBlank(groups: ["workshop:new"])]
     private ?\DateTimeImmutable $maxBookingDate = null;
-
-    #[ORM\Column(type: Types::TEXT)]
-    #[Groups(["workshop:read"])]
-    #[Assert\NotBlank(groups: ["workshop:new"])]
-    private ?string $content = null;
 
     #[ORM\ManyToOne(inversedBy: 'workshops')]
     #[ORM\JoinColumn(nullable: true)]
@@ -89,8 +79,13 @@ class Workshop
     #[Groups(["workshop:read:status:finished"])]
     private Collection $wines;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $subtitle = null;
+    #[ORM\Column]
+    #[Groups(["workshop:read"])]
+    #[Assert\NotBlank(groups: ["workshop:new", "workshop:edit"])]
+    #[Assert\PositiveOrZero(groups: ["workshop:new", "workshop:edit"])]
+    private ?float $price = null;
+
+
 
     public function __construct()
     {
@@ -102,18 +97,6 @@ class Workshop
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getLabel(): ?string
-    {
-        return $this->label;
-    }
-
-    public function setLabel(string $label): static
-    {
-        $this->label = $label;
-
-        return $this;
     }
 
     public function getDateStart(): ?\DateTimeImmutable
@@ -184,18 +167,6 @@ class Workshop
     public function setMaxBookingDate(\DateTimeImmutable $maxBookingDate): static
     {
         $this->maxBookingDate = $maxBookingDate;
-
-        return $this;
-    }
-
-    public function getContent(): ?string
-    {
-        return $this->content;
-    }
-
-    public function setContent(string $content): static
-    {
-        $this->content = $content;
 
         return $this;
     }
@@ -311,14 +282,14 @@ class Workshop
         return $this;
     }
 
-    public function getSubtitle(): ?string
+    public function getPrice(): ?float
     {
-        return $this->subtitle;
+        return $this->price;
     }
 
-    public function setSubtitle(string $subtitle): static
+    public function setPrice(float $price): static
     {
-        $this->subtitle = $subtitle;
+        $this->price = $price;
 
         return $this;
     }
