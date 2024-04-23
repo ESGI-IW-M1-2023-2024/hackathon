@@ -26,9 +26,20 @@ class ResourceDenormalizer implements DenormalizerInterface
     {
         $resource = new Resource();
 
+        $reflect = new \ReflectionClass($resource);
+        $props = $reflect->getProperties(\ReflectionProperty::IS_PRIVATE | \ReflectionProperty::IS_PUBLIC);
+
+        $keys = [];
+
+        foreach ($props as $prop) {
+            $keys[] = $prop->getName();
+        }
+
         foreach ($data as $key => $datum) {
             if ($key !== "workshopId") {
-                $this->propertyAccessor->setValue($resource, $key, $datum);
+                if (in_array($key, $keys)) {
+                    $this->propertyAccessor->setValue($resource, $key, $datum);
+                }
             } else {
                 $workshopId = $data['workshopId'];
                 $workshop = $this->em->getRepository(Workshop::class)->find($workshopId);

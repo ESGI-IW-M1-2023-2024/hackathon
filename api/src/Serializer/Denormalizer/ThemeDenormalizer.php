@@ -25,8 +25,19 @@ class ThemeDenormalizer implements DenormalizerInterface
     {
         $theme = new Theme();
 
+        $reflect = new \ReflectionClass($theme);
+        $props = $reflect->getProperties(\ReflectionProperty::IS_PRIVATE | \ReflectionProperty::IS_PUBLIC);
+
+        $keys = [];
+
+        foreach ($props as $prop) {
+            $keys[] = $prop->getName();
+        }
+
         foreach ($data as $key => $datum) {
-            $this->propertyAccessor->setValue($theme, $key, $datum);
+            if (in_array($key, $keys)) {
+                $this->propertyAccessor->setValue($theme, $key, $datum);
+            }
         }
 
         return $theme;

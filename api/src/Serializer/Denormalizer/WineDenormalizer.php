@@ -25,12 +25,23 @@ class WineDenormalizer implements DenormalizerInterface
     {
         $wine = new Wine();
 
+        $reflect = new \ReflectionClass($wine);
+        $props = $reflect->getProperties(\ReflectionProperty::IS_PRIVATE | \ReflectionProperty::IS_PUBLIC);
+
+        $keys = [];
+
+        foreach ($props as $prop) {
+            $keys[] = $prop->getName();
+        }
+
         foreach ($data as $key => $datum) {
             if ($key !== "regionId") {
                 if ($key === "bottleSize" && !empty($datum)) {
                     $this->propertyAccessor->setValue($wine, $key, WineBottleSize::tryFrom($datum));
                 } else {
-                    $this->propertyAccessor->setValue($wine, $key, $datum);
+                    if (in_array($key, $keys)) {
+                        $this->propertyAccessor->setValue($wine, $key, $datum);
+                    }
                 }
             } else {
                 $regionId = $data['regionId'];
