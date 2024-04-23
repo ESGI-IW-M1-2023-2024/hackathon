@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: WineRepository::class)]
 class Wine
@@ -14,37 +15,48 @@ class Wine
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["workshop:read"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["workshop:read"])]
     private ?string $label = null;
 
     #[ORM\Column]
+    #[Groups(["workshop:read"])]
     private ?int $productYear = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["workshop:read"])]
     private ?string $producer = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["workshop:read"])]
     private ?string $grapeVariety = null;
 
     #[ORM\Column]
+    #[Groups(["workshop:read"])]
     private ?float $alcoholLevel = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["workshop:read"])]
     private ?string $color = null;
 
     #[ORM\Column]
+    #[Groups(["workshop:read"])]
     private ?int $quantity = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["workshop:read"])]
     private ?string $bottleSize = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(["workshop:read"])]
     private ?string $comments = null;
 
     #[ORM\ManyToOne(inversedBy: 'wines')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["workshop:read"])]
     private ?Region $region = null;
 
     /**

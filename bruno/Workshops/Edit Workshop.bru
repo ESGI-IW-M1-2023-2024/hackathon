@@ -1,0 +1,17 @@
+meta {
+  name: Edit Workshops
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/api/workshops/201
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "label": "Nouveau label"
+  }
+}
