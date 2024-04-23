@@ -4,6 +4,7 @@ import Login from '../pages/auth/login.page';
 import NotFound from '../pages/common/not-found.page';
 import SecureRoute from '@/features/auth/components/secure-route';
 import Dashboard from '@/pages/admin/dashboard.page';
+import ThemesList from '@/pages/admin/themes-list.page';
 
 const AppRoutes = () => (
   <Routes>
@@ -11,6 +12,7 @@ const AppRoutes = () => (
     <Route path='/login' element={<Login />} />
     <Route element={<SecureRoute />}>
       <Route path='/admin' element={<Dashboard />} />
+      <Route path='/themes' element={<ThemesList />} />
     </Route>
     <Route path='*' element={<NotFound />} />
   </Routes>
