@@ -31,9 +31,6 @@ class ApiLoginController extends AbstractController
                 'user' => $user->getUserIdentifier(),
                 'token' => $token->getToken(),
             ],
-            headers: [
-                'Access-Control-Allow-Origin' => '*',
-            ]
         );
     }
 }
