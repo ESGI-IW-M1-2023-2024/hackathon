@@ -30,7 +30,7 @@ class Theme
     private Collection $workshops;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Groups(["workshop:list", "workshop:detail", "theme:list", "theme:detail"])]
+    #[Groups(["workshop:list", "workshop:detail", "theme:detail"])]
     #[Assert\NotBlank(groups: ["theme:new"])]
     private ?string $content = null;
 
