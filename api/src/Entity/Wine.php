@@ -19,50 +19,48 @@ class Wine
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-
-    #[Groups(["wine:read"])]
+    #[Groups(["wine:read", "workshop:read"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["wine:read"])]
+    #[Groups(["wine:read", "workshop:read"])]
     #[Assert\NotBlank(groups: ["wine:new"])]
     private ?string $label = null;
 
     #[ORM\Column]
-    #[Groups(["wine:read"])]
+    #[Groups(["wine:read", "workshop:read"])]
     private ?int $productYear = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["wine:read"])]
+    #[Groups(["wine:read", "workshop:read"])]
     #[Assert\NotBlank(groups: ["wine:new"])]
     private ?string $producer = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["wine:read"])]
+    #[Groups(["wine:read", "workshop:read"])]
     #[Assert\NotBlank(groups: ["wine:new"])]
     private ?string $grapeVariety = null;
 
     #[ORM\Column]
-    #[Groups(["wine:read"])]
+    #[Groups(["wine:read", "workshop:read"])]
     private ?float $alcoholLevel = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["wine:read"])]
+    #[Groups(["wine:read", "workshop:read"])]
     #[Assert\NotBlank(groups: ["wine:new"])]
     #[Assert\CssColor(groups: ["wine:new", "wine:edit"])]
     private ?string $color = null;
 
-    #[ORM\Column]
-    #[Groups(["wine:read"])]
-    #[Assert\NotNull(groups: ["wine:new"])]
+    #[ORM\Column(nullable: true)]
+    #[Groups(["wine:read", "workshop:read"])]
     private ?int $quantity = null;
 
     #[ORM\Column(length: 255, enumType: WineBottleSize::class)]
-    #[Groups(["wine:read"])]
+    #[Groups(["wine:read", "workshop:read"])]
     private ?WineBottleSize $bottleSize = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups(["wine:read"])]
+    #[Groups(["wine:read", "workshop:read"])]
     private ?string $comments = null;
 
     #[ORM\ManyToOne(inversedBy: 'wines')]
@@ -76,6 +74,42 @@ class Wine
      */
     #[ORM\ManyToMany(targetEntity: Workshop::class, inversedBy: 'wines')]
     private Collection $workshops;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $servingTemperature = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $storage = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $upTo = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $taste = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $byTaste = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $byEye = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $onTheNose = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $inTheMouth = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $winePairing = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $recommandedPairing = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $content = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
 
     public function __construct()
     {
@@ -241,6 +275,150 @@ class Wine
     public function removeWorkshop(Workshop $workshop): static
     {
         $this->workshops->removeElement($workshop);
+
+        return $this;
+    }
+
+    public function getServingTemperature(): ?float
+    {
+        return $this->servingTemperature;
+    }
+
+    public function setServingTemperature(?float $servingTemperature): static
+    {
+        $this->servingTemperature = $servingTemperature;
+
+        return $this;
+    }
+
+    public function getStorage(): ?string
+    {
+        return $this->storage;
+    }
+
+    public function setStorage(?string $storage): static
+    {
+        $this->storage = $storage;
+
+        return $this;
+    }
+
+    public function getUpTo(): ?string
+    {
+        return $this->upTo;
+    }
+
+    public function setUpTo(?string $upTo): static
+    {
+        $this->upTo = $upTo;
+
+        return $this;
+    }
+
+    public function getTaste(): ?string
+    {
+        return $this->taste;
+    }
+
+    public function setTaste(?string $taste): static
+    {
+        $this->taste = $taste;
+
+        return $this;
+    }
+
+    public function getByTaste(): ?string
+    {
+        return $this->byTaste;
+    }
+
+    public function setByTaste(?string $byTaste): static
+    {
+        $this->byTaste = $byTaste;
+
+        return $this;
+    }
+
+    public function getByEye(): ?string
+    {
+        return $this->byEye;
+    }
+
+    public function setByEye(?string $byEye): static
+    {
+        $this->byEye = $byEye;
+
+        return $this;
+    }
+
+    public function getOnTheNose(): ?string
+    {
+        return $this->onTheNose;
+    }
+
+    public function setOnTheNose(?string $onTheNose): static
+    {
+        $this->onTheNose = $onTheNose;
+
+        return $this;
+    }
+
+    public function getInTheMouth(): ?string
+    {
+        return $this->inTheMouth;
+    }
+
+    public function setInTheMouth(?string $inTheMouth): static
+    {
+        $this->inTheMouth = $inTheMouth;
+
+        return $this;
+    }
+
+    public function getWinePairing(): ?string
+    {
+        return $this->winePairing;
+    }
+
+    public function setWinePairing(?string $winePairing): static
+    {
+        $this->winePairing = $winePairing;
+
+        return $this;
+    }
+
+    public function getRecommandedPairing(): ?string
+    {
+        return $this->recommandedPairing;
+    }
+
+    public function setRecommandedPairing(?string $recommandedPairing): static
+    {
+        $this->recommandedPairing = $recommandedPairing;
+
+        return $this;
+    }
+
+    public function getContent(): ?string
+    {
+        return $this->content;
+    }
+
+    public function setContent(?string $content): static
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
 
         return $this;
     }
