@@ -83,7 +83,7 @@ class Wine
     #[Assert\Callback(groups: ["wine:new", "wine:edit"])]
     public function validate(ExecutionContextInterface $context): void
     {
-        if (false === in_array($this->getBottleSize(), WineBottleSize::cases())) {
+        if (false === in_array($this->getBottleSize(), WineBottleSize::cases()) && !empty($this->getBottleSize())) {
             $context->buildViolation("The specified bottle size does not exist.")
                 ->atPath("bottleSize")
                 ->addViolation();

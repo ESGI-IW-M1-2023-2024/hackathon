@@ -32,7 +32,7 @@ class WineDenormalizer implements DenormalizerInterface
 
         foreach ($data as $key => $datum) {
             if ($key !== "regionId") {
-                if ($key === "bottleSize") {
+                if ($key === "bottleSize" && !empty($datum)) {
                     $this->propertyAccessor->setValue($wine, $key, WineBottleSize::tryFrom($datum));
                 } else {
                     $this->propertyAccessor->setValue($wine, $key, $datum);

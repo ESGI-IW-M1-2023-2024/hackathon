@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -74,6 +75,7 @@ class WineController extends AbstractController
         SerializerInterface $serializer,
         ValidatorInterface  $validator,
         EntityManagerInterface $em,
+        PropertyAccessorInterface $propertyAccessor,
         Wine $wine
     ): JsonResponse
     {
@@ -85,18 +87,35 @@ class WineController extends AbstractController
             return $this->json($violations);
         }
 
-        dump($wineRequest);
-        foreach ($wineRequest as $key => $item) {
-            dump($key, $item);
-        }
+        $reflect = new \ReflectionClass($wineRequest);
+        $props = $reflect->getProperties(\ReflectionProperty::IS_PRIVATE);
 
-        die();
+        foreach ($props as $prop) {
+            if ($prop->getName() !== "id" && !empty($prop->getValue($wineRequest))) {
+                $propertyAccessor->setValue($wine, $prop->getName(), $prop->getValue($wineRequest));
+            }
+        }
 
         $em->flush();
 
         return $this->json(
             $wine,
             context: ["groups" => ["wine:read"]]
+        );
+    }
+
+    #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
+    public function delete(
+        EntityManagerInterface $em,
+        Wine $wine
+    ): JsonResponse
+    {
+        $em->remove($wine);
+        $em->flush();
+
+        return $this->json(
+            $wine,
+            context: ["groups" => ["region:read"]]
         );
     }
 }
