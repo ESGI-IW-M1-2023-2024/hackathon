@@ -17,16 +17,16 @@ class Region
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["region:read"])]
+    #[Groups(["region:read", "workshop:read"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["region:read"])]
+    #[Groups(["region:read", "workshop:read"])]
     #[Assert\NotBlank(groups: ["region:new"])]
     private ?string $label = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["region:read"])]
+    #[Groups(["region:read", "workshop:read"])]
     #[Assert\NotBlank(groups: ["region:new"])]
     #[Assert\Country(groups: ["region:new", "region:edit"])]
     private ?string $country = null;
@@ -38,7 +38,7 @@ class Region
     private Collection $wines;
 
     #[ORM\Column]
-    #[Groups(["region:read"])]
+    #[Groups(["region:read" , "workshop:read"])]
     private bool $archived = false;
 
     public function __construct()
