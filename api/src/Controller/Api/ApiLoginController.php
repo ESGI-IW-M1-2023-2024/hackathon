@@ -26,9 +26,14 @@ class ApiLoginController extends AbstractController
         $user->addApiToken($token);
         $em->flush();
 
-        return $this->json([
-            'user' => $user->getUserIdentifier(),
-            'token' => $token->getToken(),
-        ]);
+        return $this->json(
+            [
+                'user' => $user->getUserIdentifier(),
+                'token' => $token->getToken(),
+            ],
+            headers: [
+                'Access-Control-Allow-Origin' => '*',
+            ]
+        );
     }
 }
