@@ -3,6 +3,7 @@
 namespace App\Controller\Api;
 
 use App\Entity\Resource;
+use App\Service\ApiUploadFileService;
 use App\Service\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -54,6 +55,7 @@ class ResourceController extends AbstractController
         Request                $request,
         ValidatorInterface     $validator,
         EntityManagerInterface $em,
+        ApiUploadFileService $apiUploadFileService
     ): JsonResponse
     {
         $resource = $serializer->deserialize($request->getContent(), Resource::class, 'json');
@@ -63,6 +65,12 @@ class ResourceController extends AbstractController
         if ($violations->count() > 0) {
             return $this->json($violations);
         }
+
+        $data = json_decode($request->getContent());
+        $file = $data->file;
+
+        $filename = $apiUploadFileService->uploadFile($file, "resources_directory", $resource?->getFilename());
+        $resource->setFilename($filename);
 
         $em->persist($resource);
         $em->flush();
@@ -81,6 +89,7 @@ class ResourceController extends AbstractController
         ValidatorInterface  $validator,
         EntityManagerInterface $em,
         PropertyAccessorInterface $propertyAccessor,
+        ApiUploadFileService $apiUploadFileService,
         Resource $resource
     ): JsonResponse
     {
@@ -104,6 +113,13 @@ class ResourceController extends AbstractController
             if ($prop->getName() !== "id" && !empty($prop->getValue($resourceRequest))) {
                 $propertyAccessor->setValue($resource, $prop->getName(), $prop->getValue($resourceRequest));
             }
+        }
+
+        $data = json_decode($request->getContent());
+        if (!empty($data->file)) {
+            $file = $data->file;
+            $filename = $apiUploadFileService->uploadFile($file, "resources_directory", $resource?->getFilename());
+            $resource->setFilename($filename);
         }
 
         $em->flush();
