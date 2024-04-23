@@ -64,7 +64,7 @@ class Workshop
     #[ORM\ManyToMany(targetEntity: Wine::class, mappedBy: 'workshops')]
     private Collection $wines;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $subtitle = null;
 
     public function __construct()
