@@ -5,3 +5,8 @@ export interface Theme {
   subtitle?: string;
   headerFilename: string;
 }
+
+export enum ThemesSortableField {
+  'ID' = 'id',
+  'LABEL' = 'label',
+}
