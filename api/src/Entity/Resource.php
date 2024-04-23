@@ -13,16 +13,16 @@ class Resource
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["workshop:list", "workshop:detail", "resource:list", "resource:detail"])]
+    #[Groups(["workshop:detail", "resource:list", "resource:detail"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["workshop:list", "workshop:detail", "resource:list", "resource:detail"])]
+    #[Groups(["workshop:detail", "resource:list", "resource:detail"])]
     #[Assert\NotBlank(groups: ["resource:new"])]
     private ?string $label = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["workshop:list", "workshop:detail", "resource:list", "resource:detail"])]
+    #[Groups(["workshop:detail", "resource:list", "resource:detail"])]
     private ?string $filename = null;
 
     #[Assert\NotBlank(groups: ["resource:new"])]
@@ -34,7 +34,7 @@ class Resource
     private ?Workshop $workshop = null;
 
     #[ORM\Column]
-    #[Groups(["workshop:list", "workshop:detail", "resource:list", "resource:detail"])]
+    #[Groups(["workshop:detail", "resource:list", "resource:detail"])]
     private bool $archived = false;
 
     public function getId(): ?int
