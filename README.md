@@ -19,11 +19,11 @@ Boennologie est une application web permettant aux visiteurs de participation à
 Cloner le projet
 
 ```bash
-git clone 
+git clone git@github.com:ESGI-IW-M1-2023-2024/hackathon.git
 ```
 
 Exécuter l'utilitaire [Make](https://ioflood.com/blog/install-make-command-linux/#:~:text=In%20most%20Linux%20distributions%2C%20the,command%20sudo%20yum%20install%20make%20.):
 
 ```bash
-docker compose up -d
+make build
 ```
