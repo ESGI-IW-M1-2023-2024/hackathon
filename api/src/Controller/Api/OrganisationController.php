@@ -16,7 +16,6 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 #[Route('/organisations', name: 'organisations_')]
 class OrganisationController extends AbstractController
 {
-
     public function __construct(
         private EntityManagerInterface $em
     ) {}
@@ -35,7 +34,7 @@ class OrganisationController extends AbstractController
                 'pageCount' => $pagination->getPageCount(),
                 'totalItemCount' => $pagination->getTotalItemCount()
             ],
-            context: ["groups" => ["organisation:read"]]
+            context: ["groups" => ["organisation:list"]]
         );
     }
 
@@ -44,7 +43,7 @@ class OrganisationController extends AbstractController
     {
         return $this->json(
             $organisation,
-            context: ["groups" => ["organisation:read"]]
+            context: ["groups" => ["organisation:detail"]]
         );
     }
 
@@ -67,7 +66,7 @@ class OrganisationController extends AbstractController
         $this->em->persist($organisation);
         $this->em->flush();
 
-        return $this->json($organisation, context: ["groups" => ["organisation:read"]]);
+        return $this->json($organisation, context: ["groups" => ["organisation:list"]]);
     }
 
     #[Route('/{id}', name: 'update', methods: ["PUT"])]
@@ -93,7 +92,7 @@ class OrganisationController extends AbstractController
 
         $this->em->flush();
 
-        return $this->json($organisation, context: ["groups" => "organisation:read"]);
+        return $this->json($organisation, context: ["groups" => "organisation:list"]);
     }
 
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
@@ -107,7 +106,7 @@ class OrganisationController extends AbstractController
 
         return $this->json(
             $organisation,
-            context: ["groups" => ["organisation:read"]]
+            context: ["groups" => ["organisation:list"]]
         );
     }
 }

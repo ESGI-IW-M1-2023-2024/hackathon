@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3fd57009564866b87912c379e4643848",
+    "content-hash": "45c8d141332213c6ebc9911b9a8d48c6",
     "packages": [
         {
             "name": "doctrine/cache",
@@ -1294,16 +1294,16 @@
         },
         {
             "name": "knplabs/knp-components",
-            "version": "v4.3.1",
+            "version": "v4.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/knp-components.git",
-                "reference": "51f7053101ceb9c62af42ec08e6cfdee5fd64502"
+                "reference": "59ef316e34e814449d8718d7151946bdbb5e553f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/knp-components/zipball/51f7053101ceb9c62af42ec08e6cfdee5fd64502",
-                "reference": "51f7053101ceb9c62af42ec08e6cfdee5fd64502",
+                "url": "https://api.github.com/repos/KnpLabs/knp-components/zipball/59ef316e34e814449d8718d7151946bdbb5e553f",
+                "reference": "59ef316e34e814449d8718d7151946bdbb5e553f",
                 "shasum": ""
             },
             "require": {
@@ -1311,21 +1311,22 @@
                 "symfony/event-dispatcher-contracts": "^3.0"
             },
             "conflict": {
-                "doctrine/dbal": "<3.1"
+                "doctrine/dbal": "<3.8"
             },
             "require-dev": {
-                "doctrine/mongodb-odm": "^2.4",
-                "doctrine/orm": "^2.12",
-                "doctrine/phpcr-odm": "^1.6",
+                "doctrine/dbal": "^3.8 || ^4.0",
+                "doctrine/mongodb-odm": "^2.5.5",
+                "doctrine/orm": "^2.13 || ^3.0",
+                "doctrine/phpcr-odm": "^1.8 || ^2.0",
                 "ext-pdo_sqlite": "*",
-                "jackalope/jackalope-doctrine-dbal": "^1.8",
-                "phpunit/phpunit": "^9.5",
+                "jackalope/jackalope-doctrine-dbal": "^1.12 || ^2.0",
+                "phpunit/phpunit": "^9.6",
                 "propel/propel1": "^1.7",
                 "ruflin/elastica": "^7.0",
                 "solarium/solarium": "^6.0",
-                "symfony/http-foundation": "^5.4 || ^6.0 || ^7.0",
-                "symfony/http-kernel": "^5.4 || ^6.0 || ^7.0",
-                "symfony/property-access": "^5.4 || ^6.0 || ^7.0"
+                "symfony/http-foundation": "^5.4.38 || ^6.4.4 || ^7.0",
+                "symfony/http-kernel": "^5.4.38 || ^6.4.4 || ^7.0",
+                "symfony/property-access": "^5.4.38 || ^6.4.4 || ^7.0"
             },
             "suggest": {
                 "doctrine/common": "to allow usage pagination with Doctrine ArrayCollection",
@@ -1374,9 +1375,9 @@
             ],
             "support": {
                 "issues": "https://github.com/KnpLabs/knp-components/issues",
-                "source": "https://github.com/KnpLabs/knp-components/tree/v4.3.1"
+                "source": "https://github.com/KnpLabs/knp-components/tree/v4.4.0"
             },
-            "time": "2024-03-09T08:43:32+00:00"
+            "time": "2024-04-23T07:05:01+00:00"
         },
         {
             "name": "knplabs/knp-paginator-bundle",

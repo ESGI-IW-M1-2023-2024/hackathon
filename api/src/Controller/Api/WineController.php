@@ -3,6 +3,7 @@
 namespace App\Controller\Api;
 
 use App\Entity\Wine;
+use App\Service\ApiUploadFileService;
 use App\Service\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,7 +31,7 @@ class WineController extends AbstractController
                 "items" => $pagination->getItems(),
                 "pageCount" => $pagination->getPageCount(),
             ],
-            context: ["groups" => ["wine:read"]]
+            context: ["groups" => ["wine:list"]]
         );
     }
 
@@ -41,7 +42,7 @@ class WineController extends AbstractController
     {
         return $this->json(
             $wine,
-            context: ["groups" => ["wine:read"]]
+            context: ["groups" => ["wine:detail"]]
         );
     }
 
@@ -52,6 +53,7 @@ class WineController extends AbstractController
         SerializerInterface    $serializer,
         ValidatorInterface     $validator,
         EntityManagerInterface $em,
+        ApiUploadFileService $apiUploadFileService
     ): JsonResponse
     {
         $wine = $serializer->deserialize($request->getContent(), Wine::class, 'json');
@@ -62,12 +64,18 @@ class WineController extends AbstractController
             return $this->json($violations);
         }
 
+        $data = json_decode($request->getContent());
+        $file = $data->imageFile;
+
+        $filename = $apiUploadFileService->uploadFile($file, "wines_directory", $wine?->getImageFilename());
+        $wine->setImageFilename($filename);
+
         $em->persist($wine);
         $em->flush();
 
         return $this->json(
             $wine,
-            context: ["groups" => ["wine:read"]]
+            context: ["groups" => ["wine:list"]]
         );
     }
 
@@ -79,6 +87,7 @@ class WineController extends AbstractController
         ValidatorInterface  $validator,
         EntityManagerInterface $em,
         PropertyAccessorInterface $propertyAccessor,
+        ApiUploadFileService $apiUploadFileService,
         Wine $wine
     ): JsonResponse
     {
@@ -99,11 +108,18 @@ class WineController extends AbstractController
             }
         }
 
+        $data = json_decode($request->getContent());
+        if (!empty($data->imageFile)) {
+            $file = $data->imageFile;
+            $filename = $apiUploadFileService->uploadFile($file, "wines_directory", $wine?->getImageFilename());
+            $wine->setImageFilename($filename);
+        }
+
         $em->flush();
 
         return $this->json(
             $wine,
-            context: ["groups" => ["wine:read"]]
+            context: ["groups" => ["wine:list"]]
         );
     }
 
@@ -114,12 +130,12 @@ class WineController extends AbstractController
         Wine $wine
     ): JsonResponse
     {
-        $em->remove($wine);
+        $wine->setArchived(false);
         $em->flush();
 
         return $this->json(
             $wine,
-            context: ["groups" => ["region:read"]]
+            context: ["groups" => ["region:list"]]
         );
     }
 }

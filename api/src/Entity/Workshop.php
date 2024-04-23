@@ -16,76 +16,74 @@ class Workshop
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["workshop:read"])]
+    #[Groups(["workshop:list", "workshop:detail"])]
     private ?int $id = null;
 
     #[ORM\Column]
-    #[Groups(["workshop:read"])]
+    #[Groups(["workshop:list", "workshop:detail"])]
     #[Assert\NotBlank(groups: ["workshop:new"])]
     private ?\DateTimeImmutable $dateStart = null;
 
     #[ORM\Column]
-    #[Groups(["workshop:read"])]
+    #[Groups(["workshop:list", "workshop:detail"])]
     #[Assert\NotBlank(groups: ["workshop:new"])]
     private ?int $length = null;
 
     #[ORM\Column]
-    #[Groups(["workshop:read"])]
+    #[Groups(["workshop:list", "workshop:detail"])]
     #[Assert\NotBlank(groups: ["workshop:new"])]
     private ?int $maxPerson = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["workshop:read"])]
+    #[Groups(["workshop:list", "workshop:detail"])]
     #[Assert\NotBlank(groups: ["workshop:new"])]
     private ?string $location = null;
 
     #[ORM\Column(length: 255, enumType: \WorkshopStatus::class)]
-    #[Groups(["workshop:read"])]
+    #[Groups(["workshop:list", "workshop:detail"])]
     #[Assert\NotBlank(groups: ["workshop:new"])]
     private ?\WorkshopStatus $status = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
-    #[Groups(["workshop:read"])]
+    #[Groups(["workshop:list", "workshop:detail"])]
     #[Assert\NotBlank(groups: ["workshop:new"])]
     private ?\DateTimeImmutable $maxBookingDate = null;
 
     #[ORM\ManyToOne(inversedBy: 'workshops')]
     #[ORM\JoinColumn(nullable: true)]
-    #[Groups(["workshop:read"])]
+    #[Groups(["workshop:list", "workshop:detail"])]
     private ?Organisation $organisation = null;
 
     #[ORM\ManyToOne(inversedBy: 'workshops')]
-    #[Groups(["workshop:read"])]
+    #[Groups(["workshop:detail"])]
     private ?Theme $theme = null;
 
     /**
      * @var Collection<int, Resource>
      */
     #[ORM\OneToMany(targetEntity: Resource::class, mappedBy: 'workshop', orphanRemoval: true)]
-    #[Groups(["workshop:read"])]
+    #[Groups(["workshop:detail"])]
     private Collection $resources;
 
     /**
      * @var Collection<int, Booking>
      */
     #[ORM\OneToMany(targetEntity: Booking::class, mappedBy: 'workshop')]
-    #[Groups(["workshop:read"])]
+    #[Groups(["workshop:list", "workshop:detail"])]
     private Collection $bookings;
 
     /**
      * @var Collection<int, Wine>
      */
     #[ORM\ManyToMany(targetEntity: Wine::class, mappedBy: 'workshops')]
-    #[Groups(["workshop:read:status:finished"])]
+    #[Groups(["workshop:list:status:finished"])]
     private Collection $wines;
 
     #[ORM\Column]
-    #[Groups(["workshop:read"])]
+    #[Groups(["workshop:list", "workshop:detail"])]
     #[Assert\NotBlank(groups: ["workshop:new", "workshop:edit"])]
     #[Assert\PositiveOrZero(groups: ["workshop:new", "workshop:edit"])]
     private ?float $price = null;
-
-
 
     public function __construct()
     {

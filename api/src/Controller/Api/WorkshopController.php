@@ -36,7 +36,7 @@ class WorkshopController extends AbstractController
                 'pageCount' => $pagination->getPageCount(),
                 'totalItemCount' => $pagination->getTotalItemCount()
             ],
-            context: ["groups" => ["workshop:read"]]
+            context: ["groups" => ["workshop:list"]]
         );
     }
 
@@ -45,7 +45,7 @@ class WorkshopController extends AbstractController
     {
         return $this->json(
             $workshop,
-            context: ["groups" => ["workshop:read"]]
+            context: ["groups" => ["workshop:list", "workshop:detail"]]
         );
     }
     #[Route('/{id}/finished', name: 'get_finished', methods: ["GET"])]
@@ -53,7 +53,7 @@ class WorkshopController extends AbstractController
     {
         return $this->json(
             $workshop,
-            context: ["groups" => ["workshop:read", "workshop:read:status:finished"]]
+            context: ["groups" => ["workshop:list", "workshop:list:status:finished"]]
         );
     }
 
@@ -76,7 +76,7 @@ class WorkshopController extends AbstractController
         $this->em->persist($workshop);
         $this->em->flush();
 
-        return $this->json($workshop, context: ["groups" => ["workshop:read"]]);
+        return $this->json($workshop, context: ["groups" => ["workshop:list"]]);
     }
 
     #[Route('/{id}', name: 'update', methods: ["PUT"])]
@@ -108,7 +108,7 @@ class WorkshopController extends AbstractController
 
         $this->em->flush();
 
-        return $this->json($workshop, context: ["groups" => "workshop:read"]);
+        return $this->json($workshop, context: ["groups" => "workshop:list"]);
     }
 
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
@@ -122,7 +122,7 @@ class WorkshopController extends AbstractController
 
         return $this->json(
             $workshop,
-            context: ["groups" => ["workshop:read"]]
+            context: ["groups" => ["workshop:list"]]
         );
     }
 }

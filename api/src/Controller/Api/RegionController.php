@@ -31,7 +31,7 @@ class RegionController extends AbstractController
                 'pageCount' => $pagination->getPageCount(),
                 'totalItemCount' => $pagination->getTotalItemCount()
             ],
-            context: ["groups" => ["region:read"]]
+            context: ["groups" => ["region:list"]]
         );
     }
 
@@ -42,7 +42,7 @@ class RegionController extends AbstractController
     {
         return $this->json(
             $region,
-            context: ["groups" => ["region:read"]]
+            context: ["groups" => ["region:detail"]]
         );
     }
 
@@ -68,7 +68,7 @@ class RegionController extends AbstractController
 
         return $this->json(
             $region,
-            context: ["groups" => ["region:read"]]
+            context: ["groups" => ["region:list"]]
         );
     }
 
@@ -102,7 +102,7 @@ class RegionController extends AbstractController
 
         return $this->json(
             $region,
-            context: ["groups" => ["region:read"]]
+            context: ["groups" => ["region:list"]]
         );
     }
 
@@ -117,7 +117,7 @@ class RegionController extends AbstractController
 
         return $this->json(
             $region,
-            context: ["groups" => ["region:read"]]
+            context: ["groups" => ["region:list"]]
         );
     }
 }

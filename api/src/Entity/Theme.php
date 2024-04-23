@@ -16,11 +16,11 @@ class Theme
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["workshop:read", "theme:read"])]
+    #[Groups(["workshop:list", "workshop:detail", "theme:list", "theme:detail"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["workshop:read", "theme:read"])]
+    #[Groups(["workshop:list", "workshop:detail", "theme:list", "theme:detail"])]
     #[Assert\NotBlank(groups: ["theme:new"])]
     private ?string $label = null;
     /**
@@ -30,22 +30,23 @@ class Theme
     private Collection $workshops;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Groups(["workshop:read", "theme:read"])]
+    #[Groups(["workshop:detail", "theme:detail"])]
     #[Assert\NotBlank(groups: ["theme:new"])]
     private ?string $content = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["theme:read", "workshop:read"])]
+    #[Groups(["theme:list", "theme:detail", "workshop:detail"])]
     private ?string $subtitle = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["theme:read", "workshop:read"])]
+    #[Groups(["theme:list", "theme:detail", "workshop:detail"])]
     private ?string $headerFilename = null;
 
     #[Assert\NotBlank(groups: ["theme:new"])]
     public ?string $file = null;
 
     #[ORM\Column]
+    #[Groups(["theme:list", "theme:detail", "workshop:detail"])]
     private bool $archived = false;
 
     public function __construct()

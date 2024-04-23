@@ -27,7 +27,7 @@ class UserController extends AbstractController
 
         return $this->json(
             $pagination,
-            context: ["groups" => ["user:read"]]
+            context: ["groups" => ["user:list"]]
         );
     }
 
@@ -36,7 +36,7 @@ class UserController extends AbstractController
     {
         return $this->json(
             $user,
-            context: ["groups" => ["user:read"]]
+            context: ["groups" => ["user:detail"]]
         );
     }
 
@@ -64,7 +64,7 @@ class UserController extends AbstractController
         $em->persist($user);
         $em->flush();
 
-        return $this->json($user, context: ["groups" => ["user:read"]]);
+        return $this->json($user, context: ["groups" => ["user:list"]]);
     }
 
     #[Route('/{id}', name: 'update', methods: ["PUT"])]
@@ -103,6 +103,6 @@ class UserController extends AbstractController
 
         $em->flush();
 
-        return $this->json($user, context: ["groups" => "user:read"]);
+        return $this->json($user, context: ["groups" => "user:list"]);
     }
 }
