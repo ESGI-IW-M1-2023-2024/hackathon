@@ -27,8 +27,10 @@ class ApiUploadFileService
         $filename = Uuid::v4() . '.' . $file->guessExtension();
         $file->move($this->parameterBag->get($directory), $filename);
 
-        $filesystem = new Filesystem();
-        $filesystem->remove($this->parameterBag->get($directory) . '/' . $existantFile);
+        if (!empty($existantFile)) {
+            $filesystem = new Filesystem();
+            $filesystem->remove($this->parameterBag->get($directory) . '/' . $existantFile);
+        }
 
         return $filename;
     }
