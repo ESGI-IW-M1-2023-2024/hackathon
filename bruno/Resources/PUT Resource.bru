@@ -1,0 +1,26 @@
+meta {
+  name: PUT Resource
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/api/resources/10
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: 13437061efb986098de67daf0c1f40290e84fcb940fd04627cc34441d733303c
+}
+
+body:json {
+  {
+    "label": "fdjkmlmjkfldjkqlm"
+  }
+}
+
+body:multipart-form {
+  label: test
+  file: @file(/Users/mathisrome/PersonalProject/esgi/quatrieme_annee/hackathon/Makefile)
+}
