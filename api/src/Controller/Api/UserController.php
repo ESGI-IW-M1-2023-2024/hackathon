@@ -14,9 +14,10 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
+#[Route('/users', name: 'users_')]
 class UserController extends AbstractController
 {
-    #[Route('/users', name: 'users_list', methods: ["GET"])]
+    #[Route('/', name: 'list', methods: ["GET"])]
     public function index(
         Request $request,
         PaginationService $paginationService
@@ -30,7 +31,7 @@ class UserController extends AbstractController
         );
     }
 
-    #[Route('/users/{id}', name: 'users', methods: ["GET"])]
+    #[Route('/{id}', name: 'show', methods: ["GET"])]
     public function get(User $user): JsonResponse
     {
         return $this->json(
@@ -39,7 +40,7 @@ class UserController extends AbstractController
         );
     }
 
-    #[Route('/users', name: 'users_new', methods: ["POST"])]
+    #[Route('/', name: '_new', methods: ["POST"])]
     public function new(
         Request                     $request,
         SerializerInterface         $serializer,
@@ -66,7 +67,7 @@ class UserController extends AbstractController
         return $this->json($user, context: ["groups" => ["user:read"]]);
     }
 
-    #[Route('/users/{id}', name: 'users_update', methods: ["PUT"])]
+    #[Route('/{id}', name: 'update', methods: ["PUT"])]
     public function update(
         User $user,
         Request             $request,

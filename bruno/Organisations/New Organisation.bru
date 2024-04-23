@@ -1,0 +1,17 @@
+meta {
+  name: New Organisation
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/organisations/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "label": "ESGI"
+  }
+}

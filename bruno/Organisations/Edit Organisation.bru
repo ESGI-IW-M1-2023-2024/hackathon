@@ -1,0 +1,17 @@
+meta {
+  name: Edit Organisations
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/api/organisations/201
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "label": "Ynov campus"
+  }
+}
