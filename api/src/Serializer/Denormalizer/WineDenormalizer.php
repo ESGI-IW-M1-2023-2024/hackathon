@@ -23,12 +23,7 @@ class WineDenormalizer implements DenormalizerInterface
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = [])
     {
-        $regionId = $data['regionId'];
-
-        $region = $this->em->getRepository(Region::class)->find($regionId);
-
         $wine = new Wine();
-        $wine->setRegion($region);
 
         foreach ($data as $key => $datum) {
             if ($key !== "regionId") {
@@ -37,6 +32,10 @@ class WineDenormalizer implements DenormalizerInterface
                 } else {
                     $this->propertyAccessor->setValue($wine, $key, $datum);
                 }
+            } else {
+                $regionId = $data['regionId'];
+                $region = $this->em->getRepository(Region::class)->find($regionId);
+                $wine->setRegion($region);
             }
         }
 
