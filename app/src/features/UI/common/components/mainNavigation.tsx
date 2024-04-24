@@ -16,7 +16,9 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import WineBarIcon from '@mui/icons-material/WineBar';
-import Button from "@mui/material/Button";
+import InfoIcon from '@mui/icons-material/Info';
+import GroupsIcon from '@mui/icons-material/Groups';
+import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
 
 import logoImg from '@/assets/common/navbar/logo.svg'
 
@@ -174,7 +176,7 @@ export default function MainNavigation() {
                                 <Link href="/concept" onClick={toggleDrawer(false)}>
                                     <ListItemButton>
                                         <ListItemIcon>
-                                            <WineBarIcon sx={{ color: palette.secondary.contrastText }} />
+                                            <TipsAndUpdatesIcon sx={{ color: palette.secondary.contrastText }} />
                                         </ListItemIcon >
                                         <ListItemText primary="Concept" />
                                     </ListItemButton>
@@ -182,7 +184,7 @@ export default function MainNavigation() {
                                 <Link href="/workshops" onClick={toggleDrawer(false)}>
                                     <ListItemButton>
                                         <ListItemIcon>
-                                            <WineBarIcon sx={{ color: palette.secondary.contrastText }} />
+                                            <GroupsIcon sx={{ color: palette.secondary.contrastText }} />
                                         </ListItemIcon>
                                         <ListItemText primary="Ateliers" />
                                     </ListItemButton>
@@ -190,26 +192,11 @@ export default function MainNavigation() {
                                 <Link href="/about" onClick={toggleDrawer(false)}>
                                     <ListItemButton>
                                         <ListItemIcon>
-                                            <WineBarIcon sx={{ color: palette.secondary.contrastText }} />
+                                            <InfoIcon sx={{ color: palette.secondary.contrastText }} />
                                         </ListItemIcon>
                                         <ListItemText primary="A propos" />
                                     </ListItemButton>
                                 </Link>
-                            </Box>
-
-
-
-                            <Box sx={{
-                                display: "flex",
-                                justifyContent: "center",
-                                position: "absolute",
-                                bottom: "0",
-                                left: "50%",
-                                transform: "translate(-50%, 0)"
-                            }}
-                            >
-                                <Button variant="contained" sx={{ m: 1, width: .5 }}>Register</Button>
-                                <Button variant="outlined" sx={{ m: 1, width: .5 }}>Login</Button>
                             </Box>
                         </Box>
 
