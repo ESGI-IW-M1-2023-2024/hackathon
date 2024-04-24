@@ -48,6 +48,7 @@ export default function OutlinedCard() {
                     <Typography className="d-shadow">Un voyage à travers les saveurs</Typography>
                     <br />
                     <ColorButton href="/workshops" variant='contained' startIcon={<Diversity3Icon />}>
+
                         Participer aux ateliers
                     </ColorButton>
                 </Stack>
@@ -201,6 +202,7 @@ export default function OutlinedCard() {
                         gap={'10px'}
                     >
 
+
                         <Typography variant="h3">Les modalités</Typography>
                         <Typography>Pour participer à notre atelier de vin, remplissez le formulaire d'inscription en ligne et effectuez le paiement selon les instructions fournies. Assurez-vous de consulter notre calendrier pour la date et l'heure de l'atelier, et prévoyez d'arriver à l'heure pour profiter pleinement de l'expérience.</Typography>
 
@@ -276,6 +278,7 @@ export default function OutlinedCard() {
                                     borderLeftColor: '#fff'
                                 }}
                             >
+
                                 <CardContent sx={{ textAlign: 'center' }}>
                                     <p style={{ color: '#fff' }}>À partir de</p>
                                     <p style={{ marginLeft: 5, marginRight: 5, fontSize: '22px', fontWeight: 600 }}>
@@ -297,7 +300,9 @@ export default function OutlinedCard() {
                                         right: '-40px',
                                     }}
                                 ></span>
+
                             </Card>
+
                         </Stack>
                         {/* fin ticket */}
                         <Typography sx={{

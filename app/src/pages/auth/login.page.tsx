@@ -1,5 +1,5 @@
 import { UserCredentials } from '../../features/auth/types/logged-user.type';
-import { Box, Button } from '@mui/material';
+import { Alert, Box, Button, Stack } from '@mui/material';
 import { apiSlice } from '../../redux/api/api.slice';
 import { useAppDispatch } from '../../redux/hooks';
 import { openSnackBar } from '../../redux/slices/notification.slice';
@@ -46,7 +46,17 @@ const Login = () => {
   };
 
   return (
-    <Box component='form' onSubmit={handleSubmit((data) => handleFormSubmit(data))}>
+    <Stack
+      component='form'
+      onSubmit={handleSubmit((data) => handleFormSubmit(data))}
+      margin={'6rem auto'}
+      width={'30rem'}
+      spacing={2}
+    >
+      <h1>Authentification</h1>
+      <Alert severity='warning'>
+        L'authentification est réservée aux administrateurs de la cave
+      </Alert>
       <CustomFormField
         childrenComponentType='TEXT_FIELD'
         control={control}
@@ -63,7 +73,7 @@ const Login = () => {
       <Button variant='contained' type='submit'>
         Se connecter
       </Button>
-    </Box>
+    </Stack>
   );
 };
 

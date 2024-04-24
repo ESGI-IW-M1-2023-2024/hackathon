@@ -11,6 +11,9 @@ import CreateRegion from "@/pages/admin/region/create.page";
 import EditTheme from '@/pages/admin/themes-edit.page';
 import CreateTheme from '@/pages/admin/themes-create.page';
 import EditRegion from "@/pages/admin/region/edit.page";
+import OrganisationList from "@/pages/admin/organisation/list.page";
+import CreateOrganisation from "@/pages/admin/organisation/create.page";
+import EditOrganisation from "@/pages/admin/organisation/edit.page";
 
 
 const AppRoutes = () => (
@@ -26,8 +29,9 @@ const AppRoutes = () => (
         <Route path='/admin/regions' element={<RegionList/>}/>
         <Route path='/admin/regions/create' element={<CreateRegion/>}/>
         <Route path='/admin/regions/:id' element={<EditRegion/>}/>
-      <Route path='/themes/create' element={<CreateTheme />} />
-      <Route path='/themes/:id' element={<EditTheme />} />
+        <Route path='/admin/organisations' element={<OrganisationList/>}/>
+        <Route path='/admin/organisations/create' element={<CreateOrganisation/>}/>
+        <Route path='/admin/organisations/:id' element={<EditOrganisation/>}/>
     </Route>
     <Route path='*' element={<NotFound />} />
   </Routes>

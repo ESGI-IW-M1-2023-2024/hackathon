@@ -1,5 +1,5 @@
 import { ListGridProps } from '@/types/data-grid.types';
-import { Box, Container, Pagination, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Container, Pagination, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { DataGrid, DataGridProps, GridSortDirection, GridSortModel } from '@mui/x-data-grid';
 
 const ListGridComponent = <Row,>({ columns, rows, loading, defaultSort, pagination }: ListGridProps<Row>) => {
@@ -32,7 +32,7 @@ const ListGridComponent = <Row,>({ columns, rows, loading, defaultSort, paginati
   };
 
   const getDisplayRange = () => {
-    const firstRow = (page - 1) * limit;
+    const firstRow = (page - 1) * limit + 1;
     const lastRow = Math.min(limit * page, totalResults ?? 1);
     return (
       <Box sx={{ position: 'absolute', right: 0, mr: 3 }}>
@@ -47,57 +47,56 @@ const ListGridComponent = <Row,>({ columns, rows, loading, defaultSort, paginati
     const newSearchParams = new URLSearchParams(searchParams);
     if (model.length) {
       const sortModel = model[0];
-      newSearchParams.set('sortField', sortModel.field);
-      newSearchParams.set('sortOrder', sortModel.sort ? sortModel.sort : 'desc');
+      newSearchParams.set('orderBy', sortModel.field);
+      newSearchParams.set('orderByDirection', sortModel.sort ? sortModel.sort : 'desc');
     } else {
-      newSearchParams.set('sortOrder', '');
-      newSearchParams.set('sortField', '');
+      newSearchParams.set('orderBy', '');
+      newSearchParams.set('orderByDirection', '');
     }
     setSearchParams(newSearchParams);
   };
 
   return (
-    <DataGrid
-      {...initialGridProps}
-      rowCount={totalResults || 0}
-      rowHeight={35}
-      paginationModel={{ page: page - 1, pageSize: limit }}
-      paginationMode='server'
-      sortingMode='server'
-      initialState={{
-        sorting: {
-          sortModel: [
-            {
-              field: searchParams.get('sortField') || defaultSort.field,
-              sort: (searchParams.get('sortOrder') as GridSortDirection) || defaultSort.order,
-            },
-          ],
-        },
-      }}
-      onSortModelChange={handleSortModelChange}
-      slotProps={{
-        pagination: (
-          <Container
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <Pagination
-              showFirstButton
-              showLastButton
-              count={totalResults ? Math.ceil(totalResults / limit) : 1}
-              page={page}
-              size={getPaginationSize() || 'medium'}
-              color='primary'
-              onChange={(_event, newPage) => handlePageChange(newPage)}
-            />
-            {getDisplayRange()}
-          </Container>
-        ),
-      }}
-    />
+    <>
+      <DataGrid
+        {...initialGridProps}
+        rowCount={totalResults || 0}
+        rowHeight={35}
+        paginationModel={{ page: page - 1, pageSize: limit }}
+        paginationMode='server'
+        sortingMode='server'
+        initialState={{
+          sorting: {
+            sortModel: [
+              {
+                field: searchParams.get('orderBy') || defaultSort.field,
+                sort: (searchParams.get('orderByDirection') as GridSortDirection) || defaultSort.order,
+              },
+            ],
+          },
+        }}
+        onSortModelChange={handleSortModelChange}
+        hideFooter
+      />
+      <Container
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Pagination
+          showFirstButton
+          showLastButton
+          count={totalResults ? Math.ceil(totalResults / limit) : 1}
+          page={page}
+          size={getPaginationSize() || 'medium'}
+          color='primary'
+          onChange={(_event, newPage) => handlePageChange(newPage)}
+        />
+        {getDisplayRange()}
+      </Container>
+    </>
   );
 };
 

@@ -4,6 +4,7 @@ export interface Theme {
   content: string;
   subtitle: string;
   headerFilename: string;
+  archived: 0 | 1;
 }
 
 export interface NewTheme extends Omit<Theme, 'headerFilename' | 'id'> {
