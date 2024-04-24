@@ -95,6 +95,28 @@ export const apiSlice = createApi({
         method: 'GET',
       }),
     }),
+      getCountries: builder.query<Country[], void>({
+          query: () => ({
+              url: 'countries',
+              method: 'GET',
+          }),
+          providesTags: ['Countries'],
+      }),
+      getRegions: builder.query<PaginatedResponse<Region>, CustomPaginationParams>({
+          query: (params) => ({
+              url: 'regions',
+              method: 'GET',
+              params,
+          }),
+          providesTags: ['Regions'],
+      }),
+      createRegion: builder.mutation<Region, NewRegion>({
+          query: (body) => ({
+              url: 'regions/',
+              method: 'POST',
+              body,
+          }),
+      }),
   }),
 });
 
