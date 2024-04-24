@@ -57,47 +57,46 @@ const ListGridComponent = <Row,>({ columns, rows, loading, defaultSort, paginati
   };
 
   return (
-    <DataGrid
-      {...initialGridProps}
-      rowCount={totalResults || 0}
-      rowHeight={35}
-      paginationModel={{ page: page - 1, pageSize: limit }}
-      paginationMode='server'
-      sortingMode='server'
-      initialState={{
-        sorting: {
-          sortModel: [
-            {
-              field: searchParams.get('sortField') || defaultSort.field,
-              sort: (searchParams.get('sortOrder') as GridSortDirection) || defaultSort.order,
-            },
-          ],
-        },
-      }}
-      onSortModelChange={handleSortModelChange}
-      slotProps={{
-        pagination: (
-          <Container
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <Pagination
-              showFirstButton
-              showLastButton
-              count={totalResults ? Math.ceil(totalResults / limit) : 1}
-              page={page}
-              size={getPaginationSize() || 'medium'}
-              color='primary'
-              onChange={(_event, newPage) => handlePageChange(newPage)}
-            />
-            {getDisplayRange()}
-          </Container>
-        ),
-      }}
-    />
+    <>
+      <DataGrid
+        {...initialGridProps}
+        rowCount={totalResults || 0}
+        rowHeight={35}
+        paginationModel={{ page: page - 1, pageSize: limit }}
+        paginationMode='server'
+        sortingMode='server'
+        initialState={{
+          sorting: {
+            sortModel: [
+              {
+                field: searchParams.get('sortField') || defaultSort.field,
+                sort: (searchParams.get('sortOrder') as GridSortDirection) || defaultSort.order,
+              },
+            ],
+          },
+        }}
+        onSortModelChange={handleSortModelChange}
+        hideFooter
+      />
+      <Container
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Pagination
+          showFirstButton
+          showLastButton
+          count={totalResults ? Math.ceil(totalResults / limit) : 1}
+          page={page}
+          size={getPaginationSize() || 'medium'}
+          color='primary'
+          onChange={(_event, newPage) => handlePageChange(newPage)}
+        />
+        {getDisplayRange()}
+      </Container>
+    </>
   );
 };
 
