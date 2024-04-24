@@ -3,11 +3,16 @@
 namespace App\Controller\Api;
 
 use App\Entity\Booking;
+use App\Enum\BookingStatus;
+use App\Service\MailerService;
 use App\Service\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -55,6 +60,7 @@ class BookingController extends AbstractController
         Request                     $request,
         SerializerInterface         $serializer,
         ValidatorInterface          $validator,
+        MailerService $mailerService
     ): JsonResponse
     {
         $booking = $serializer->deserialize($request->getContent(), Booking::class, 'json');
@@ -64,6 +70,13 @@ class BookingController extends AbstractController
         if ($violations->count() > 0) {
             return $this->json($violations);
         }
+
+        $mailerService->sendMail(
+            \MailerEnum::BOOKING,
+            [
+                "booking" => $booking
+            ]
+        );
 
         $this->em->persist($booking);
         $this->em->flush();
@@ -116,6 +129,52 @@ class BookingController extends AbstractController
     {
 //      Supprimer ici une réservation
         $this->em->flush();
+
+        return $this->json(
+            $booking,
+            context: ["groups" => ["booking:list"]]
+        );
+    }
+
+    #[Route('/{id}/validate', name: 'validate', methods: ["POST"])]
+    #[IsGranted("ROLE_ADMIN")]
+    public function validate(
+        Booking $booking,
+        MailerService $mailerService
+    )
+    {
+        $booking->setStatus(BookingStatus::PAID);
+        $this->em->flush();
+
+        $mailerService->sendMail(
+            \MailerEnum::BOOKING_VALIDATION,
+            [
+                "booking" => $booking
+            ]
+        );
+
+        return $this->json(
+            $booking,
+            context: ["groups" => ["booking:list"]]
+        );
+    }
+
+    #[Route('/{id}/cancel', name: 'cancel', methods: ["POST"])]
+    #[IsGranted("ROLE_ADMIN")]
+    public function cancel(
+        Booking $booking,
+        MailerService $mailerService
+    ): JsonResponse
+    {
+        $booking->setStatus(BookingStatus::CANCELED);
+        $this->em->flush();
+
+        $mailerService->sendMail(
+            \MailerEnum::BOOKING_CANCELED,
+            [
+                "booking" => $booking
+            ]
+        );
 
         return $this->json(
             $booking,

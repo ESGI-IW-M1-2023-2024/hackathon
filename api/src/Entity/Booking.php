@@ -49,6 +49,7 @@ class Booking
     #[ORM\ManyToOne(inversedBy: 'bookings')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(["booking:list"])]
+    #[Assert\NotNull(groups: ["booking:new"])]
     private ?Workshop $workshop = null;
 
     public function getId(): ?int

@@ -45,8 +45,8 @@ class BookingDenormalizer implements DenormalizerInterface
                 }
             } else {
                 $workshopId = $data['workshopId'];
-                $region = $this->em->getRepository(Workshop::class)->find($workshopId);
-                $booking->setWorkshop($region);
+                $workshop = $this->em->getRepository(Workshop::class)->find($workshopId);
+                $booking->setWorkshop($workshop);
             }
         }
 

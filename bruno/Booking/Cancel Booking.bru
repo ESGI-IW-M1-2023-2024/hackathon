@@ -1,11 +1,11 @@
 meta {
-  name: New Booking
+  name: Cancel Booking
   type: http
-  seq: 3
+  seq: 7
 }
 
 post {
-  url: {{baseUrl}}/api/bookings/
+  url: {{baseUrl}}/api/bookings/{id}/validate
   body: json
   auth: bearer
 }
