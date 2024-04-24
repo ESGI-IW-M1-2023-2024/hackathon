@@ -13,6 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use OpenApi\Attributes as OA;
 
 #[Route('/organisations', name: 'organisations_')]
 class OrganisationController extends AbstractController
@@ -48,6 +49,16 @@ class OrganisationController extends AbstractController
         );
     }
 
+    #[OA\RequestBody(
+        required: true,
+        content: new OA\JsonContent(
+            type: Organisation::class,
+            example: [
+                'label' => 'required',
+                'logoFilename' => 'nullable',
+            ]
+        )
+    )]
     #[Route('', name: 'new', methods: ["POST"])]
     #[IsGranted("ROLE_ADMIN")]
     public function new(
@@ -69,6 +80,16 @@ class OrganisationController extends AbstractController
         return $this->json($organisation, context: ["groups" => ["organisation:list"]]);
     }
 
+    #[OA\RequestBody(
+        required: true,
+        content: new OA\JsonContent(
+            type: Organisation::class,
+            example: [
+                'label' => 'required',
+                'logoFilename' => 'nullable',
+            ]
+        )
+    )]
     #[Route('/{id}', name: 'update', methods: ["PUT"])]
     #[IsGranted("ROLE_ADMIN")]
     public function update(

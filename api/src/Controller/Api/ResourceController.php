@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use OpenApi\Attributes as OA;
 
 #[Route('/resources', name: 'resources_')]
 class ResourceController extends AbstractController
@@ -46,6 +47,17 @@ class ResourceController extends AbstractController
         );
     }
 
+    #[OA\RequestBody(
+        required: true,
+        content: new OA\JsonContent(
+            type: Resource::class,
+            example: [
+                'label' => 'required',
+                'workshopId' => 0,
+                'file' => 'required'
+            ]
+        )
+    )]
     #[Route('', name: 'new', methods: ['POST'])]
     #[IsGranted("ROLE_ADMIN")]
     public function new(
@@ -78,6 +90,17 @@ class ResourceController extends AbstractController
         );
     }
 
+    #[OA\RequestBody(
+        required: true,
+        content: new OA\JsonContent(
+            type: Resource::class,
+            example: [
+                'label' => 'required',
+                'workshopId' => 0,
+                'file' => 'required'
+            ]
+        )
+    )]
     #[Route('/{id}', name: 'edit', methods: ["PUT"])]
     #[IsGranted("ROLE_ADMIN")]
     public function edit(
