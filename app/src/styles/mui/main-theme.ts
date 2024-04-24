@@ -17,12 +17,46 @@ export const customPalette: PaletteOptions = {
   },
 };
 
+export const customTypography = {
+  fontFamily: "Montserrat, sans-serif",
+  h1: {
+    fontFamily: "MonteCarlo, cursive",
+    fontSize: "2.5rem",
+    fontWeight: "400",
+    fontStyle: "normal",
+  },
+  h2: {
+    fontFamily: "MonteCarlo, cursive",
+    fontSize: "2rem",
+    fontWeight: "400",
+    fontStyle: "normal",
+  },
+  h3: {
+    fontSize: "1.5rem",
+  },
+  h4: {
+    fontSize: "1.25rem",
+  },
+  h5: {
+    fontSize: "1rem",
+  },
+  h6: {
+    fontSize: "0.875rem",
+  },
+  a: {
+    color: "inherit",
+    textDecoration: "none",
+  },
+
+}
+
 export const themeOptions: ThemeOptions = {
   ...theme,
   palette: { ...customPalette },
   components: {
     ...SnackbarOverride(),
   },
+  typography: { ...customTypography },
 };
 
 export default createTheme({ ...theme, ...themeOptions });
