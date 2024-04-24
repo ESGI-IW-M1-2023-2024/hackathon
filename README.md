@@ -15,6 +15,7 @@ Boennologie est une application web permettant aux visiteurs de participation à
   - [Schéma de la base de données](#schéma-de-la-base-de-données)
   - [Documentation de l'API](#documentation-de-lapi)
   - [Maquettage](#maquettage)
+  - [Arborescence du site](#arborescence-du-site)
 
 ## Initialiser le projet
 
@@ -117,4 +118,14 @@ Le maquettage du site est réalisé avec l'outils collaboratif [Figma](https://w
 <summary>Apperçu d'une Wireframe</summary>
 
 ![Wireframe](docs/wireframe.png)
+</details>
+
+## Arborescence du site 
+
+L'arborescence du site est designé sur [Lucid](https://lucid.co/fr)
+
+<details>
+<summary>Apperçu de l'arborescence</summary>
+
+![Arborescence](docs/mindmap.png)
 </details>
