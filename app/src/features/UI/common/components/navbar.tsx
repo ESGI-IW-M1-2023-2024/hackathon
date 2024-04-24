@@ -29,20 +29,21 @@ const Navbar = (props: any) => {
                     component="a"
                     href="/"
                     display="block"
-                    width="100px"
+                    height="90px"
+                    padding={2}
                 >
                     <Box
                         component="img"
                         src={logoImg}
                         alt="logo"
-                        width="120%"
+                        height="100%"
                         className='d-shadow'
                     />
                 </Box>
                 <Box
                     className="d-shadow"
                     sx={{
-                        fontSize: "3rem",
+                        fontSize: "2.5rem",
                         fontFamily: 'MonteCarlo',
                         fontWeight: 400,
                         fontStyle: 'normal',
@@ -61,7 +62,7 @@ const Navbar = (props: any) => {
                 <a href="#">Ateliers</a>
                 <a href="#">Ressources</a>
                 <a href="#">A propos</a>
-                <a href="#"><LinkedInIcon /></a>
+                <a href="https://www.linkedin.com/in/olivier-bonneton-5a320020"><LinkedInIcon /></a>
             </Stack>
         </Stack>
     )
