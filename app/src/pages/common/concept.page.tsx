@@ -1,4 +1,3 @@
-import Navbar from "@/features/UI/common/components/navbar";
 import winecave from "@/assets/concept/wine-cave.jpg";
 import wineglasses from "@/assets/concept/wine-glasses.jpg";
 import Chip from '@mui/material/Chip';
@@ -6,51 +5,41 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import LiquorIcon from '@mui/icons-material/Liquor';
-import Button, { ButtonProps } from '@mui/material/Button';
 import Diversity3Icon from '@mui/icons-material/Diversity3';
-import { styled } from '@mui/material/styles';
 import Stack from '@mui/material/Stack';
 import { Container } from '@mui/material';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListSubheader from '@mui/material/ListSubheader';
 import WatchLaterIcon from '@mui/icons-material/WatchLater';
-
-const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
-    color: theme.palette.getContrastText('#660033'),
-    backgroundColor: '#660033',
-    textTransform: 'none',
-    '&:hover': {
-        backgroundColor: '#B9515B',
-    },
-}));
+import ColorButton from "@/features/UI/custom-mui-components/components/custom-button.component";
 
 export default function OutlinedCard() {
 
     return (
         <>
-           <Stack
-    direction="column"
-    justifyContent="flex-start"
-    alignItems="center"
-    sx={{
-        color: "white",
-        backgroundColor: "rgba(0,0,0,0.5)",
-        backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${winecave})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        height: "70vh"
-    }}
->
-    <Navbar transparent={true} />
-    <div style={{ textAlign: 'center', marginTop: 'auto', marginBottom: 'auto', textShadow: '1px 1px 2px black' }}>
-        <h2 className="d-shadow" style={{ fontWeight: 400 }}>Découverte et dégustations de vins</h2>
-        <p className="d-shadow" style={{ marginBottom: '2rem' }}>Un voyage à travers les saveurs</p>
-        <ColorButton variant='contained' startIcon={<Diversity3Icon />} className="d-shadow">
-            Participer aux ateliers
-        </ColorButton>
-    </div>
-</Stack>
+            <Stack
+                direction="column"
+                justifyContent="flex-start"
+                alignItems="center"
+                sx={{
+                    color: "white",
+                    backgroundColor: "rgba(0,0,0,0.5)",
+                    backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${winecave})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    minHeight: "600px",
+                    maxHeight: "70vh",
+                }}
+            >
+                <div style={{ textAlign: 'center', marginTop: 'auto', marginBottom: 'auto', textShadow: '1px 1px 2px black' }}>
+                    <h2 className="d-shadow" style={{ fontWeight: 400 }}>Découverte et dégustations de vins</h2>
+                    <p className="d-shadow" style={{ marginBottom: '2rem' }}>Un voyage à travers les saveurs</p>
+                    <ColorButton href="/workshops" variant='contained' startIcon={<Diversity3Icon />} className="d-shadow">
+                        Participer aux ateliers
+                    </ColorButton>
+                </div>
+            </Stack>
 
 
             <Container component="main">
@@ -106,39 +95,39 @@ export default function OutlinedCard() {
                                 '&::-webkit-scrollbar': {
                                     width: '6px',
                                     backgroundColor: '#D5C1AE'
-                                  },
-                                  '&::-webkit-scrollbar-track': {
+                                },
+                                '&::-webkit-scrollbar-track': {
                                     boxShadow: 'inset 0 0 6px rgba(0,0,0,0.3)',
                                     borderRadius: '10px',
                                     backgroundColor: '#D5C1AE'
-                                  },
-                                  '&::-webkit-scrollbar-thumb': {
+                                },
+                                '&::-webkit-scrollbar-thumb': {
                                     backgroundColor: '#660033',
                                     borderRadius: '10px'
-                                  }
+                                }
                             }}
                             subheader={<li />}
                         >
                             {[0, 1, 2, 3, 4].map((sectionId) => (
-                                    <ul>
-                                        <ListSubheader sx={{ fontSize: '18px', padding: 0 }}>{'France'}</ListSubheader>
-                                        {[0, 1, 2].map((item) => (
-                                            <ListItem key={`item-${sectionId}-${item}`} sx={{ padding: 0, paddingRight: 2 }}>
-                                                <Card sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', backgroundColor: '#D5C1AE80', gap: 4, width: 1, padding: 2, marginBottom: 2, position: 'relative' }}>
-                                                    <div className={'curve'} />
-                                                    <LiquorIcon />
-                                                    <Stack>
-                                                        <p style={{ fontWeight: 600, fontSize: '20px'}}>
-                                                            Ma première dégustation : Tour de France
-                                                        </p>
-                                                        <p color='text.secondary'>
-                                                            Ceci est une description de l'atelier !
-                                                        </p>
-                                                    </Stack>
-                                                </Card>
-                                            </ListItem>
-                                        ))}
-                                    </ul>
+                                <ul>
+                                    <ListSubheader sx={{ fontSize: '18px', padding: 0 }}>{'France'}</ListSubheader>
+                                    {[0, 1, 2].map((item) => (
+                                        <ListItem key={`item-${sectionId}-${item}`} sx={{ padding: 0, paddingRight: 2 }}>
+                                            <Card sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', backgroundColor: '#D5C1AE80', gap: 4, width: 1, padding: 2, marginBottom: 2, position: 'relative' }}>
+                                                <div className={'curve'} />
+                                                <LiquorIcon />
+                                                <Stack>
+                                                    <p style={{ fontWeight: 600, fontSize: '20px' }}>
+                                                        Ma première dégustation : Tour de France
+                                                    </p>
+                                                    <p color='text.secondary'>
+                                                        Ceci est une description de l'atelier !
+                                                    </p>
+                                                </Stack>
+                                            </Card>
+                                        </ListItem>
+                                    ))}
+                                </ul>
                             ))}
                         </List>
                         <p style={{ marginTop: '2rem' }}><strong>Dégustez, apprenez, voyagez !</strong></p>
@@ -147,7 +136,7 @@ export default function OutlinedCard() {
                     <Box
                         component={'img'}
                         className="d-shadow"
-                        sx={{ width: 400, height: 400, objectFit: 'cover' }}
+                        sx={{ width: 400, height: 400, objectFit: 'cover', borderRadius: '4px' }}
                         src={wineglasses}
                     />
                 </Box>
@@ -166,13 +155,13 @@ export default function OutlinedCard() {
                     <Box
                         component={'img'}
                         className="d-shadow"
-                        sx={{ width: 400, height: 400, objectFit: 'cover' }}
+                        sx={{ width: 400, height: 400, objectFit: 'cover', borderRadius: '4px' }}
                         src={wineglasses}
                     />
                     <Box
                         display={'flex'}
                         flexDirection={'column'}
-                        gap={'10px'}    
+                        gap={'10px'}
                     >
 
                         <h3>Les modalités</h3>
@@ -219,7 +208,7 @@ export default function OutlinedCard() {
                     marginTop={'2rem'}
                     marginBottom={'2rem'}
                 >
-                    <ColorButton variant='contained' startIcon={<Diversity3Icon />} className="d-shadow">
+                    <ColorButton href="/workshops" variant='contained' startIcon={<Diversity3Icon />} className="d-shadow">
                         Participer aux ateliers
                     </ColorButton>
                 </Box>
