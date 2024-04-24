@@ -2,13 +2,14 @@ import { Box, Stack } from "@mui/material"
 
 interface TextImageProps {
     reverse?: boolean
+    button?: JSX.Element
     title: string
     text: string | JSX.Element
     src: string
     alt?: string
 }
 
-const TextImage = ({ reverse, title, text, src, alt }: TextImageProps) => {
+const TextImage = ({ reverse, title, text, src, alt, button }: TextImageProps) => {
     return (
         <>
             <Stack
@@ -38,6 +39,7 @@ const TextImage = ({ reverse, title, text, src, alt }: TextImageProps) => {
                     <p>
                         {text}
                     </p>
+                    {button}
                 </Stack>
                 <Box
                     component={"img"}
@@ -46,7 +48,8 @@ const TextImage = ({ reverse, title, text, src, alt }: TextImageProps) => {
                     sx={{
                         width: "400px",
                         height: "400px",
-                        objectFit: "cover"
+                        objectFit: "cover",
+                        borderRadius: "4px",
                     }}
                     className="d-shadow"
                 />
