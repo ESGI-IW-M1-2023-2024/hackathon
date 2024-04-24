@@ -92,16 +92,17 @@ const Home = () => {
                 >
                     <TextImage
                         title="Explorez le Monde du Vin"
-                        text={<>
-                            Plongez dans l'univers fascinant du vin avec nos ateliers de dégustation. Que vous soyez novice ou connaisseur, nos sessions sont conçues pour éveiller vos sens et enrichir votre palais.<br /> Découvrez les secrets des vignerons, les nuances des cépages, et partagez des moments inoubliables. Rejoignez-nous pour explorer, apprendre et savourer.<br /><br /> <strong>Votre voyage dans le monde du vin commence ici!</strong>
-                        </>}
                         src="https://images.pexels.com/photos/1123260/pexels-photo-1123260.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                         button={
                             <ColorButton href="/concept" variant='contained' startIcon={<Diversity3Icon />}>
                                 Découvrir le concept des ateliers
                             </ColorButton>
                         }
-                    />
+                    >
+                        Plongez dans l'univers fascinant du vin avec nos ateliers de dégustation. Que vous soyez novice ou connaisseur, nos sessions sont conçues pour éveiller vos sens et enrichir votre palais.<br />
+                        Découvrez les secrets des vignerons, les nuances des cépages, et partagez des moments inoubliables. Rejoignez-nous pour explorer, apprendre et savourer.<br /><br />
+                        <strong>Votre voyage dans le monde du vin commence ici!</strong>
+                    </TextImage>
                 </Box>
 
                 <Box
@@ -115,9 +116,6 @@ const Home = () => {
                 >
                     <TextImage
                         title="Cultivez Votre Passion pour le Vin"
-                        text={<>
-                            Laissez-vous guider à travers le riche patrimoine viticole et affinez votre compréhension du vin avec nos ateliers éducatifs. De la vigne au verre, nos experts vous transporteront dans un voyage de découverte et d'apprentissage.<br />Acquérez les compétences de dégustation, comprenez les subtilités des accords mets-vins et devenez un véritable connaisseur. Avec chaque gorgée, transformez votre curiosité en savoir.<br /><br /><strong>Apprenez, dégustez, excellez.</strong>
-                        </>}
                         src="https://images.pexels.com/photos/2440524/pexels-photo-2440524.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                         reverse
                         button={
@@ -129,7 +127,11 @@ const Home = () => {
                             backgroundColor: 'rgba(199, 172, 146, 0.2)',
                             borderRadius: '4px'
                         }}
-                    />
+                    >
+                        Laissez-vous guider à travers le riche patrimoine viticole et affinez votre compréhension du vin avec nos ateliers éducatifs. De la vigne au verre, nos experts vous transporteront dans un voyage de découverte et d'apprentissage.<br />
+                        Acquérez les compétences de dégustation, comprenez les subtilités des accords mets-vins et devenez un véritable connaisseur. Avec chaque gorgée, transformez votre curiosité en savoir.<br /><br />
+                        <strong>Apprenez, dégustez, excellez.</strong>
+                    </TextImage>
                 </Box>
                 <Stack
                     direction="column"

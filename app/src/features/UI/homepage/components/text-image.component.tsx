@@ -1,16 +1,17 @@
-import { Box, Stack, SxProps } from "@mui/material"
+import { Box, Stack, SxProps, Theme } from "@mui/material"
+import { ReactNode } from "react"
 
 interface TextImageProps {
     reverse?: boolean
     button?: JSX.Element
     title: string
-    text: string | JSX.Element
     src: string
     alt?: string
-    sx?: SxProps
+    sx?: SxProps<Theme>
+    children?: ReactNode
 }
 
-const TextImage = ({ reverse, title, text, src, alt, button, sx }: TextImageProps) => {
+const TextImage = ({ reverse, title, src, alt, button, sx, children }: TextImageProps) => {
     return (
         <>
             <Stack
@@ -39,7 +40,7 @@ const TextImage = ({ reverse, title, text, src, alt, button, sx }: TextImageProp
                 >
                     <h3>{title}</h3>
                     <p>
-                        {text}
+                        {children}
                     </p>
                     {button}
                 </Stack>
