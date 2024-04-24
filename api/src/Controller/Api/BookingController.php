@@ -20,6 +20,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/bookings', name: 'bookings_')]
+#[IsGranted("ROLE_ADMIN")]
 class BookingController extends AbstractController
 {
 
@@ -55,7 +56,6 @@ class BookingController extends AbstractController
     }
 
     #[Route('/', name: 'new', methods: ["POST"])]
-    #[IsGranted("ROLE_ADMIN")]
     public function new(
         Request                     $request,
         SerializerInterface         $serializer,
@@ -85,7 +85,6 @@ class BookingController extends AbstractController
     }
 
     #[Route('/{id}', name: 'update', methods: ["PUT"])]
-    #[IsGranted("ROLE_ADMIN")]
     public function update(
         Booking                        $booking,
         Request                             $request,
@@ -122,7 +121,6 @@ class BookingController extends AbstractController
     }
 
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
-    #[IsGranted("ROLE_ADMIN")]
     public function delete(
         Booking $booking
     ): JsonResponse
@@ -137,7 +135,6 @@ class BookingController extends AbstractController
     }
 
     #[Route('/{id}/validate', name: 'validate', methods: ["POST"])]
-    #[IsGranted("ROLE_ADMIN")]
     public function validate(
         Booking $booking,
         MailerService $mailerService
@@ -160,7 +157,6 @@ class BookingController extends AbstractController
     }
 
     #[Route('/{id}/cancel', name: 'cancel', methods: ["POST"])]
-    #[IsGranted("ROLE_ADMIN")]
     public function cancel(
         Booking $booking,
         MailerService $mailerService
