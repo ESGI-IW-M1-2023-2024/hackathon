@@ -16,7 +16,7 @@ const TextImage = ({ reverse, title, src, alt, button, sx, children }: TextImage
         <>
             <Stack
                 component={"article"}
-                direction={reverse ? "row-reverse" : "row"}
+                direction={{ xs: 'column', sm: reverse ? "row-reverse" : "row" }}
                 justifyContent="space-between"
                 alignItems="center"
                 gap="20px"
@@ -44,15 +44,17 @@ const TextImage = ({ reverse, title, src, alt, button, sx, children }: TextImage
                     <Typography>
                         {children}
                     </Typography>
-                    {button}
+                    <Box sx={{}}>
+                        {button}
+                    </Box>
                 </Stack>
                 <Box
                     component={"img"}
                     src={src}
                     alt={alt}
                     sx={{
-                        width: "400px",
-                        height: "400px",
+                        width: { xs: '100%', sm: '200px', md: '400px' },
+                        height: { xs: 'auto', sm: '200px', md: '400px' },
                         objectFit: "cover",
                         borderRadius: "4px",
                         aspectRatio: "1/1",
