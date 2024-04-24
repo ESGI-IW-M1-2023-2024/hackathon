@@ -1,0 +1,12 @@
+<h1>Bonjour {{ email.to[0].address }}</h1>
+
+<p>Rappel de paiement sur l'atelier : {{ booking.workshop.theme.label }} commence le {{ booking.workshop.startDate|date("d/m/y H:i") }}</p>
+
+<p>Vous trouverez ci-dessous tous les moyens de paiement : </p>
+
+<ul>
+    <li><strong>Paypal :</strong> <a href="mailto:bonnetonolivier@gmail.com">bonnetonolivier@gmail.com</a></li>
+    <li><strong>Lydia / Paylib :</strong> <a href="tel:+33683059070">06 83 05 90 70</a></li>
+</ul>
+
+<p>Vous pouvez annuler a tout moment en appelant le <a href="tel:+33683059070">06 83 05 90 70</a></p>

@@ -17,16 +17,16 @@ class Organisation
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["organisation:list", "organisation:detail", "workshop:list", "workshop:detail"])]
+    #[Groups(["organisation:list", "organisation:detail", "workshop:list", "workshop:detail", "booking:list"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["organisation:list", "workshop:list", "workshop:detail"])]
+    #[Groups(["organisation:list", "workshop:list", "workshop:detail", "booking:list"])]
     #[Assert\NotBlank(groups: ["organisation:new"])]
     private ?string $label = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["organisation:list", "organisation:detail", "workshop:list", "workshop:detail"])]
+    #[Groups(["organisation:list", "organisation:detail", "workshop:list", "workshop:detail", "booking:list"])]
     private ?string $logoFilename = null;
 
     /**
@@ -36,7 +36,7 @@ class Organisation
     private Collection $workshops;
 
     #[ORM\Column]
-    #[Groups(["organisation:list", "organisation:detail", "workshop:list", "workshop:detail"])]
+    #[Groups(["organisation:list", "organisation:detail", "workshop:list", "workshop:detail", "booking:list"])]
     private ?bool $isArchived = false;
 
     public function __construct()

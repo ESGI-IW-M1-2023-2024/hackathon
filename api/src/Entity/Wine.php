@@ -56,6 +56,7 @@ class Wine
 
     #[ORM\Column(length: 255, enumType: WineBottleSize::class)]
     #[Groups(["wine:list", "wine:detail"])]
+    #[Assert\NotNull(groups: ["wine:new", "wine:edit"])]
     private ?WineBottleSize $bottleSize = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -242,7 +243,7 @@ class Wine
         return $this->bottleSize;
     }
 
-    public function setBottleSize(WineBottleSize $bottleSize): static
+    public function setBottleSize(?WineBottleSize $bottleSize): static
     {
         $this->bottleSize = $bottleSize;
 

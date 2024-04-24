@@ -2,9 +2,11 @@
 
 namespace App\Entity;
 
+use App\Enum\BookingStatus;
 use App\Repository\BookingRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BookingRepository::class)]
 class Booking
@@ -12,36 +14,48 @@ class Booking
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["workshop:list"])]
+    #[Groups(["workshop:list", "booking:list"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["workshop:list"])]
+    #[Groups(["workshop:list", "booking:list"])]
+    #[Assert\NotBlank(groups: ["booking:new"])]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["workshop:list"])]
+    #[Groups(["workshop:list", "booking:list"])]
+    #[Assert\NotBlank(groups: ["booking:new"])]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["workshop:list"])]
+    #[Groups(["workshop:list", "booking:list"])]
+    #[Assert\NotBlank(groups: ["booking:new"])]
+    #[Assert\Email(groups: ["booking:new"])]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["workshop:list"])]
+    #[Groups(["workshop:list", "booking:list"])]
+    #[Assert\NotBlank(groups: ["booking:new"])]
     private ?string $schoolClass = null;
 
-    #[ORM\Column(length: 255)]
-    #[Groups(["workshop:list"])]
-    private ?string $status = null;
+    #[ORM\Column(length: 255, enumType: BookingStatus::class)]
+    #[Groups(["workshop:list", "booking:list"])]
+    #[Assert\NotNull(groups: ["booking:new", "booking:edit"])]
+    private ?BookingStatus $status = BookingStatus::PENDING;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["workshop:list"])]
-    private ?string $reference = null;
+    #[Groups(["workshop:list", "booking:list"])]
+    private ?string $reference = "1";
 
     #[ORM\ManyToOne(inversedBy: 'bookings')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["booking:list"])]
+    #[Assert\NotNull(groups: ["booking:new"])]
     private ?Workshop $workshop = null;
+
+    #[ORM\Column]
+    #[Groups(["booking:list", "booking:detail"])]
+    private bool $archived = false;
 
     public function getId(): ?int
     {
@@ -96,12 +110,12 @@ class Booking
         return $this;
     }
 
-    public function getStatus(): ?string
+    public function getStatus(): ?BookingStatus
     {
         return $this->status;
     }
 
-    public function setStatus(string $status): static
+    public function setStatus(?BookingStatus $status): static
     {
         $this->status = $status;
 
@@ -128,6 +142,18 @@ class Booking
     public function setWorkshop(?Workshop $workshop): static
     {
         $this->workshop = $workshop;
+
+        return $this;
+    }
+
+    public function isArchived(): bool
+    {
+        return $this->archived;
+    }
+
+    public function setArchived(bool $archived): static
+    {
+        $this->archived = $archived;
 
         return $this;
     }
