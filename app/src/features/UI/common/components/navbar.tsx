@@ -62,7 +62,7 @@ const Navbar = (props: any) => {
                 <a href="#">Ateliers</a>
                 <a href="#">Ressources</a>
                 <a href="#">A propos</a>
-                <a href="#"><LinkedInIcon /></a>
+                <a href="https://www.linkedin.com/in/olivier-bonneton-5a320020"><LinkedInIcon /></a>
             </Stack>
         </Stack>
     )

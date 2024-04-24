@@ -5,6 +5,7 @@ import herobanner from "@/assets/homepage/herobanner.jpg";
 import TextImage from "@/features/UI/homepage/components/text-image.component";
 import { useGetThreeLastWorkshopsQuery, useGetWorkshopsQuery } from "@/redux/api/api.slice";
 import ColorButton from "@/features/UI/custom-mui-components/components/custom-button.component";
+import Footer from "@/features/UI/common/components/footer";
 
 const Home = () => {
     const { data, isLoading } = useGetThreeLastWorkshopsQuery();
@@ -142,6 +143,7 @@ const Home = () => {
                     </Box>
                 )}
             </Container>
+            <Footer />
         </>
 
     )
