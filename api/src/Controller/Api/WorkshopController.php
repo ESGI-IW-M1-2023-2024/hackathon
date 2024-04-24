@@ -62,7 +62,7 @@ class WorkshopController extends AbstractController
     #[OA\RequestBody(
         required: true,
         content: new OA\JsonContent(
-            type: Wine::class,
+            type: Workshop::class,
             example: [
                 'label' => 'required',
                 'dateStart' => 'required',
@@ -73,7 +73,7 @@ class WorkshopController extends AbstractController
                 'maxBookingDate' => 'required',
                 'price' => 35,
             ]
-        )
+        ),
     )]
     #[Route('', name: 'new', methods: ["POST"])]
     #[IsGranted("ROLE_ADMIN")]
@@ -99,7 +99,7 @@ class WorkshopController extends AbstractController
     #[OA\RequestBody(
         required: true,
         content: new OA\JsonContent(
-            type: Wine::class,
+            type: Workshop::class,
             example: [
                 'label' => 'required',
                 'dateStart' => 'required',
