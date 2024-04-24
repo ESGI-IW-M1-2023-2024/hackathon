@@ -1,12 +1,14 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { LoggedUser, UserCredentials } from '../../features/auth/types/logged-user.type';
-import { EditTheme, NewTheme, Theme } from '@/features/admin/types/theme.types';
-import { RootState } from '../store';
-import { CustomPaginationParams, PaginatedResponse } from '@/types/pagination.types';
+import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
+import {LoggedUser, UserCredentials} from '../../features/auth/types/logged-user.type';
+import {EditTheme, NewTheme, Theme} from '@/features/admin/types/theme.types';
+import {RootState} from '../store';
+import {CustomPaginationParams, PaginatedResponse} from '@/types/pagination.types';
+import {NewRegion, Region} from "@/features/admin/types/region.types";
+import {Country} from "@/features/admin/types/country.types";
 
 export const apiSlice = createApi({
   reducerPath: 'api',
-  tagTypes: ['Themes'],
+    tagTypes: ['Themes', 'Regions', 'Countries'],
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_API_BASE_URL,
     prepareHeaders: (headers, api) => {
@@ -52,6 +54,28 @@ export const apiSlice = createApi({
         method: 'DELETE',
       }),
     }),
+      getCountries: builder.query<Country[], void>({
+          query: () => ({
+              url: 'countries',
+              method: 'GET',
+          }),
+          providesTags: ['Countries'],
+      }),
+      getRegions: builder.query<PaginatedResponse<Region>, CustomPaginationParams>({
+          query: (params) => ({
+              url: 'regions',
+              method: 'GET',
+              params,
+          }),
+          providesTags: ['Regions'],
+      }),
+      createRegion: builder.mutation<Region, NewRegion>({
+          query: (body) => ({
+              url: 'regions/',
+              method: 'POST',
+              body,
+          }),
+      }),
   }),
 });
 
@@ -62,4 +86,7 @@ export const {
   useCreateThemeMutation,
   useEditThemeMutation,
   useDeleteThemeMutation,
+    useGetRegionsQuery,
+    useCreateRegionMutation,
+    useGetCountriesQuery
 } = apiSlice;
