@@ -8,7 +8,10 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<LoggedUser>) => state ?? action.payload,
+    setUser: (state, action: PayloadAction<LoggedUser>) => {
+      document.cookie = `loggedUser=${JSON.stringify(action.payload)}; path=/;`;
+      return state ?? action.payload;
+    },
     updateUser: (state, action) => {
       return { ...state, ...action.payload };
     },
