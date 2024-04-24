@@ -9,6 +9,9 @@ const Footer = () => {
             justifyContent={"space-between"}
             alignItems={"center"}
             padding={3}
+            sx={{
+                backgroundColor: "rgba(199, 172, 146, 0.2)",
+            }}
         >
             <p><strong>L'abus d'alcool est dangereux pour la santé, à consommer avec modération.</strong></p>
             <Stack

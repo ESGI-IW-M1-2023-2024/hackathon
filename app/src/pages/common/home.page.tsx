@@ -1,11 +1,9 @@
-import Navbar from "@/features/UI/common/components/navbar";
 import { Box, Card, CardActions, CardContent, CircularProgress, Container, Stack, Typography } from "@mui/material";
 import Diversity3Icon from '@mui/icons-material/Diversity3';
 import herobanner from "@/assets/homepage/herobanner.jpg";
 import TextImage from "@/features/UI/homepage/components/text-image.component";
-import { useGetThreeLastWorkshopsQuery, useGetWorkshopsQuery } from "@/redux/api/api.slice";
+import { useGetThreeLastWorkshopsQuery } from "@/redux/api/api.slice";
 import ColorButton from "@/features/UI/custom-mui-components/components/custom-button.component";
-import Footer from "@/features/UI/common/components/footer";
 
 const Home = () => {
     const { data, isLoading } = useGetThreeLastWorkshopsQuery();
@@ -70,7 +68,7 @@ const Home = () => {
                     filter: "drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5))"
                 }}
             >
-                <Navbar transparent={true} />
+
                 <Stack spacing={2} alignItems="center" marginTop='auto' marginBottom='auto'>
                     <h2 className="d-shadow">Participez à des ateliers de dégustation de vin</h2>
                     <p className="d-shadow">Envolez-vous dans un monde de saveurs et de découvertes</p>
@@ -98,6 +96,11 @@ const Home = () => {
                             Plongez dans l'univers fascinant du vin avec nos ateliers de dégustation. Que vous soyez novice ou connaisseur, nos sessions sont conçues pour éveiller vos sens et enrichir votre palais.<br /> Découvrez les secrets des vignerons, les nuances des cépages, et partagez des moments inoubliables. Rejoignez-nous pour explorer, apprendre et savourer.<br /><br /> <strong>Votre voyage dans le monde du vin commence ici!</strong>
                         </>}
                         src="https://images.pexels.com/photos/1123260/pexels-photo-1123260.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                        button={
+                            <ColorButton href="/concept" variant='contained' startIcon={<Diversity3Icon />}>
+                                Découvrir le concept des ateliers
+                            </ColorButton>
+                        }
                     />
                 </Box>
 
@@ -118,7 +121,7 @@ const Home = () => {
                         src="https://images.pexels.com/photos/2440524/pexels-photo-2440524.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                         reverse
                         button={
-                            <ColorButton variant='contained' startIcon={<Diversity3Icon />}>
+                            <ColorButton href="/workshops" variant='contained' startIcon={<Diversity3Icon />}>
                                 Participer aux ateliers
                             </ColorButton>
                         }
@@ -143,7 +146,7 @@ const Home = () => {
                     </Box>
                 )}
             </Container>
-            <Footer />
+
         </>
 
     )
