@@ -90,7 +90,7 @@ export const apiSlice = createApi({
       }),
       createRegion: builder.mutation<Region, NewRegion>({
           query: (body) => ({
-              url: 'regions/',
+              url: 'regions',
               method: 'POST',
               body,
           }),
@@ -131,8 +131,11 @@ export const {
   useEditThemeMutation,
   useDeleteThemeMutation,
   useGetWorkshopsQuery,
+  useGetOneThemeQuery,
     useGetRegionsQuery,
+    useGetOneRegionQuery,
     useCreateRegionMutation,
-    useGetCountriesQuery,
-    useGetOneThemeQuery,
+    useEditRegionMutation,
+    useDeleteRegionMutation,
+    useGetCountriesQuery
 } = apiSlice;
