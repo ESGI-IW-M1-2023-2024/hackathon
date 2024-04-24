@@ -5,6 +5,8 @@ import NotFound from '../pages/common/not-found.page';
 import SecureRoute from '@/features/auth/components/secure-route';
 import Dashboard from '@/pages/admin/dashboard.page';
 import ThemesList from '@/pages/admin/themes-list.page';
+import RegionList from "@/pages/admin/region/list.page";
+import CreateRegion from "@/pages/admin/region/create.page";
 
 const AppRoutes = () => (
   <Routes>
@@ -13,6 +15,8 @@ const AppRoutes = () => (
     <Route element={<SecureRoute />}>
       <Route path='/admin' element={<Dashboard />} />
       <Route path='/themes' element={<ThemesList />} />
+        <Route path='/admin/regions' element={<RegionList />} />
+        <Route path='/admin/regions/create' element={<CreateRegion />} />
     </Route>
     <Route path='*' element={<NotFound />} />
   </Routes>

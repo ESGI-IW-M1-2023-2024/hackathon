@@ -10,6 +10,9 @@ const Dashboard = () => {
       <Button variant='contained' onClick={() => navigate('/themes')}>
         Liste des thèmes
       </Button>
+        <Button variant='contained' onClick={() => navigate('/admin/regions')}>
+            Liste des régions
+        </Button>
     </>
   );
 };
