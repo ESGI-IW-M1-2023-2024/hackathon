@@ -6,18 +6,21 @@ use EnvProcessorService;
 use MailerEnum;
 use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 
 class MailerService
 {
     private const EMAIL_SENDER = "noreply@boennologie.fr";
+    private $sender;
 
     public function __construct(
         private MailerInterface $mailer,
-        private LoggerInterface $logger
+        private LoggerInterface $logger,
+        private ParameterBagInterface $parameterBag
     ) {
-        $this->sender = getenv('MAILER_SENDER');
+        $this->sender = $parameterBag->get('app.mailer.sender');
     }
 
     /**
@@ -26,78 +29,75 @@ class MailerService
      */
     public function sendMail(MailerEnum $mailerEnum, array $context)
     {
-        match ($mailerEnum) {
+        $email = match ($mailerEnum) {
             MailerEnum::BOOKING => $this->sendMailBooking($context),
             MailerEnum::BOOKING_REMINDER => $this->sendMailBookingReminder($context),
             MailerEnum::BOOKING_VALIDATION => $this->sendMailBookingValidation($context),
             MailerEnum::BOOKING_CANCELED => $this->sendMailBookingCanceled($context),
-            MailerEnum::WORKSHOP_REMINDER => null,
+            MailerEnum::WORKSHOP_REMINDER => $this->sendMailWorkshopReminder($context),
             MailerEnum::WORKSHOP_CANCELED => null,
             MailerEnum::WORKSHOP_FINISHED => null
         };
+
+        try {
+            $this->mailer->send($email);
+        } catch (TransportExceptionInterface $e) {
+            $this->logger->error($e->getMessage());
+        }
     }
 
-    private function sendMailBookingReminder(array $context): void
+    private function sendMailBookingReminder(array $context): TemplatedEmail
     {
-        $email = (new TemplatedEmail())
+        return (new TemplatedEmail())
             ->from(self::EMAIL_SENDER)
             ->to($context["booking"]->getEmail())
             ->subject("Rappel paiement atelier : " . $context["booking"]->getWorkshop()->getTheme()->getLabel())
             ->htmlTemplate('emails/booking/booking_reminder.html.twig')
             ->context(['booking' => $context["booking"]]);
-
-        try {
-            $this->mailer->send($email);
-        } catch (TransportExceptionInterface $e) {
-            $this->logger->error($e->getMessage());
-        }
     }
 
-    private function sendMailBookingCanceled(array $context): void
+    private function sendMailBookingCanceled(array $context): TemplatedEmail
     {
-        $email = (new TemplatedEmail())
+        return (new TemplatedEmail())
             ->from(self::EMAIL_SENDER)
             ->to($context["booking"]->getEmail())
             ->subject("Annulation inscription sur l'atelier : " . $context["booking"]->getWorkshop()->getTheme()->getLabel())
             ->htmlTemplate('emails/booking/booking_canceled.html.twig')
             ->context(['booking' => $context["booking"]]);
-
-        try {
-            $this->mailer->send($email);
-        } catch (TransportExceptionInterface $e) {
-            $this->logger->error($e->getMessage());
-        }
     }
 
-    private function sendMailBookingValidation(array $context): void
+    private function sendMailBookingValidation(array $context): TemplatedEmail
     {
-        $email = (new TemplatedEmail())
+        return (new TemplatedEmail())
             ->from(self::EMAIL_SENDER)
             ->to($context["booking"]->getEmail())
             ->subject("Confirmation inscription sur l'atelier : " . $context["booking"]->getWorkshop()->getTheme()->getLabel())
             ->htmlTemplate('emails/booking/booking_validation.html.twig')
             ->context(['booking' => $context["booking"]]);
-
-        try {
-            $this->mailer->send($email);
-        } catch (TransportExceptionInterface $e) {
-            $this->logger->error($e->getMessage());
-        }
     }
 
-    private function sendMailBooking(array $context): void
+    private function sendMailBooking(array $context): TemplatedEmail
     {
-        $email = (new TemplatedEmail())
+        return (new TemplatedEmail())
             ->from(self::EMAIL_SENDER)
             ->to($context["booking"]->getEmail())
             ->subject("Inscription sur l'atelier : " . $context["booking"]->getWorkshop()->getTheme()->getLabel())
             ->htmlTemplate('emails/booking/booking_request.html.twig')
             ->context(['booking' => $context["booking"]]);
+    }
 
-        try {
-            $this->mailer->send($email);
-        } catch (TransportExceptionInterface $e) {
-            $this->logger->error($e->getMessage());
-        }
+    private function sendMailWorkshopReminder(array $context): TemplatedEmail
+    {
+        /**
+         * @var Booking $booking
+         */
+        $booking = $context["booking"];
+
+        return (new TemplatedEmail())
+            ->from($this->sender)
+            ->to($booking->getEmail())
+            ->subject("Boennologie - Rappel d'atelier")
+            ->htmlTemplate('emails/workshop/reminder.html.twig')
+            ->context(['workshop' => $booking->getWorkshop()]);
     }
 }

@@ -20,14 +20,14 @@ class WorkshopController extends AbstractController
 
     public function __construct(
         private EntityManagerInterface $em
-    ) {}
+    ) {
+    }
 
     #[Route('/', name: 'list', methods: ["GET"])]
     public function index(
         Request $request,
         PaginationService $paginationService
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $pagination = $paginationService->getPagination($request, Workshop::class);
 
         return $this->json(
@@ -63,8 +63,7 @@ class WorkshopController extends AbstractController
         Request                     $request,
         SerializerInterface         $serializer,
         ValidatorInterface          $validator,
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $workshop = $serializer->deserialize($request->getContent(), Workshop::class, 'json');
 
         $violations = $validator->validate($workshop, groups: ["workshop:new"]);
@@ -87,8 +86,7 @@ class WorkshopController extends AbstractController
         SerializerInterface                 $serializer,
         ValidatorInterface                  $validator,
         PropertyAccessorInterface $propertyAccessor
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $workshopRequest = $serializer->deserialize($request->getContent(), Workshop::class, 'json');
 
         $violations = $validator->validate($workshopRequest, groups: ["workshop:edit"]);
@@ -101,11 +99,10 @@ class WorkshopController extends AbstractController
         $props = $reflect->getProperties(\ReflectionProperty::IS_PRIVATE);
 
         foreach ($props as $prop) {
-            if ($prop->getName() !== "id" && !empty($prop->getValue($workshopRequest))) {
+            if (!empty($prop->getValue($workshopRequest)) && !in_array($prop->getName(), ['id', 'bookings', 'resources'])) {
                 $propertyAccessor->setValue($workshop, $prop->getName(), $prop->getValue($workshopRequest));
             }
         }
-
         $this->em->flush();
 
         return $this->json($workshop, context: ["groups" => "workshop:list"]);
@@ -115,9 +112,8 @@ class WorkshopController extends AbstractController
     #[IsGranted("ROLE_ADMIN")]
     public function delete(
         Workshop $workshop
-    ): JsonResponse
-    {
-//        $workshop->setArchived(true);
+    ): JsonResponse {
+        //        $workshop->setArchived(true);
         $this->em->flush();
 
         return $this->json(

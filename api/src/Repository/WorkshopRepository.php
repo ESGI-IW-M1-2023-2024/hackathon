@@ -3,9 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Workshop;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Validator\Constraints\Date;
 
 /**
  * @extends ServiceEntityRepository<Workshop>
@@ -28,5 +30,17 @@ class WorkshopRepository extends ServiceEntityRepository
     public function getBaseQueryBuilder(): QueryBuilder
     {
         return $this->createQueryBuilder('u');
+    }
+
+    public function findByDelay($delay)
+    {
+        return $this->createQueryBuilder('w')
+            ->where('w.dateStart >= :date')
+            ->andWhere('w.dateStart <= :dateDelayed')
+            ->setParameter('date', new DateTime())
+            ->setParameter('dateDelayed', (new DateTime())->modify('+' . $delay . ' days'))
+            ->andWhere('w.reminderSent = false')
+            ->getQuery()
+            ->getResult();
     }
 }
