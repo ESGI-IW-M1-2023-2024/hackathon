@@ -1,4 +1,4 @@
-import { Box, Stack } from "@mui/material"
+import { Box, Stack, SxProps } from "@mui/material"
 
 interface TextImageProps {
     reverse?: boolean
@@ -7,9 +7,10 @@ interface TextImageProps {
     text: string | JSX.Element
     src: string
     alt?: string
+    sx?: SxProps
 }
 
-const TextImage = ({ reverse, title, text, src, alt, button }: TextImageProps) => {
+const TextImage = ({ reverse, title, text, src, alt, button, sx }: TextImageProps) => {
     return (
         <>
             <Stack
@@ -18,6 +19,7 @@ const TextImage = ({ reverse, title, text, src, alt, button }: TextImageProps) =
                 justifyContent="space-between"
                 alignItems="center"
                 sx={{
+                    ...sx,
                     marginTop: "2rem",
                     marginBottom: "2rem"
                 }}
