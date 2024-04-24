@@ -125,26 +125,41 @@ const Home = () => {
                                 Participer aux ateliers
                             </ColorButton>
                         }
+                        sx={{
+                            backgroundColor: 'rgba(199, 172, 146, 0.2)',
+                            borderRadius: '4px'
+                        }}
                     />
                 </Box>
+                <Stack
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="center"
+                    sx={{
+                        marginTop: "2rem",
+                        marginBottom: "2rem"
+                    }}
+                >
+                    <h2>Prochains Ateliers</h2>
+                    {isLoading ? (
+                        <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 5, marginBottom: 5 }}>
+                            <CircularProgress />
+                        </Box>
+                    ) : (
+                        <Box
+                            component={'section'}
+                            display={'flex'}
+                            flexDirection={'row'}
+                            justifyContent={'center'}
+                            flexWrap={'wrap'}
+                            marginTop={'2rem'}
+                            marginBottom={'2rem'}
+                        >
+                            {renderWorkshopCards()}
+                        </Box>
+                    )}
+                </Stack>
 
-                {isLoading ? (
-                    <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 4 }}>
-                        <CircularProgress />
-                    </Box>
-                ) : (
-                    <Box
-                        component={'section'}
-                        display={'flex'}
-                        flexDirection={'row'}
-                        justifyContent={'center'}
-                        flexWrap={'wrap'}
-                        marginTop={'2rem'}
-                        marginBottom={'2rem'}
-                    >
-                        {renderWorkshopCards()}
-                    </Box>
-                )}
             </Container>
 
         </>
