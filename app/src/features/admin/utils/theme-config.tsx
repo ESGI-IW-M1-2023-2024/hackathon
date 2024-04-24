@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const useThemeColumns = (): GridColDef[] => {
+const useThemeColumns = ({ handleDeleteTheme }: { handleDeleteTheme: (id: number) => Promise<void> }): GridColDef[] => {
   const navigate = useNavigate();
 
   return [
@@ -34,7 +34,7 @@ const useThemeColumns = (): GridColDef[] => {
             </IconButton>
           </Tooltip>,
           <Tooltip key='deleteTheme' title='Supprimer'>
-            <IconButton onClick={() => console.log('TODO supprimer')}>
+            <IconButton onClick={() => handleDeleteTheme(params.row.id)}>
               <DeleteIcon />
             </IconButton>
           </Tooltip>,

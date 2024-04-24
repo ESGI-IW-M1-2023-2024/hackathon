@@ -57,6 +57,7 @@ export const apiSlice = createApi({
         url: `themes/${id}`,
         method: 'DELETE',
       }),
+      invalidatesTags: ['Themes'],
     }),
     getWorkshops: builder.query<PaginatedResponse<Workshop>, void>({
       query: () => ({
