@@ -44,7 +44,12 @@ export const apiSlice = createApi({
       query: (body) => ({
         url: `themes/${body.id}`,
         method: 'PUT',
-        body,
+        body: {
+          label: body.label,
+          content: body.content,
+          subtitle: body.subtitle,
+          file: body.file,
+        },
       }),
     }),
     deleteTheme: builder.mutation<void, number>({
@@ -59,7 +64,12 @@ export const apiSlice = createApi({
         method: 'GET',
       }),
     }),
-
+    getOneTheme: builder.query<Theme, number>({
+      query: (id) => ({
+        url: `themes/${id}`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
@@ -70,5 +80,6 @@ export const {
   useCreateThemeMutation,
   useEditThemeMutation,
   useDeleteThemeMutation,
-  useGetWorkshopsQuery
+  useGetWorkshopsQuery,
+  useGetOneThemeQuery,
 } = apiSlice;

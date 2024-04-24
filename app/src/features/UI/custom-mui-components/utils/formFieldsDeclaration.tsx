@@ -12,7 +12,7 @@ import {
   Select,
   TextField,
 } from '@mui/material';
-import { HTMLAttributes, useState } from 'react';
+import { HTMLAttributes } from 'react';
 import { AutoCompleteFieldOpts, CheckboxField, ChoiceField, FileField, SimpleField } from '@/types/formField.types';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
