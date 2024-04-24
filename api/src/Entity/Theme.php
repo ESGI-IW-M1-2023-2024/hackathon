@@ -35,18 +35,18 @@ class Theme
     private ?string $content = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["theme:list", "theme:detail", "workshop:detail"])]
+    #[Groups(["workshop:list", "theme:list", "theme:detail", "workshop:detail"])]
     private ?string $subtitle = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["theme:list", "theme:detail", "workshop:detail"])]
+    #[Groups(["workshop:list", "theme:list", "theme:detail", "workshop:detail"])]
     private ?string $headerFilename = null;
 
     #[Assert\NotBlank(groups: ["theme:new"])]
     public ?string $file = null;
 
     #[ORM\Column]
-    #[Groups(["theme:list", "theme:detail", "workshop:detail"])]
+    #[Groups(["workshop:list", "theme:list", "theme:detail", "workshop:detail"])]
     private bool $archived = false;
 
     public function __construct()

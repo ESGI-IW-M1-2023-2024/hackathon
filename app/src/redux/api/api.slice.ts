@@ -53,7 +53,7 @@ export const apiSlice = createApi({
         method: 'DELETE',
       }),
     }),
-    getWorkshops: builder.query<Workshop[], void>({
+    getWorkshops: builder.query<PaginatedResponse<Workshop>, void>({
       query: () => ({
         url: 'workshops',
         method: 'GET',

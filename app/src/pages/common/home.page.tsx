@@ -7,26 +7,26 @@ import { useGetWorkshopsQuery } from "@/redux/api/api.slice";
 
 const Home = () => {
     const { data, isLoading } = useGetWorkshopsQuery();
+    console.log(data?.items);
 
     const renderWorkshopCards = () => {
         // Assure-toi que data est non-null et a au moins un élément
-        if (!data || data.length === 0) return <Typography variant="h6">Aucun atelier disponible pour le moment.</Typography>;
+        if (!data || !data.items || data.items.length === 0) return <Typography variant="h6">Aucun atelier disponible pour le moment.</Typography>;
 
         // Prends les trois derniers éléments de l'array
-        console.log(data);
-        const lastThreeWorkshops = data.slice(-3);
+        const lastThreeWorkshops = data.items.slice(-3);
 
         return lastThreeWorkshops.map((workshop, index) => {
             // Assure-toi que chaque atelier a une propriété 'image', 'title', et 'description'
-            if (!workshop.theme || !workshop.theme.headerFilename || !workshop.theme.label || !workshop.theme.subtitle) return null;
+            //if (!workshop.theme || !workshop.theme.headerFilename || !workshop.theme.label || !workshop.theme.subtitle) return null;
 
             return (
                 <Card key={index} sx={{ maxWidth: 345, margin: 2 }}>
                     <CardMedia
                         component="img"
                         height="140"
-                        image={workshop.theme.headerFilename}
-                        alt={workshop.theme.label}
+                        image={workshop.theme?.headerFilename || 'https://via.placeholder.com/150'}
+                        alt={workshop.theme?.label}
                     />
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
