@@ -21,13 +21,16 @@ class Organisation
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["organisation:list", "workshop:list", "workshop:detail", "booking:list"])]
+    #[Groups(["organisation:list", "organisation:detail", "workshop:list", "workshop:detail", "booking:list"])]
     #[Assert\NotBlank(groups: ["organisation:new"])]
     private ?string $label = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(["organisation:list", "organisation:detail", "workshop:list", "workshop:detail", "booking:list"])]
     private ?string $logoFilename = null;
+
+    #[Assert\NotBlank(groups: ["resource:new"])]
+    public ?string $logoFile = null;
 
     /**
      * @var Collection<int, Workshop>
@@ -37,7 +40,7 @@ class Organisation
 
     #[ORM\Column]
     #[Groups(["organisation:list", "organisation:detail", "workshop:list", "workshop:detail", "booking:list"])]
-    private ?bool $isArchived = false;
+    private ?bool $archived = false;
 
     public function __construct()
     {
@@ -105,12 +108,12 @@ class Organisation
 
     public function isArchived(): ?bool
     {
-        return $this->isArchived;
+        return $this->archived;
     }
 
-    public function setArchived(bool $isArchived): static
+    public function setArchived(bool $archived): static
     {
-        $this->isArchived = $isArchived;
+        $this->archived = $archived;
 
         return $this;
     }
