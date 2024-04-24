@@ -1,0 +1,12 @@
+{% extends "emails/layout.html.twig" %}
+
+{% block body %}
+<h2>Rappel d'atelier</h2>
+
+<p>
+    Le site boennologie vous rappel qu'aura lieu l'atelier sur le thème {{ workshop.theme.label }}
+    aura bien lieu le {{ workshop.dateStart|date('d-m-Y') }} à {{ workshop.location }}.
+
+    Si vous avez un imprévu de dernière minute, veuillez nous prévenir pour que nous puissions réallouer votre place à un autre réservant en nous répondant à ce mail.
+</p>
+{% endblock %}

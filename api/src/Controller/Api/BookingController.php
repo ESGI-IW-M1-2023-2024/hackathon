@@ -11,6 +11,7 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
@@ -26,14 +27,14 @@ class BookingController extends AbstractController
 
     public function __construct(
         private EntityManagerInterface $em
-    ) {}
+    ) {
+    }
 
-    #[Route('/', name: 'list', methods: ["GET"])]
+    #[Route('', name: 'list', methods: ["GET"])]
     public function index(
         Request $request,
         PaginationService $paginationService
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $pagination = $paginationService->getPagination($request, Booking::class);
 
         return $this->json(
@@ -51,24 +52,23 @@ class BookingController extends AbstractController
     {
         return $this->json(
             $booking,
-            context: ["groups" => ["booking:list", ]]
+            context: ["groups" => ["booking:list",]]
         );
     }
 
-    #[Route('/', name: 'new', methods: ["POST"])]
+    #[Route('', name: 'new', methods: ["POST"])]
     public function new(
         Request                     $request,
         SerializerInterface         $serializer,
         ValidatorInterface          $validator,
         MailerService $mailerService
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $booking = $serializer->deserialize($request->getContent(), Booking::class, 'json');
 
         $violations = $validator->validate($booking, groups: ["booking:new"]);
 
         if ($violations->count() > 0) {
-            return $this->json($violations);
+            return $this->json($violations, Response::HTTP_BAD_REQUEST);
         }
 
         $mailerService->sendMail(
@@ -91,8 +91,7 @@ class BookingController extends AbstractController
         SerializerInterface                 $serializer,
         ValidatorInterface                  $validator,
         PropertyAccessorInterface $propertyAccessor
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $bookingRequest = $serializer->deserialize(
             $request->getContent(),
             Booking::class,
@@ -103,7 +102,7 @@ class BookingController extends AbstractController
         $violations = $validator->validate($bookingRequest, groups: ["booking:edit"]);
 
         if ($violations->count() > 0) {
-            return $this->json($violations);
+            return $this->json($violations, Response::HTTP_BAD_REQUEST);
         }
 
         $reflect = new \ReflectionClass($bookingRequest);
@@ -123,23 +122,18 @@ class BookingController extends AbstractController
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
     public function delete(
         Booking $booking
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $booking->setArchived(true);
         $this->em->flush();
 
-        return $this->json(
-            $booking,
-            context: ["groups" => ["booking:list"]]
-        );
+        return $this->json([], Response::HTTP_NO_CONTENT);
     }
 
     #[Route('/{id}/validate', name: 'validate', methods: ["POST"])]
     public function validate(
         Booking $booking,
         MailerService $mailerService
-    )
-    {
+    ) {
         $booking->setStatus(BookingStatus::PAID);
         $this->em->flush();
 
@@ -160,8 +154,7 @@ class BookingController extends AbstractController
     public function cancel(
         Booking $booking,
         MailerService $mailerService
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $booking->setStatus(BookingStatus::CANCELED);
         $this->em->flush();
 

@@ -7,6 +7,8 @@ parameters:
   resources_directory: '%kernel.project_dir%/public/uploads/resources'
   themes_directory: '%kernel.project_dir%/public/uploads/themes'
   wines_directory: '%kernel.project_dir%/public/uploads/wines'
+  app.mailer.sender: '%env(MAILER_SENDER)%x'
+  app.workshop.reminder_delay: '%env(WORKSHOP_REMINDER_DELAY)%'
 
 services:
     # default configuration for services in *this* file
