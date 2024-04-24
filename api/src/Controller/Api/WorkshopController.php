@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -69,7 +70,7 @@ class WorkshopController extends AbstractController
         $violations = $validator->validate($workshop, groups: ["workshop:new"]);
 
         if ($violations->count() > 0) {
-            return $this->json($violations);
+            return $this->json($violations, Response::HTTP_BAD_REQUEST);
         }
 
         $this->em->persist($workshop);
@@ -92,7 +93,7 @@ class WorkshopController extends AbstractController
         $violations = $validator->validate($workshopRequest, groups: ["workshop:edit"]);
 
         if ($violations->count() > 0) {
-            return $this->json($violations);
+            return $this->json($violations, Response::HTTP_BAD_REQUEST);
         }
 
         $reflect = new \ReflectionClass($workshopRequest);
@@ -116,9 +117,6 @@ class WorkshopController extends AbstractController
         //        $workshop->setArchived(true);
         $this->em->flush();
 
-        return $this->json(
-            $workshop,
-            context: ["groups" => ["workshop:list"]]
-        );
+        return $this->json([], Response::HTTP_NO_CONTENT);
     }
 }

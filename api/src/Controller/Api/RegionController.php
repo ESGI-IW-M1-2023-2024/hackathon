@@ -9,6 +9,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -57,7 +58,7 @@ class RegionController extends AbstractController
         $violations = $validator->validate($region, groups: ["region:new"]);
 
         if ($violations->count() > 0) {
-            return $this->json($violations);
+            return $this->json($violations, Response::HTTP_BAD_REQUEST);
         }
 
         $em->persist($region);
@@ -83,7 +84,7 @@ class RegionController extends AbstractController
         $violations = $validator->validate($regionRequest, groups: ["region:edit"]);
 
         if ($violations->count() > 0) {
-            return $this->json($violations);
+            return $this->json($violations, Response::HTTP_BAD_REQUEST);
         }
 
         if (!empty($regionRequest->getCountry())) {
@@ -110,9 +111,6 @@ class RegionController extends AbstractController
         $region->setArchived(true);
         $em->flush();
 
-        return $this->json(
-            $region,
-            context: ["groups" => ["region:list"]]
-        );
+        return $this->json([], Response::HTTP_NO_CONTENT);
     }
 }

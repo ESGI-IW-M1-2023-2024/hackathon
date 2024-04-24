@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -58,7 +59,7 @@ class WineController extends AbstractController
         $violations = $validator->validate($wine, groups: ["wine:new"]);
 
         if ($violations->count() > 0) {
-            return $this->json($violations);
+            return $this->json($violations, Response::HTTP_BAD_REQUEST);
         }
 
         $data = json_decode($request->getContent());
@@ -92,7 +93,7 @@ class WineController extends AbstractController
         $violations = $validator->validate($wineRequest, groups: ["wine:edit"]);
 
         if ($violations->count() > 0) {
-            return $this->json($violations);
+            return $this->json($violations, Response::HTTP_BAD_REQUEST);
         }
 
         $reflect = new \ReflectionClass($wineRequest);
@@ -128,9 +129,6 @@ class WineController extends AbstractController
         $wine->setArchived(false);
         $em->flush();
 
-        return $this->json(
-            $wine,
-            context: ["groups" => ["region:list"]]
-        );
+        return $this->json([], Response::HTTP_NO_CONTENT);
     }
 }

@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -59,7 +60,7 @@ class OrganisationController extends AbstractController
         $violations = $validator->validate($organisation, groups: ["organisation:new"]);
 
         if ($violations->count() > 0) {
-            return $this->json($violations);
+            return $this->json($violations, Response::HTTP_BAD_REQUEST);
         }
 
         $this->em->persist($organisation);
@@ -81,7 +82,7 @@ class OrganisationController extends AbstractController
         $violations = $validator->validate($organisationRequest, groups: ["organisation:edit"]);
 
         if ($violations->count() > 0) {
-            return $this->json($violations);
+            return $this->json($violations, Response::HTTP_BAD_REQUEST);
         }
 
         if (!empty($organisationRequest->getLabel())) {
@@ -101,9 +102,6 @@ class OrganisationController extends AbstractController
         $organisation->setArchived(true);
         $this->em->flush();
 
-        return $this->json(
-            $organisation,
-            context: ["groups" => ["organisation:list"]]
-        );
+        return $this->json([], Response::HTTP_NO_CONTENT);
     }
 }

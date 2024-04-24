@@ -60,7 +60,7 @@ class ResourceController extends AbstractController
         $violations = $validator->validate($resource, groups: ["resource:new"]);
 
         if ($violations->count() > 0) {
-            return $this->json($violations);
+            return $this->json($violations, Response::HTTP_BAD_REQUEST);
         }
 
         $data = json_decode($request->getContent());
@@ -99,7 +99,7 @@ class ResourceController extends AbstractController
         $violations = $validator->validate($resourceRequest, groups: ["resource:edit"]);
 
         if ($violations->count() > 0) {
-            return $this->json($violations);
+            return $this->json($violations, Response::HTTP_BAD_REQUEST);
         }
 
         $reflect = new \ReflectionClass($resourceRequest);
@@ -135,6 +135,6 @@ class ResourceController extends AbstractController
         $resource->setArchived(true);
         $em->flush();
 
-        return $this->json('', Response::HTTP_NO_CONTENT);
+        return $this->json([], Response::HTTP_NO_CONTENT);
     }
 }

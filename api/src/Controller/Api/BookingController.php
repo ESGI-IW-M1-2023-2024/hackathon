@@ -11,6 +11,7 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
@@ -67,7 +68,7 @@ class BookingController extends AbstractController
         $violations = $validator->validate($booking, groups: ["booking:new"]);
 
         if ($violations->count() > 0) {
-            return $this->json($violations);
+            return $this->json($violations, Response::HTTP_BAD_REQUEST);
         }
 
         $mailerService->sendMail(
@@ -101,7 +102,7 @@ class BookingController extends AbstractController
         $violations = $validator->validate($bookingRequest, groups: ["booking:edit"]);
 
         if ($violations->count() > 0) {
-            return $this->json($violations);
+            return $this->json($violations, Response::HTTP_BAD_REQUEST);
         }
 
         $reflect = new \ReflectionClass($bookingRequest);
@@ -125,10 +126,7 @@ class BookingController extends AbstractController
         $booking->setArchived(true);
         $this->em->flush();
 
-        return $this->json(
-            $booking,
-            context: ["groups" => ["booking:list"]]
-        );
+        return $this->json([], Response::HTTP_NO_CONTENT);
     }
 
     #[Route('/{id}/validate', name: 'validate', methods: ["POST"])]

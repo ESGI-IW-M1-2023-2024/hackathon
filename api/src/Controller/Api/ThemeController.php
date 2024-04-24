@@ -61,7 +61,7 @@ class ThemeController extends AbstractController
         $violations = $validator->validate($theme, groups: ["theme:new"]);
 
         if ($violations->count() > 0) {
-            return $this->json($violations);
+            return $this->json($violations, Response::HTTP_BAD_REQUEST);
         }
 
         $data = json_decode($request->getContent());
@@ -100,7 +100,7 @@ class ThemeController extends AbstractController
         $violations = $validator->validate($themeRequest, groups: ["theme:edit"]);
 
         if ($violations->count() > 0) {
-            return $this->json($violations);
+            return $this->json($violations, Response::HTTP_BAD_REQUEST);
         }
 
         $data = json_decode($request->getContent());
@@ -137,6 +137,6 @@ class ThemeController extends AbstractController
         $theme->setArchived(true);
         $em->flush();
 
-        return $this->json('', Response::HTTP_NO_CONTENT);
+        return $this->json([], Response::HTTP_NO_CONTENT);
     }
 }
