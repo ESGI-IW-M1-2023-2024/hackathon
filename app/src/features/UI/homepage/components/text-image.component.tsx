@@ -1,4 +1,4 @@
-import { Box, Stack, SxProps, Theme } from "@mui/material"
+import { Box, Stack, SxProps, Theme, Typography } from "@mui/material"
 import { ReactNode } from "react"
 
 interface TextImageProps {
@@ -40,10 +40,10 @@ const TextImage = ({ reverse, title, src, alt, button, sx, children }: TextImage
                         }
                     }}
                 >
-                    <h3>{title}</h3>
-                    <p>
+                    <Typography variant="h3">{title}</Typography>
+                    <Typography>
                         {children}
-                    </p>
+                    </Typography>
                     {button}
                 </Stack>
                 <Box

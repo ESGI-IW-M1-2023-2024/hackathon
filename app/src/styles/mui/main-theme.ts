@@ -21,21 +21,23 @@ export const customTypography = {
   fontFamily: "Montserrat, sans-serif",
   h1: {
     fontFamily: "MonteCarlo, cursive",
-    fontSize: "2.5rem",
+    fontSize: "3rem",
     fontWeight: "400",
     fontStyle: "normal",
   },
   h2: {
     fontFamily: "MonteCarlo, cursive",
-    fontSize: "2rem",
+    fontSize: "2.5rem",
     fontWeight: "400",
     fontStyle: "normal",
   },
   h3: {
-    fontSize: "1.5rem",
+    fontSize: "1.3rem",
+    fontWeight: "bold",
   },
   h4: {
     fontSize: "1.25rem",
+    fontWeight: "bold",
   },
   h5: {
     fontSize: "1rem",
@@ -46,6 +48,9 @@ export const customTypography = {
   a: {
     color: "inherit",
     textDecoration: "none",
+  },
+  strong: {
+    fontWeight: "bold",
   },
 
 }

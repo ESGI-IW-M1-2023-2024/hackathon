@@ -1,4 +1,4 @@
-import { Box, Card, CardActions, CardContent, CircularProgress, Container, Stack, Typography } from "@mui/material";
+import { Box, Card, CardActions, CardContent, CircularProgress, Container, Divider, Stack, Typography } from "@mui/material";
 import Diversity3Icon from '@mui/icons-material/Diversity3';
 import herobanner from "@/assets/homepage/herobanner.jpg";
 import TextImage from "@/features/UI/homepage/components/text-image.component";
@@ -27,9 +27,10 @@ const Home = () => {
             return (
                 <Card key={index} sx={{ maxWidth: 300, minWidth: 300, margin: 2, display: 'flex', flexDirection: 'column' }}>
                     <CardContent>
-                        <h4>
+                        <Typography variant="h4" component={"h4"}>
                             {workshop.theme.label}
-                        </h4>
+                        </Typography>
+                        <Divider sx={{ mb: 2, mt: 2 }} />
                         <Typography gutterBottom component="p">
                             {formattedDate}
                         </Typography>
@@ -70,8 +71,8 @@ const Home = () => {
             >
 
                 <Stack spacing={2} alignItems="center" marginTop='auto' marginBottom='auto'>
-                    <h2 className="d-shadow">Participez à des ateliers de dégustation de vin</h2>
-                    <p className="d-shadow">Envolez-vous dans un monde de saveurs et de découvertes</p>
+                    <Typography variant="h1" className="d-shadow" sx={{ fontSize: '4.5rem' }}>Participez à des ateliers de dégustation de vin</Typography>
+                    <Typography className="d-shadow">Envolez-vous dans un monde de saveurs et de découvertes</Typography>
                     <br />
                     <ColorButton variant='contained' startIcon={<Diversity3Icon />}>
                         Participer aux ateliers
@@ -142,7 +143,7 @@ const Home = () => {
                         marginBottom: "2rem"
                     }}
                 >
-                    <h2>Prochains Ateliers</h2>
+                    <Typography variant="h2">Prochains Ateliers</Typography>
                     {isLoading ? (
                         <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 5, marginBottom: 5 }}>
                             <CircularProgress />
