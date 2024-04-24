@@ -3,8 +3,8 @@ import { LoggedUser, UserCredentials } from '../../features/auth/types/logged-us
 import { EditTheme, NewTheme, Theme } from '@/features/admin/types/theme.types';
 import { RootState } from '../store';
 import { CustomPaginationParams, PaginatedResponse } from '@/types/pagination.types';
-import { EditRegion, NewRegion, Region } from "@/features/admin/types/region.types";
-import { Country } from "@/features/admin/types/country.types";
+import { EditRegion, NewRegion, Region } from '@/features/admin/types/region.types';
+import { Country } from '@/features/admin/types/country.types';
 import { Workshop } from '@/features/admin/types/workshop.types';
 
 export const apiSlice = createApi({
@@ -16,6 +16,17 @@ export const apiSlice = createApi({
       const loggedUser = (api.getState() as RootState).user;
       if (loggedUser) {
         headers.set('Authorization', `Bearer ${loggedUser.token}`);
+      }
+    },
+    fetchFn: async (url, options) => {
+      try {
+        const response = await fetch(url, options);
+        if (response.status === 401) {
+          window.location.href = '/login';
+        }
+        return response;
+      } catch (error) {
+        throw error;
       }
     },
   }),
@@ -110,7 +121,7 @@ export const apiSlice = createApi({
           country: body.country,
         },
       }),
-      invalidatesTags: ['Regions']
+      invalidatesTags: ['Regions'],
     }),
     getOneRegion: builder.query<Region, number>({
       query: (id) => ({
