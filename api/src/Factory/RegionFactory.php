@@ -47,7 +47,7 @@ final class RegionFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
-            'country' => self::faker()->country(),
+            'country' => self::faker()->countryCode(),
             'label' => self::faker()->text(10),
         ];
     }
