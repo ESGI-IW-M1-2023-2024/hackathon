@@ -56,7 +56,7 @@ class Workshop
     private ?Organisation $organisation = null;
 
     #[ORM\ManyToOne(inversedBy: 'workshops')]
-    #[Groups(["workshop:detail"])]
+    #[Groups(["workshop:detail", "workshop:list"])]
     private ?Theme $theme = null;
 
     /**
