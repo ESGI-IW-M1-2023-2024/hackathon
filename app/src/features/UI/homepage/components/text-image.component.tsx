@@ -19,6 +19,7 @@ const TextImage = ({ reverse, title, src, alt, button, sx, children }: TextImage
                 direction={reverse ? "row-reverse" : "row"}
                 justifyContent="space-between"
                 alignItems="center"
+                gap="20px"
                 sx={{
                     ...sx,
                     marginTop: "2rem",
@@ -31,7 +32,8 @@ const TextImage = ({ reverse, title, src, alt, button, sx, children }: TextImage
                     alignItems={"flex-start"}
                     gap={2}
                     sx={{
-                        width: "50%",
+                        width: "auto",
+                        paddingRight: reverse ? "20px" : "0px",
                         "& > h3": {
                             fontSize: "2rem",
                             fontWeight: "bold"
@@ -53,6 +55,7 @@ const TextImage = ({ reverse, title, src, alt, button, sx, children }: TextImage
                         height: "400px",
                         objectFit: "cover",
                         borderRadius: "4px",
+                        aspectRatio: "1/1",
                     }}
                     className="d-shadow"
                 />
