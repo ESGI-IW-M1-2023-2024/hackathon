@@ -135,4 +135,5 @@ export const {
     useCreateRegionMutation,
     useGetCountriesQuery,
     useGetOneThemeQuery,
+    useDeleteRegionMutation
 } = apiSlice;
