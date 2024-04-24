@@ -14,6 +14,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use OpenApi\Attributes as OA;
 
 #[Route('/users', name: 'users_')]
 class UserController extends AbstractController
@@ -40,6 +41,18 @@ class UserController extends AbstractController
         );
     }
 
+    #[OA\RequestBody(
+        required: true,
+        content: new OA\JsonContent(
+            type: User::class,
+            example: [
+                'email' => 'required',
+                'plainPassword' => 'required',
+                'firstname' => 'required',
+                'lastname' => 'required'
+            ]
+        )
+    )]
     #[Route('', name: '_new', methods: ["POST"])]
     public function new(
         Request                     $request,
@@ -66,6 +79,18 @@ class UserController extends AbstractController
         return $this->json($user, context: ["groups" => ["user:list"]]);
     }
 
+    #[OA\RequestBody(
+        required: true,
+        content: new OA\JsonContent(
+            type: User::class,
+            example: [
+                'email' => 'required',
+                'plainPassword' => 'required',
+                'firstname' => 'required',
+                'lastname' => 'required'
+            ]
+        )
+    )]
     #[Route('/{id}', name: 'update', methods: ["PUT"])]
     public function update(
         User $user,

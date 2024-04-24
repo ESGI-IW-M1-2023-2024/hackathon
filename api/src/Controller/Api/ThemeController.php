@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use OpenApi\Attributes as OA;
 
 #[Route('/themes', name: 'themes_')]
 class ThemeController extends AbstractController
@@ -47,6 +48,17 @@ class ThemeController extends AbstractController
         );
     }
 
+    #[OA\RequestBody(
+        required: true,
+        content: new OA\JsonContent(
+            type: Theme::class,
+            example: [
+                'label' => 'required',
+                'content' => 'required',
+                'file' => 'required: base64'
+            ]
+        )
+    )]
     #[Route('', name: 'new', methods: ['POST'])]
     #[IsGranted("ROLE_ADMIN")]
     public function new(
@@ -79,6 +91,17 @@ class ThemeController extends AbstractController
         );
     }
 
+    #[OA\RequestBody(
+        required: true,
+        content: new OA\JsonContent(
+            type: Theme::class,
+            example: [
+                'label' => 'required',
+                'content' => 'required',
+                'file' => 'required: base64'
+            ]
+        )
+    )]
     #[Route('/{id}', name: 'edit', methods: ["PUT"])]
     #[IsGranted("ROLE_ADMIN")]
     public function edit(
