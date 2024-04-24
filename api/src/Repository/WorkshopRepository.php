@@ -27,9 +27,22 @@ class WorkshopRepository extends ServiceEntityRepository
     /**
      * Requête de base
      */
-    public function getBaseQueryBuilder(): QueryBuilder
+    public function getBaseQueryBuilder(array $filter): QueryBuilder
     {
-        return $this->createQueryBuilder('u');
+
+        $queryBuilder = $this->createQueryBuilder('u');
+
+        if (!empty($filter['dateStart'])) {
+            $queryBuilder
+                ->andWhere('u.dateStart >= :dateStart')
+                ->setParameter('dateStart', $filter['dateStart']);
+        }
+
+        if (!empty($filter['orderBy']) && !empty($filter['orderByDirection'])) {
+            $queryBuilder->orderBy('u.' . $filter['orderBy'], $filter['orderByDirection']);
+        }
+
+        return $queryBuilder;
     }
 
     public function findByDelay($delay)
