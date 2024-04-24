@@ -114,15 +114,15 @@ export default function OutlinedCard() {
                                 '& ul': { padding: 0 },
                                 '&::-webkit-scrollbar': {
                                     width: '6px',
-                                    backgroundColor: '#D5C1AE'
+                                    backgroundColor: 'primary.light'
                                 },
                                 '&::-webkit-scrollbar-track': {
                                     boxShadow: 'inset 0 0 6px rgba(0,0,0,0.3)',
                                     borderRadius: '10px',
-                                    backgroundColor: '#D5C1AE'
+                                    backgroundColor: 'primary.light'
                                 },
                                 '&::-webkit-scrollbar-thumb': {
-                                    backgroundColor: '#660033',
+                                    backgroundColor: 'secondary.main',
                                     borderRadius: '10px'
                                 }
                             }}
@@ -180,21 +180,6 @@ export default function OutlinedCard() {
                     alignItems={'center'}
                     gap={"20px"}
                 >
-                    {/* Image de gauche */}
-                    {/* <Box
-                        component={'img'}
-                        className="d-shadow"
-                        // masquer pour les petits écrans
-                        sx={{
-                            display: { xs: 'none', sm: 'block' },
-                            width: { xs: '100%', sm: '200px', md: '400px' },
-                            height: { xs: 'auto', sm: '200px', md: '400px' },
-                            objectFit: "cover",
-                            borderRadius: "4px",
-                            aspectRatio: "1/1",
-                        }}
-                        src={wineglasses}
-                    /> */}
                     {/* bloc de droite */}
                     <Box
                         display={'flex'}
@@ -207,6 +192,7 @@ export default function OutlinedCard() {
                         <Typography>Pour participer à notre atelier de vin, remplissez le formulaire d'inscription en ligne et effectuez le paiement selon les instructions fournies. Assurez-vous de consulter notre calendrier pour la date et l'heure de l'atelier, et prévoyez d'arriver à l'heure pour profiter pleinement de l'expérience.</Typography>
 
                         {/* ticket */}
+                        <strong style={{ textAlign: 'center', marginTop: '2rem' }}>Réservez vite votre place !</strong>
                         <Stack
                             alignSelf={'center'}
                             direction={{ xs: 'column', sm: 'row' }}
@@ -215,7 +201,7 @@ export default function OutlinedCard() {
                             justifyContent={'center'}
                             position={'relative'}
                             marginTop={'2rem'}
-                        >
+                            >
                             {/* première partie du ticket */}
                             <Card
                                 sx={{
@@ -266,7 +252,7 @@ export default function OutlinedCard() {
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
-                                    backgroundColor: '#BA9878',
+                                    backgroundColor: 'primary.dark',
                                     width: { xs: '100%', sm: '1' },
                                     borderRadius: { xs: '0 0 6px 6px', sm: '0 6px 6px 0' },
                                     position: 'relative',
@@ -309,7 +295,6 @@ export default function OutlinedCard() {
                             marginTop: { sm: '2rem' },
                             textAlign: 'center'
                         }}>
-                            <strong>Réservez vite votre place !</strong>
                         </Typography>
                     </Box>
                 </Box>

@@ -4,6 +4,8 @@ import herobanner from "@/assets/homepage/herobanner.jpg";
 import TextImage from "@/features/UI/homepage/components/text-image.component";
 import { useGetThreeLastWorkshopsQuery } from "@/redux/api/api.slice";
 import ColorButton from "@/features/UI/custom-mui-components/components/custom-button.component";
+import Button from '@mui/material/Button';
+import Olivier from '@/assets/about/olivier-cut.png';
 
 const Home = () => {
     const { data, isLoading } = useGetThreeLastWorkshopsQuery();
@@ -167,6 +169,73 @@ const Home = () => {
                             {renderWorkshopCards()}
                         </Box>
                     )}
+                </Stack>
+
+                <Stack
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="flex-start"
+                    sx={{
+                        marginTop: "2rem",
+                        marginBottom: "2rem",
+                        width: '80%'
+                    }}
+                >
+                    <Typography variant="h2">Qui suis-je ?</Typography>
+                    <Box
+                        component={'section'}
+                        margin={'auto'}
+                    >
+                        <Card sx={{
+                            margin: 'auto',
+                            boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
+                            borderRadius: '10px',
+                            backgroundColor: '',
+                            transition: 'transform 0.3s',
+                            '&:hover': {
+                                transform: 'translateY(-5px)',
+                                boxShadow: '0px 8px 20px rgba(0, 0, 0, 0.2)',
+                            },
+                            display: 'flex',
+                            width: '80%',
+                            padding: '0 20px'
+                        }}>
+                            <CardContent sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'flex-start',
+                            }}>
+                                <Typography sx={{ textAlign: 'center', fontSize: '20px' }}>
+                                    Mon nom est
+                                </Typography>
+                                <Typography sx={{ marginBottom: '1rem', textAlign: 'center', fontSize: '60px' }}>
+                                    Olivier Bonneton
+                                </Typography>
+                                <Typography variant="body1" component="p" sx={{ marginBottom: '1rem', width: '50%' }}>
+                                    Découvrez qui je suis et ce que je fais. Apprenez-en plus sur ma passion pour le vin et mon expertise dans le domaine.
+                                </Typography>
+                                <CardActions sx={{ justifyContent: 'center' }}>
+                                    <Button href="/about" variant="contained" color="primary">
+                                        Voir plus
+                                    </Button>
+                                </CardActions>
+                            </CardContent>
+
+                            <Box
+                                component={'img'}
+                                src={Olivier}
+                                sx={{
+                                    margin: 'auto',
+                                    backgroundPosition: 'center',
+                                    objectFit: 'cover',
+                                    width: '200px',
+                                    height: '200px',
+                                    borderRadius: '4px'
+                                }}
+                            />
+                        </Card>
+
+                    </Box>
                 </Stack>
 
             </Container>

@@ -14,6 +14,7 @@ import EditRegion from "@/pages/admin/region/edit.page";
 import OrganisationList from "@/pages/admin/organisation/list.page";
 import CreateOrganisation from "@/pages/admin/organisation/create.page";
 import EditOrganisation from "@/pages/admin/organisation/edit.page";
+import About from '../pages/common/about.page';
 
 
 const AppRoutes = () => (
@@ -21,6 +22,7 @@ const AppRoutes = () => (
     <Route path='/' element={<Home />} />
     <Route path='/login' element={<Login />} />
     <Route path='/concept' element={<Concept />} />
+    <Route path='/about' element={<About />} />
     <Route element={<SecureRoute />}>
       <Route path='/admin' element={<Dashboard />} />
       <Route path='/themes' element={<ThemesList />} />
