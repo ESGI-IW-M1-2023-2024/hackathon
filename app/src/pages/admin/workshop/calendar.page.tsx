@@ -1,25 +1,38 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
 import {EventClickArg, EventSourceInput} from "@fullcalendar/core"; // a plugin!
-import { useGetWorkshopsQuery } from "@/redux/api/api.slice";
+import { useGetWorkshopsForCalendarQuery } from "@/redux/api/api.slice";
 import {Button, LinearProgress, Modal, Typography} from "@mui/material";
-import { useState } from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {Workshop} from "@/features/admin/types/workshop.types";
 import { useTheme } from '@mui/material';
+import {CalendarParams} from "@/types/calendarParams.types";
 
 const WorkshopCalendar = () => {
 
-  const { data, isLoading } = useGetWorkshopsQuery();
   const [modalOpen, setModalOpen] = useState(false); // State to handle modal visibility
   const [selectedWorkshop, setSelectedWorkshop] = useState<Workshop|undefined>(undefined); // State to hold the clicked workshop's data
   const {palette} = useTheme();
+  const calendarRef = useRef(null);
+  const [currentDateRange, setCurrentDateRange] = useState<CalendarParams>({ start: null, end: null });
+  useEffect(() => {
+    if (calendarRef.current) {
+      const api = calendarRef.current.getApi();
+      const newDateRange = {
+        start: api.view.activeStart,
+        end: api.view.activeEnd
+      };
+      setCurrentDateRange(newDateRange);
+    }
+  }, [calendarRef.current]);
 
+  const { data, isLoading } = useGetWorkshopsForCalendarQuery(currentDateRange);
   const handleClose = () => {
     setModalOpen(false);
   };
 
   const handleEventClick = (arg :  EventClickArg) => {
-    setSelectedWorkshop(data?.items.find((item) => item.id.toString() === arg.event.id));
+    setSelectedWorkshop(data?.items.find((item : Workshop) => item.id.toString() === arg.event.id));
     setModalOpen(true); // Open modal on event click
   };
 
@@ -38,6 +51,8 @@ const WorkshopCalendar = () => {
     return new Date(date).toLocaleString();
   }
 
+  console.log(calendarRef?.current?.getApi().getDate());
+
   const modalContent = modalOpen && (
     <Modal open={modalOpen} onClose={handleClose}>
       <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: 'white', padding: 20 }}>
@@ -54,6 +69,7 @@ const WorkshopCalendar = () => {
     <>
       {modalContent}
       <FullCalendar
+        ref={calendarRef}
         plugins={[ dayGridPlugin ]}
         initialView="dayGridMonth"
         weekends={true}

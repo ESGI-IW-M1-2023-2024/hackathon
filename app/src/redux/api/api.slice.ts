@@ -4,6 +4,7 @@ import { EditTheme, NewTheme, Theme } from '@/features/admin/types/theme.types';
 import { RootState } from '../store';
 import { CustomPaginationParams, PaginatedResponse } from '@/types/pagination.types';
 import { Workshop } from '@/features/admin/types/workshop.types';
+import {CalendarParams} from "@/types/calendarParams.types";
 
 export const apiSlice = createApi({
   reducerPath: 'api',
@@ -59,7 +60,13 @@ export const apiSlice = createApi({
         method: 'GET',
       }),
     }),
-
+    getWorkshopsForCalendar: builder.query<Workshop[], CalendarParams>({
+      query: (body) => ({
+        url: 'workshops/calendar',
+        method: 'POST',
+        body,
+      }),
+    }),
   }),
 });
 
@@ -70,5 +77,6 @@ export const {
   useCreateThemeMutation,
   useEditThemeMutation,
   useDeleteThemeMutation,
-  useGetWorkshopsQuery
+  useGetWorkshopsQuery,
+  useGetWorkshopsForCalendarQuery,
 } = apiSlice;

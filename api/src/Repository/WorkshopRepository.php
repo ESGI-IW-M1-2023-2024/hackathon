@@ -43,4 +43,15 @@ class WorkshopRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findByInterval($start, $end)
+    {
+        return $this->createQueryBuilder('w')
+            ->where('w.dateStart >= :start')
+            ->andWhere('w.dateStart <= :end')
+            ->setParameter('start', $start)
+            ->setParameter('end', $end)
+            ->getQuery()
+            ->getResult();
+    }
 }
