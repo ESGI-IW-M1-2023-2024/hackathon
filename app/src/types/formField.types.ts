@@ -1,4 +1,4 @@
-import { AutocompleteInputChangeReason } from '@mui/material';
+import { AutocompleteInputChangeReason, IconButtonProps } from '@mui/material';
 import { SyntheticEvent } from 'react';
 
 export type ChoiceItems = {
@@ -36,4 +36,23 @@ export interface AutoCompleteFieldOpts {
   fieldId?: string;
   required?: boolean;
   checkbox?: boolean;
+}
+
+enum FileType {
+  'IMAGE' = 'image/*',
+  'AUDIO' = 'audio/*',
+  'VIDEO' = 'video/*',
+  'PNG' = '.png',
+  'JPG' = '.jpg',
+  'JPEG' = '.jpeg',
+  'PDF' = '.pdf',
+  'EXCEL' = '.xsl, .xslx',
+  'WORD' = '.doc, .docx',
+}
+
+export interface FileField extends SimpleField {
+  placeholder?: string;
+  fileTypes?: FileType[];
+  iconButton?: IconButtonProps;
+  setValue: any;
 }

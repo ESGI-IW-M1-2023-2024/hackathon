@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { LoggedUser, UserCredentials } from '../../features/auth/types/logged-user.type';
-import { Theme } from '@/features/admin/types/theme.types';
+import { EditTheme, NewTheme, Theme } from '@/features/admin/types/theme.types';
 import { RootState } from '../store';
 import { CustomPaginationParams, PaginatedResponse } from '@/types/pagination.types';
 
@@ -32,8 +32,34 @@ export const apiSlice = createApi({
       }),
       providesTags: ['Themes'],
     }),
+    createTheme: builder.mutation<Theme, NewTheme>({
+      query: (body) => ({
+        url: 'themes/',
+        method: 'POST',
+        body,
+      }),
+    }),
+    editTheme: builder.mutation<Theme, EditTheme>({
+      query: (body) => ({
+        url: `themes/${body.id}`,
+        method: 'PUT',
+        body,
+      }),
+    }),
+    deleteTheme: builder.mutation<void, number>({
+      query: (id) => ({
+        url: `themes/${id}`,
+        method: 'DELETE',
+      }),
+    }),
   }),
 });
 
 // Export the auto-generated hook for the `getPosts` query endpoint
-export const { useLoginUserMutation, useGetThemesQuery } = apiSlice;
+export const {
+  useLoginUserMutation,
+  useGetThemesQuery,
+  useCreateThemeMutation,
+  useEditThemeMutation,
+  useDeleteThemeMutation,
+} = apiSlice;

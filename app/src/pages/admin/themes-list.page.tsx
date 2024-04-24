@@ -3,11 +3,12 @@ import { Theme, ThemesSortableField } from '@/features/admin/types/theme.types';
 import useThemeColumns from '@/features/admin/utils/theme-config';
 import { useGetThemesQuery } from '@/redux/api/api.slice';
 import { ListGridProps } from '@/types/data-grid.types';
-import { LinearProgress } from '@mui/material';
-import { useSearchParams } from 'react-router-dom';
+import { Button, LinearProgress } from '@mui/material';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const ThemesList = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   // Pagination
   const pagination = {
@@ -49,6 +50,9 @@ const ThemesList = () => {
   return (
     <>
       <h1>Liste des Thèmes</h1>
+      <Button variant='contained' onClick={() => navigate('/themes/create')}>
+        Créer un thème
+      </Button>
       <ListGridComponent {...listProps} />
     </>
   );
