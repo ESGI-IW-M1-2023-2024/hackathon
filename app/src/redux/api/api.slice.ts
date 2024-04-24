@@ -19,6 +19,17 @@ export const apiSlice = createApi({
         headers.set('Authorization', `Bearer ${loggedUser.token}`);
       }
     },
+    fetchFn: async (url, options) => {
+      try {
+        const response = await fetch(url, options);
+        if (response.status === 401) {
+          window.location.href = '/login';
+        }
+        return response;
+      } catch (error) {
+        throw error;
+      }
+    },
   }),
   endpoints: (builder) => ({
     loginUser: builder.mutation<LoggedUser, UserCredentials>({
@@ -119,7 +130,9 @@ export const apiSlice = createApi({
               method: 'GET',
           }),
           providesTags: ['Regions'],
-      }),
+
+      invalidatesTags: ['Regions'],
+    }),
       deleteRegion: builder.mutation<void, number>({
           query: (id) => ({
               url: `regions/${id}`,
