@@ -41,6 +41,13 @@ h4 {
   font-size: 32px;
 }
 
+/*
+  ombre portée avec filtre drop-shadow avec hover et transition
+*/
 .d-shadow {
   filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
+  transition: filter 0.3s;
+}
+.d-shadow:hover {
+  filter: drop-shadow(4px 4px 8px rgba(0, 0, 0, 0.5));
 }

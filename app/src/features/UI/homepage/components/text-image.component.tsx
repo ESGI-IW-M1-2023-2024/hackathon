@@ -24,7 +24,7 @@ const TextImage = ({ reverse, title, text, src, alt }: TextImageProps) => {
                 <Stack
                     direction={"column"}
                     justifyContent={"center"}
-                    alignItems={"center"}
+                    alignItems={"flex-start"}
                     gap={2}
                     sx={{
                         width: "50%",
@@ -48,6 +48,7 @@ const TextImage = ({ reverse, title, text, src, alt }: TextImageProps) => {
                         height: "400px",
                         objectFit: "cover"
                     }}
+                    className="d-shadow"
                 />
             </Stack>
         </>
