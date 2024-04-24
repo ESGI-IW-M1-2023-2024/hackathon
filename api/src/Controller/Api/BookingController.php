@@ -125,7 +125,7 @@ class BookingController extends AbstractController
         Booking $booking
     ): JsonResponse
     {
-//      Supprimer ici une réservation
+        $booking->setArchived(true);
         $this->em->flush();
 
         return $this->json(

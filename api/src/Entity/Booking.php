@@ -38,8 +38,9 @@ class Booking
     #[Assert\NotBlank(groups: ["booking:new"])]
     private ?string $schoolClass = null;
 
-    #[ORM\Column(length: 255, enumType: \BookingStatus::class)]
+    #[ORM\Column(length: 255, enumType: BookingStatus::class)]
     #[Groups(["workshop:list", "booking:list"])]
+    #[Assert\NotNull(groups: ["booking:new", "booking:edit"])]
     private ?BookingStatus $status = BookingStatus::PENDING;
 
     #[ORM\Column(length: 255)]
@@ -51,6 +52,10 @@ class Booking
     #[Groups(["booking:list"])]
     #[Assert\NotNull(groups: ["booking:new"])]
     private ?Workshop $workshop = null;
+
+    #[ORM\Column]
+    #[Groups(["booking:list", "booking:detail"])]
+    private bool $archived = false;
 
     public function getId(): ?int
     {
@@ -110,7 +115,7 @@ class Booking
         return $this->status;
     }
 
-    public function setStatus(BookingStatus $status): static
+    public function setStatus(?BookingStatus $status): static
     {
         $this->status = $status;
 
@@ -137,6 +142,18 @@ class Booking
     public function setWorkshop(?Workshop $workshop): static
     {
         $this->workshop = $workshop;
+
+        return $this;
+    }
+
+    public function isArchived(): bool
+    {
+        return $this->archived;
+    }
+
+    public function setArchived(bool $archived): static
+    {
+        $this->archived = $archived;
 
         return $this;
     }
