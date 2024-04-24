@@ -16,11 +16,19 @@ class WorkshopService
 
     public function workshopReminderHandler(OutputInterface $outputInterface)
     {
-        // Fetch workshop delay
         $delay = $this->parameterBag->get('app.workshop.reminder_delay');
 
         $workshops = $this->workshopRepository->findByDelay($delay);
 
-        $outputInterface->writeln($delay);
-    }
+        if (empty($workshops)) {
+            $outputInterface->writeln('Aucun atelier à venir dans les ' . $delay . ' jours');
+            return;
+        }
+
+        // Send email for each bookers
+        foreach ($workshops as $workshop) {
+            foreach ($workshop->getValidatedBookings as $booking) {
+                
+            }
+        }
 }

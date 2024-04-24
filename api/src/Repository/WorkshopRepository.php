@@ -32,13 +32,13 @@ class WorkshopRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('u');
     }
 
-    public function findByDelay(int $delay)
+    public function findByDelay($delay)
     {
         return $this->createQueryBuilder('w')
             ->where('w.dateStart >= :date')
             ->andWhere('w.dateStart <= :dateDelayed')
             ->setParameter('date', new DateTime())
-            ->setParameter('date', (new DateTime())->modify('+' . $delay . ' days'))
+            ->setParameter('dateDelayed', (new DateTime())->modify('+' . $delay . ' days'))
             ->getQuery()
             ->getResult();
     }
