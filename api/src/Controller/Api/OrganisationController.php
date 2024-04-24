@@ -18,14 +18,14 @@ class OrganisationController extends AbstractController
 {
     public function __construct(
         private EntityManagerInterface $em
-    ) {}
+    ) {
+    }
 
-    #[Route('/', name: 'list', methods: ["GET"])]
+    #[Route('', name: 'list', methods: ["GET"])]
     public function index(
         Request $request,
         PaginationService $paginationService
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $pagination = $paginationService->getPagination($request, Organisation::class);
 
         return $this->json(
@@ -47,14 +47,13 @@ class OrganisationController extends AbstractController
         );
     }
 
-    #[Route('/', name: 'new', methods: ["POST"])]
+    #[Route('', name: 'new', methods: ["POST"])]
     #[IsGranted("ROLE_ADMIN")]
     public function new(
         Request                     $request,
         SerializerInterface         $serializer,
         ValidatorInterface          $validator,
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $organisation = $serializer->deserialize($request->getContent(), Organisation::class, 'json');
 
         $violations = $validator->validate($organisation, groups: ["organisation:new"]);
@@ -76,8 +75,7 @@ class OrganisationController extends AbstractController
         Request                             $request,
         SerializerInterface                 $serializer,
         ValidatorInterface                  $validator,
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $organisationRequest = $serializer->deserialize($request->getContent(), Organisation::class, 'json');
 
         $violations = $validator->validate($organisationRequest, groups: ["organisation:edit"]);
@@ -99,8 +97,7 @@ class OrganisationController extends AbstractController
     #[IsGranted("ROLE_ADMIN")]
     public function delete(
         Organisation $organisation
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $organisation->setArchived(true);
         $this->em->flush();
 

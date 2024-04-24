@@ -35,7 +35,7 @@ export const apiSlice = createApi({
     }),
     createTheme: builder.mutation<Theme, NewTheme>({
       query: (body) => ({
-        url: 'themes/',
+        url: 'themes',
         method: 'POST',
         body,
       }),

@@ -17,12 +17,11 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 #[Route("/regions", name: "regions_")]
 class RegionController extends AbstractController
 {
-    #[Route('/', name: 'list', methods: ['GET'])]
+    #[Route('', name: 'list', methods: ['GET'])]
     public function index(
         PaginationService $paginationService,
         Request $request
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $pagination = $paginationService->getPagination($request, Region::class);
 
         return $this->json(
@@ -38,23 +37,21 @@ class RegionController extends AbstractController
     #[Route('/{id}', name: 'get', methods: ['GET'])]
     public function get(
         Region $region,
-    ): JsonResponse
-    {
+    ): JsonResponse {
         return $this->json(
             $region,
             context: ["groups" => ["region:detail"]]
         );
     }
 
-    #[Route('/', name: 'new', methods: ['POST'])]
+    #[Route('', name: 'new', methods: ['POST'])]
     #[IsGranted("ROLE_ADMIN")]
     public function new(
         SerializerInterface    $serializer,
         Request                $request,
         ValidatorInterface     $validator,
         EntityManagerInterface $em,
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $region = $serializer->deserialize($request->getContent(), Region::class, 'json');
 
         $violations = $validator->validate($region, groups: ["region:new"]);
@@ -80,8 +77,7 @@ class RegionController extends AbstractController
         ValidatorInterface     $validator,
         EntityManagerInterface $em,
         Region                 $region
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $regionRequest = $serializer->deserialize($request->getContent(), Region::class, 'json');
 
         $violations = $validator->validate($regionRequest, groups: ["region:edit"]);
@@ -110,8 +106,7 @@ class RegionController extends AbstractController
     public function delete(
         EntityManagerInterface $em,
         Region                 $region
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $region->setArchived(true);
         $em->flush();
 

@@ -26,14 +26,14 @@ class BookingController extends AbstractController
 
     public function __construct(
         private EntityManagerInterface $em
-    ) {}
+    ) {
+    }
 
-    #[Route('/', name: 'list', methods: ["GET"])]
+    #[Route('', name: 'list', methods: ["GET"])]
     public function index(
         Request $request,
         PaginationService $paginationService
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $pagination = $paginationService->getPagination($request, Booking::class);
 
         return $this->json(
@@ -51,18 +51,17 @@ class BookingController extends AbstractController
     {
         return $this->json(
             $booking,
-            context: ["groups" => ["booking:list", ]]
+            context: ["groups" => ["booking:list",]]
         );
     }
 
-    #[Route('/', name: 'new', methods: ["POST"])]
+    #[Route('', name: 'new', methods: ["POST"])]
     public function new(
         Request                     $request,
         SerializerInterface         $serializer,
         ValidatorInterface          $validator,
         MailerService $mailerService
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $booking = $serializer->deserialize($request->getContent(), Booking::class, 'json');
 
         $violations = $validator->validate($booking, groups: ["booking:new"]);
@@ -91,8 +90,7 @@ class BookingController extends AbstractController
         SerializerInterface                 $serializer,
         ValidatorInterface                  $validator,
         PropertyAccessorInterface $propertyAccessor
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $bookingRequest = $serializer->deserialize(
             $request->getContent(),
             Booking::class,
@@ -123,8 +121,7 @@ class BookingController extends AbstractController
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
     public function delete(
         Booking $booking
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $booking->setArchived(true);
         $this->em->flush();
 
@@ -138,8 +135,7 @@ class BookingController extends AbstractController
     public function validate(
         Booking $booking,
         MailerService $mailerService
-    )
-    {
+    ) {
         $booking->setStatus(BookingStatus::PAID);
         $this->em->flush();
 
@@ -160,8 +156,7 @@ class BookingController extends AbstractController
     public function cancel(
         Booking $booking,
         MailerService $mailerService
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $booking->setStatus(BookingStatus::CANCELED);
         $this->em->flush();
 

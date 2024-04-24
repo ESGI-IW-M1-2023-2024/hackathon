@@ -18,12 +18,11 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 #[Route('/wines', name: 'wines_')]
 class WineController extends AbstractController
 {
-    #[Route('/', name: 'list', methods: ["GET"])]
+    #[Route('', name: 'list', methods: ["GET"])]
     public function index(
         Request           $request,
         PaginationService $paginationService
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $pagination = $paginationService->getPagination($request, Wine::class);
 
         return $this->json(
@@ -38,15 +37,14 @@ class WineController extends AbstractController
     #[Route('/{id}', name: 'get', methods: ["GET"])]
     public function get(
         Wine $wine,
-    ): JsonResponse
-    {
+    ): JsonResponse {
         return $this->json(
             $wine,
             context: ["groups" => ["wine:detail"]]
         );
     }
 
-    #[Route('/', name: 'new', methods: ["POST"])]
+    #[Route('', name: 'new', methods: ["POST"])]
     #[IsGranted("ROLE_ADMIN")]
     public function new(
         Request                $request,
@@ -54,8 +52,7 @@ class WineController extends AbstractController
         ValidatorInterface     $validator,
         EntityManagerInterface $em,
         ApiUploadFileService $apiUploadFileService
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $wine = $serializer->deserialize($request->getContent(), Wine::class, 'json');
 
         $violations = $validator->validate($wine, groups: ["wine:new"]);
@@ -89,8 +86,7 @@ class WineController extends AbstractController
         PropertyAccessorInterface $propertyAccessor,
         ApiUploadFileService $apiUploadFileService,
         Wine $wine
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $wineRequest = $serializer->deserialize($request->getContent(), Wine::class, 'json');
 
         $violations = $validator->validate($wineRequest, groups: ["wine:edit"]);
@@ -128,8 +124,7 @@ class WineController extends AbstractController
     public function delete(
         EntityManagerInterface $em,
         Wine $wine
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $wine->setArchived(false);
         $em->flush();
 

@@ -23,7 +23,7 @@ class WorkshopController extends AbstractController
     ) {
     }
 
-    #[Route('/', name: 'list', methods: ["GET"])]
+    #[Route('', name: 'list', methods: ["GET"])]
     public function index(
         Request $request,
         PaginationService $paginationService
@@ -57,7 +57,7 @@ class WorkshopController extends AbstractController
         );
     }
 
-    #[Route('/', name: 'new', methods: ["POST"])]
+    #[Route('', name: 'new', methods: ["POST"])]
     #[IsGranted("ROLE_ADMIN")]
     public function new(
         Request                     $request,
