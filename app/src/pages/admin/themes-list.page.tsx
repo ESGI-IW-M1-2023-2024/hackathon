@@ -18,9 +18,11 @@ const ThemesList = () => {
   const pagination = {
     page: Number(searchParams.get('page') || 1),
     limit: Number(searchParams.get('limit') || import.meta.env.VITE_DEFAULT_PAGE_SIZE || 15),
+    orderBy: searchParams.get('orderBy') || '',
+    orderByDirection: searchParams.get('orderByDirection') || '',
     archived: Boolean(searchParams.get('archived')) || false,
   };
-  const { page, limit, archived } = pagination;
+  const { page, limit, orderBy, orderByDirection, archived } = pagination;
 
   const handlePageChange = (newPage: number) => {
     const newSearchParams = new URLSearchParams(searchParams);
@@ -39,7 +41,7 @@ const ThemesList = () => {
   };
 
   // Api Data
-  const { data, isLoading } = useGetThemesQuery({ page, limit, archived });
+  const { data, isLoading } = useGetThemesQuery({ page, limit, orderBy, orderByDirection, archived });
 
   const listProps: ListGridProps<Theme> = {
     columns: [...useThemeColumns({ handleDeleteTheme })],

@@ -47,11 +47,11 @@ const ListGridComponent = <Row,>({ columns, rows, loading, defaultSort, paginati
     const newSearchParams = new URLSearchParams(searchParams);
     if (model.length) {
       const sortModel = model[0];
-      newSearchParams.set('sortField', sortModel.field);
-      newSearchParams.set('sortOrder', sortModel.sort ? sortModel.sort : 'desc');
+      newSearchParams.set('orderBy', sortModel.field);
+      newSearchParams.set('orderByDirection', sortModel.sort ? sortModel.sort : 'desc');
     } else {
-      newSearchParams.set('sortOrder', '');
-      newSearchParams.set('sortField', '');
+      newSearchParams.set('orderBy', '');
+      newSearchParams.set('orderByDirection', '');
     }
     setSearchParams(newSearchParams);
   };
@@ -69,8 +69,8 @@ const ListGridComponent = <Row,>({ columns, rows, loading, defaultSort, paginati
           sorting: {
             sortModel: [
               {
-                field: searchParams.get('sortField') || defaultSort.field,
-                sort: (searchParams.get('sortOrder') as GridSortDirection) || defaultSort.order,
+                field: searchParams.get('orderBy') || defaultSort.field,
+                sort: (searchParams.get('orderByDirection') as GridSortDirection) || defaultSort.order,
               },
             ],
           },

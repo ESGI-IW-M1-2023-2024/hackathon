@@ -1,6 +1,8 @@
 export interface CustomPaginationParams {
   page: number;
   limit: number;
+  orderBy?: string;
+  orderByDirection?: string;
   archived: boolean;
 }
 

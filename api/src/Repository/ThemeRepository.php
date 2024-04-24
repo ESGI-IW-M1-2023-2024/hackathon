@@ -34,6 +34,10 @@ class ThemeRepository extends ServiceEntityRepository
             ->setParameter("archived", $filter["archived"]);
         }
 
+        if (!empty($filter["orderBy"]) && !empty($filter["orderByDirection"])) {
+            $queryBuilder->orderBy("u.".$filter["orderBy"], $filter["orderByDirection"]);
+        }
+
         return $queryBuilder;
     }
 }
