@@ -20,6 +20,8 @@ const AppRoutes = () => (
       <Route path='/themes' element={<ThemesList />} />
       <Route path='/themes/create' element={<CreateTheme />} />
       <Route path='/themes/:id' element={<EditTheme />} />
+        <Route path='/admin/regions' element={<RegionList/>}/>
+        <Route path='/admin/regions/create' element={<CreateRegion/>}/>
         <Route path='/admin/regions/:id' element={<EditRegion/>}/>
       <Route path='/themes/create' element={<CreateTheme />} />
       <Route path='/themes/:id' element={<EditTheme />} />
