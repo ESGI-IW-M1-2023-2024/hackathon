@@ -6,6 +6,7 @@ Boennologie est une application web permettant aux visiteurs de participation à
 - [Boennologie](#boennologie)
   - [Table de contenus](#table-de-contenus)
   - [Initialiser le projet](#initialiser-le-projet)
+  - [L'équipe](#léquipe)
   - [Technologies](#technologies)
   - [Fonctionnalités](#fonctionnalités)
     - [Public](#public)
@@ -35,6 +36,18 @@ make build
 ```
 
 Se rendre sur le site [Boennologie](localhost:5173)
+
+## L'équipe
+
+|           Chef de projet            |         Lead Tech Symfony         |          DB Administrator           |
+| :---------------------------------: | :-------------------------------: | :---------------------------------: |
+|               Quentin               |              Mathis               |               Olivier               |
+| ![Quentin](docs/trombi/Quentin.png) | ![Mathis](docs/trombi/Mathis.png) | ![Olivier](docs/trombi/Olivier.png) |
+
+|         UX/UI Designer          |        Lead Tech React        |       FullStack Developper        |
+| :-----------------------------: | :---------------------------: | :-------------------------------: |
+|              Kenza              |             Loan              |              Arnaud               |
+| ![Kenza](docs/trombi/Kenza.png) | ![Loan](docs/trombi/Loan.png) | ![Arnaud](docs/trombi/Arnaud.png) |
 
 ## Technologies
 - Environnement: [Docker](https://www.docker.com)
