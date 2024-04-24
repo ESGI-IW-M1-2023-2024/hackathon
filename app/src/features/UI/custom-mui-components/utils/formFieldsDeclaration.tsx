@@ -12,10 +12,12 @@ import {
   Select,
   TextField,
 } from '@mui/material';
-import { HTMLAttributes } from 'react';
-import { AutoCompleteFieldOpts, CheckboxField, ChoiceField, SimpleField } from '@/types/formField.types';
+import { HTMLAttributes, useState } from 'react';
+import { AutoCompleteFieldOpts, CheckboxField, ChoiceField, FileField, SimpleField } from '@/types/formField.types';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import { MuiFileInput } from 'mui-file-input';
+import { convertFileToBase64 } from './convert-file.util';
 
 export const CustomTextField = (
   field: ControllerRenderProps<FieldValues, string>,
@@ -149,6 +151,36 @@ export const CustomAutocomplete = (
           />
         );
       }}
+    />
+  );
+};
+
+export const CustomFileField = (
+  field: ControllerRenderProps<FieldValues, string>,
+  fieldState: ControllerFieldState,
+  options: FileField,
+  props: { [key: string]: any },
+): JSX.Element => {
+  const handleChangeFileToBase64 = async (file: File | null) => {
+    if (file) {
+      const newFile = await convertFileToBase64(file);
+      options.setValue('file', newFile);
+    }
+  };
+
+  return (
+    <MuiFileInput
+      id={options.fieldId}
+      label={options.label}
+      placeholder={options.placeholder}
+      fullWidth
+      {...field}
+      {...props}
+      onChange={(event) => handleChangeFileToBase64(event)}
+      error={fieldState.error?.message !== undefined}
+      helperText={fieldState.error?.message}
+      inputProps={options.fileTypes ? { accept: options.fileTypes.join(', ') } : {}}
+      clearIconButtonProps={options.iconButton}
     />
   );
 };
