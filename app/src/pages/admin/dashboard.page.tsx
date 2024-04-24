@@ -13,6 +13,9 @@ const Dashboard = () => {
         <Button variant='contained' onClick={() => navigate('/admin/regions')}>
             Liste des régions
         </Button>
+        <Button variant='contained' onClick={() => navigate('/admin/organisations')}>
+            Liste des organisations
+        </Button>
     </>
   );
 };
