@@ -3,7 +3,7 @@ export interface CustomPaginationParams {
   limit: number;
   orderBy?: string;
   orderByDirection?: string;
-  archived: boolean;
+  archived: 0 | 1;
 }
 
 export interface PaginatedResponse<ResultsType = any> {

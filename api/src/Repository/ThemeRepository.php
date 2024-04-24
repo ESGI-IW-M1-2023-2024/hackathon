@@ -35,7 +35,7 @@ class ThemeRepository extends ServiceEntityRepository
         }
 
         if (!empty($filter["orderBy"]) && !empty($filter["orderByDirection"])) {
-            $queryBuilder->orderBy("u.".$filter["orderBy"], $filter["orderByDirection"]);
+            $queryBuilder->orderBy("t.".$filter["orderBy"], $filter["orderByDirection"]);
         }
 
         return $queryBuilder;
