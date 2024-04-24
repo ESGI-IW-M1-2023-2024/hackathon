@@ -14,6 +14,9 @@ import EditRegion from "@/pages/admin/region/edit.page";
 import OrganisationList from "@/pages/admin/organisation/list.page";
 import CreateOrganisation from "@/pages/admin/organisation/create.page";
 import EditOrganisation from "@/pages/admin/organisation/edit.page";
+import WineList from "@/pages/admin/wine/list.page";
+import CreateWine from "@/pages/admin/wine/create.page";
+import EditWine from "@/pages/admin/wine/edit.page";
 
 
 const AppRoutes = () => (
@@ -32,6 +35,9 @@ const AppRoutes = () => (
         <Route path='/admin/organisations' element={<OrganisationList/>}/>
         <Route path='/admin/organisations/create' element={<CreateOrganisation/>}/>
         <Route path='/admin/organisations/:id' element={<EditOrganisation/>}/>
+        <Route path='/admin/wines' element={<WineList/>}/>
+        <Route path='/admin/wines/create' element={<CreateWine/>}/>
+        <Route path='/admin/wines/:id' element={<EditWine/>}/>
     </Route>
     <Route path='*' element={<NotFound />} />
   </Routes>

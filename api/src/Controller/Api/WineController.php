@@ -31,6 +31,7 @@ class WineController extends AbstractController
             [
                 "items" => $pagination->getItems(),
                 "pageCount" => $pagination->getPageCount(),
+                'totalItemCount' => $pagination->getTotalItemCount()
             ],
             context: ["groups" => ["wine:list"]]
         );

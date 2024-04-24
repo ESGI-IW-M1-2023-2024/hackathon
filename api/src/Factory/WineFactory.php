@@ -52,7 +52,7 @@ final class WineFactory extends ModelFactory
             'bottleSize' => self::faker()->shuffleArray(WineBottleSize::cases())[0],
             'color' => self::faker()->hexColor(),
             'grapeVariety' => self::faker()->text(255),
-            'label' => self::faker()->text(255),
+            'label' => self::faker()->text(30),
             'producer' => self::faker()->name(),
             'productYear' => self::faker()->year(),
             'quantity' => self::faker()->randomNumber(),

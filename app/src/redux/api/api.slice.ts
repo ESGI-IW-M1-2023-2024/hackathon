@@ -7,6 +7,7 @@ import {EditRegion, NewRegion, Region} from "@/features/admin/types/region.types
 import {Country} from "@/features/admin/types/country.types";
 import {Workshop} from '@/features/admin/types/workshop.types';
 import {EditOrganisation, NewOrganisation, Organisation} from "@/features/admin/types/organisation.types";
+import {EditWine, NewWine, Wine} from "@/features/admin/types/wine.types";
 
 export const apiSlice = createApi({
   reducerPath: 'api',
@@ -130,8 +131,6 @@ export const apiSlice = createApi({
               method: 'GET',
           }),
           providesTags: ['Regions'],
-
-      invalidatesTags: ['Regions'],
     }),
       deleteRegion: builder.mutation<void, number>({
           query: (id) => ({
@@ -180,6 +179,47 @@ export const apiSlice = createApi({
           }),
           invalidatesTags: ['Organisations'],
       }),
+
+
+      getWines: builder.query<PaginatedResponse<Wine>, CustomPaginationParams>({
+          query: (params) => ({
+              url: 'wines',
+              method: 'GET',
+              params,
+          }),
+          providesTags: ['Regions'],
+      }),
+      createWine: builder.mutation<Wine, NewWine>({
+          query: (body) => ({
+              url: 'wines',
+              method: 'POST',
+              body,
+          }),
+      }),
+      editWine: builder.mutation<Wine, EditWine>({
+          query: (body) => ({
+              url: `wines/${body.id}`,
+              method: 'PUT',
+              body: {
+                  label: body.label,
+              },
+          }),
+          invalidatesTags: ['Regions']
+      }),
+      getOneWine: builder.query<Wine, number>({
+          query: (id) => ({
+              url: `wines/${id}`,
+              method: 'GET',
+          }),
+          providesTags: ['Regions'],
+      }),
+      deleteWine: builder.mutation<void, number>({
+          query: (id) => ({
+              url: `wines/${id}`,
+              method: 'DELETE',
+          }),
+          invalidatesTags: ['Regions'],
+      }),
   }),
 });
 
@@ -203,5 +243,10 @@ export const {
     useGetOneOrganisationQuery,
     useGetOrganisationsQuery,
     useEditOrganisationMutation,
-    useGetThreeLastWorkshopsQuery
+    useGetThreeLastWorkshopsQuery,
+    useGetWinesQuery,
+    useCreateWineMutation,
+    useEditWineMutation,
+    useGetOneWineQuery,
+    useDeleteWineMutation
 } = apiSlice;
