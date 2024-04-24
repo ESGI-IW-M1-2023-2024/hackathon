@@ -1,10 +1,45 @@
 import Navbar from "@/features/UI/common/components/navbar";
-import { Box, Button, ButtonProps, Container, Stack, styled } from "@mui/material";
+import { Box, Button, ButtonProps, Card, CardContent, CardMedia, CircularProgress, Container, Stack, styled, Typography } from "@mui/material";
 import Diversity3Icon from '@mui/icons-material/Diversity3';
 import herobanner from "@/assets/homepage/herobanner.jpg";
 import TextImage from "@/features/UI/homepage/components/text-image.component";
+import { useGetWorkshopsQuery } from "@/redux/api/api.slice";
 
 const Home = () => {
+    const { data, isLoading } = useGetWorkshopsQuery();
+
+    const renderWorkshopCards = () => {
+        // Assure-toi que data est non-null et a au moins un élément
+        if (!data || data.length === 0) return <Typography variant="h6">Aucun atelier disponible pour le moment.</Typography>;
+
+        // Prends les trois derniers éléments de l'array
+        console.log(data);
+        const lastThreeWorkshops = data.slice(-3);
+
+        return lastThreeWorkshops.map((workshop, index) => {
+            // Assure-toi que chaque atelier a une propriété 'image', 'title', et 'description'
+            if (!workshop.theme || !workshop.theme.headerFilename || !workshop.theme.label || !workshop.theme.subtitle) return null;
+
+            return (
+                <Card key={index} sx={{ maxWidth: 345, margin: 2 }}>
+                    <CardMedia
+                        component="img"
+                        height="140"
+                        image={workshop.theme.headerFilename}
+                        alt={workshop.theme.label}
+                    />
+                    <CardContent>
+                        <Typography gutterBottom variant="h5" component="div">
+                            {workshop.theme.label}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                            {workshop.theme.subtitle}
+                        </Typography>
+                    </CardContent>
+                </Card>
+            );
+        });
+    };
 
     const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
         color: theme.palette.getContrastText('#660033'),
@@ -91,6 +126,23 @@ const Home = () => {
                     />
                 </Box>
 
+                {isLoading ? (
+                    <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 4 }}>
+                        <CircularProgress />
+                    </Box>
+                ) : (
+                    <Box
+                        component={'section'}
+                        display={'flex'}
+                        flexDirection={'row'}
+                        justifyContent={'center'}
+                        flexWrap={'wrap'}
+                        marginTop={'2rem'}
+                        marginBottom={'2rem'}
+                    >
+                        {renderWorkshopCards()}
+                    </Box>
+                )}
             </Container>
         </>
 

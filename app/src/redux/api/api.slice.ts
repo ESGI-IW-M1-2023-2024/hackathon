@@ -3,6 +3,7 @@ import { LoggedUser, UserCredentials } from '../../features/auth/types/logged-us
 import { EditTheme, NewTheme, Theme } from '@/features/admin/types/theme.types';
 import { RootState } from '../store';
 import { CustomPaginationParams, PaginatedResponse } from '@/types/pagination.types';
+import { Workshop } from '@/features/admin/types/workshop.types';
 
 export const apiSlice = createApi({
   reducerPath: 'api',
@@ -52,6 +53,13 @@ export const apiSlice = createApi({
         method: 'DELETE',
       }),
     }),
+    getWorkshops: builder.query<Workshop[], void>({
+      query: () => ({
+        url: 'workshops',
+        method: 'GET',
+      }),
+    }),
+
   }),
 });
 
@@ -62,4 +70,5 @@ export const {
   useCreateThemeMutation,
   useEditThemeMutation,
   useDeleteThemeMutation,
+  useGetWorkshopsQuery
 } = apiSlice;
