@@ -9,6 +9,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -17,12 +18,11 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 #[Route('/users', name: 'users_')]
 class UserController extends AbstractController
 {
-    #[Route('/', name: 'list', methods: ["GET"])]
+    #[Route('', name: 'list', methods: ["GET"])]
     public function index(
         Request $request,
         PaginationService $paginationService
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $pagination = $paginationService->getPagination($request, User::class);
 
         return $this->json(
@@ -40,21 +40,20 @@ class UserController extends AbstractController
         );
     }
 
-    #[Route('/', name: '_new', methods: ["POST"])]
+    #[Route('', name: '_new', methods: ["POST"])]
     public function new(
         Request                     $request,
         SerializerInterface         $serializer,
         ValidatorInterface          $validator,
         EntityManagerInterface      $em,
         UserPasswordHasherInterface $userPasswordHasher
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $user = $serializer->deserialize($request->getContent(), User::class, 'json');
 
         $violations = $validator->validate($user, groups: ["user:new"]);
 
         if ($violations->count() > 0) {
-            return $this->json($violations);
+            return $this->json($violations, Response::HTTP_BAD_REQUEST);
         }
 
         $user->setRoles(["ROLE_ADMIN"]);
@@ -75,14 +74,13 @@ class UserController extends AbstractController
         ValidatorInterface  $validator,
         EntityManagerInterface $em,
         UserPasswordHasherInterface $userPasswordHasher
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $userRequest = $serializer->deserialize($request->getContent(), User::class, 'json');
 
         $violations = $validator->validate($userRequest, groups: ["user:edit"]);
 
         if ($violations->count() > 0) {
-            return $this->json($violations);
+            return $this->json($violations, Response::HTTP_BAD_REQUEST);
         }
 
         if (!empty($userRequest->getFirstname())) {

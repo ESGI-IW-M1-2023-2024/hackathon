@@ -19,12 +19,11 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 #[Route('/resources', name: 'resources_')]
 class ResourceController extends AbstractController
 {
-    #[Route('/', name: 'list', methods: ["GET"])]
+    #[Route('', name: 'list', methods: ["GET"])]
     public function index(
         PaginationService $paginationService,
         Request           $request
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $pagination = $paginationService->getPagination($request, Resource::class);
 
         return $this->json(
@@ -40,15 +39,14 @@ class ResourceController extends AbstractController
     #[Route('/{id}', name: 'get', methods: ["GET"])]
     public function get(
         Resource $resource,
-    ): JsonResponse
-    {
+    ): JsonResponse {
         return $this->json(
             $resource,
             context: ["groups" => ["resource:detail"]]
         );
     }
 
-    #[Route('/', name: 'new', methods: ['POST'])]
+    #[Route('', name: 'new', methods: ['POST'])]
     #[IsGranted("ROLE_ADMIN")]
     public function new(
         SerializerInterface    $serializer,
@@ -56,14 +54,13 @@ class ResourceController extends AbstractController
         ValidatorInterface     $validator,
         EntityManagerInterface $em,
         ApiUploadFileService $apiUploadFileService
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $resource = $serializer->deserialize($request->getContent(), Resource::class, 'json');
 
         $violations = $validator->validate($resource, groups: ["resource:new"]);
 
         if ($violations->count() > 0) {
-            return $this->json($violations);
+            return $this->json($violations, Response::HTTP_BAD_REQUEST);
         }
 
         $data = json_decode($request->getContent());
@@ -91,8 +88,7 @@ class ResourceController extends AbstractController
         PropertyAccessorInterface $propertyAccessor,
         ApiUploadFileService $apiUploadFileService,
         Resource $resource
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $resourceRequest = $serializer->deserialize(
             $request->getContent(),
             Resource::class,
@@ -103,7 +99,7 @@ class ResourceController extends AbstractController
         $violations = $validator->validate($resourceRequest, groups: ["resource:edit"]);
 
         if ($violations->count() > 0) {
-            return $this->json($violations);
+            return $this->json($violations, Response::HTTP_BAD_REQUEST);
         }
 
         $reflect = new \ReflectionClass($resourceRequest);
@@ -135,11 +131,10 @@ class ResourceController extends AbstractController
     public function delete(
         EntityManagerInterface $em,
         Resource $resource
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $resource->setArchived(true);
         $em->flush();
 
-        return $this->json('', Response::HTTP_NO_CONTENT);
+        return $this->json([], Response::HTTP_NO_CONTENT);
     }
 }

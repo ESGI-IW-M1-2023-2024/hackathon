@@ -17,8 +17,7 @@ class BookingDenormalizer implements DenormalizerInterface
     public function __construct(
         private EntityManagerInterface    $em,
         private PropertyAccessorInterface $propertyAccessor
-    )
-    {
+    ) {
     }
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = [])

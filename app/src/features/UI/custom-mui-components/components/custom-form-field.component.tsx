@@ -1,13 +1,19 @@
-import { AutoCompleteFieldOpts, CheckboxField, ChoiceField, SimpleField } from '@/types/formField.types';
+import { AutoCompleteFieldOpts, CheckboxField, ChoiceField, FileField, SimpleField } from '@/types/formField.types';
 import { Controller, ControllerFieldState, ControllerRenderProps, FieldValues } from 'react-hook-form';
-import { CustomAutocomplete, CustomCheckboxField, CustomSelect, CustomTextField } from '../utils/formFieldsDeclaration';
+import {
+  CustomAutocomplete,
+  CustomCheckboxField,
+  CustomFileField,
+  CustomSelect,
+  CustomTextField,
+} from '../utils/formFieldsDeclaration';
 
 export interface CustomFormFieldProps {
   control: any;
   controlName: string;
-  options: SimpleField | CheckboxField | ChoiceField | AutoCompleteFieldOpts;
+  options: SimpleField | CheckboxField | ChoiceField | AutoCompleteFieldOpts | FileField;
   props?: { [key: string]: any };
-  childrenComponentType: 'TEXT_FIELD' | 'CHECKBOX' | 'SELECT' | 'AUTOCOMPLETE';
+  childrenComponentType: 'TEXT_FIELD' | 'CHECKBOX' | 'SELECT' | 'AUTOCOMPLETE' | 'FILE_FIELD';
   label?: string;
 }
 
@@ -30,6 +36,10 @@ const CustomFormField = ({ control, controlName, options, childrenComponentType,
       case 'AUTOCOMPLETE': {
         const opts = options as AutoCompleteFieldOpts;
         return CustomAutocomplete(field, opts, props || {});
+      }
+      case 'FILE_FIELD': {
+        const opts = options as FileField;
+        return CustomFileField(field, fieldState, opts, props || {});
       }
     }
   };

@@ -19,12 +19,12 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 #[Route('/themes', name: 'themes_')]
 class ThemeController extends AbstractController
 {
-    #[Route('/', name: 'list', methods: ["GET"])]
+    #[Route('', name: 'list', methods: ["GET"])]
+    #[IsGranted("ROLE_ADMIN")]
     public function index(
         Request           $request,
         PaginationService $paginationService
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $pagination = $paginationService->getPagination($request, Theme::class);
 
         return $this->json(
@@ -40,15 +40,14 @@ class ThemeController extends AbstractController
     #[Route('/{id}', name: 'get', methods: ["GET"])]
     public function get(
         Theme $theme,
-    ): JsonResponse
-    {
+    ): JsonResponse {
         return $this->json(
             $theme,
             context: ["groups" => ["theme:list"]]
         );
     }
 
-    #[Route('/', name: 'new', methods: ['POST'])]
+    #[Route('', name: 'new', methods: ['POST'])]
     #[IsGranted("ROLE_ADMIN")]
     public function new(
         SerializerInterface    $serializer,
@@ -56,14 +55,13 @@ class ThemeController extends AbstractController
         ValidatorInterface     $validator,
         EntityManagerInterface $em,
         ApiUploadFileService   $apiUploadFileService
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $theme = $serializer->deserialize($request->getContent(), Theme::class, 'json');
 
         $violations = $validator->validate($theme, groups: ["theme:new"]);
 
         if ($violations->count() > 0) {
-            return $this->json($violations);
+            return $this->json($violations, Response::HTTP_BAD_REQUEST);
         }
 
         $data = json_decode($request->getContent());
@@ -91,8 +89,7 @@ class ThemeController extends AbstractController
         PropertyAccessorInterface $propertyAccessor,
         ApiUploadFileService      $apiUploadFileService,
         Theme                     $theme
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $themeRequest = $serializer->deserialize(
             $request->getContent(),
             Theme::class,
@@ -103,7 +100,7 @@ class ThemeController extends AbstractController
         $violations = $validator->validate($themeRequest, groups: ["theme:edit"]);
 
         if ($violations->count() > 0) {
-            return $this->json($violations);
+            return $this->json($violations, Response::HTTP_BAD_REQUEST);
         }
 
         $data = json_decode($request->getContent());
@@ -136,11 +133,10 @@ class ThemeController extends AbstractController
     public function delete(
         EntityManagerInterface $em,
         Theme $theme
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $theme->setArchived(true);
         $em->flush();
 
-        return $this->json('', Response::HTTP_NO_CONTENT);
+        return $this->json([], Response::HTTP_NO_CONTENT);
     }
 }

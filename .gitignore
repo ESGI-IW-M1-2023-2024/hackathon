@@ -1,4 +1,5 @@
 ###> ide ###
+/.vscode
 /.idea
 /nbproject
 ###< ide ###
