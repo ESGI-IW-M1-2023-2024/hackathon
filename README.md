@@ -13,6 +13,7 @@ Boennologie est une application web permettant aux visiteurs de participation à
     - [Administrateur](#administrateur)
   - [Schéma de la base de données](#schéma-de-la-base-de-données)
   - [Documentation de l'API](#documentation-de-lapi)
+  - [Maquettage](#maquettage)
 
 ## Initialiser le projet
 
@@ -44,6 +45,8 @@ Se rendre sur le site [Boennologie](localhost:5173)
 - FrontEnd: [TypeScript](https://www.typescriptlang.org) avec le framework [React](https://fr.react.dev)
 - API Client: [Bruno](https://www.usebruno.com)
 - Maquettage UX/UI: [Figma](https://www.figma.com/fr/design/)
+- Création de graphique: [Lucid](https://lucid.co/fr)
+- Analyse de code: [SonarCloud](https://sonarcloud.io)
 
 ## Fonctionnalités
 
@@ -70,9 +73,15 @@ Se rendre sur le site [Boennologie](localhost:5173)
 
 ## Schéma de la base de données
 
-Schéma de la base de données avec l'outils [DBDiagram](https://dbdiagram.io/d/Boenologie-6626395203593b6b619e916d):
+Schéma de la base de données avec l'outils [DBDiagram](https://dbdiagram.io/d/Boenologie-6626395203593b6b619e916d).
+<details>
+
+<summary>
+Voir l'apperçu
+</summary>
 
 ![DB Diagram](docs/dbdiagram.png)
+</details>
 
 ## Documentation de l'API
 
@@ -80,3 +89,19 @@ La documentation de l'API est automatiquement générée avec le bundle [Nelmio/
 Elle est consultable depuis deux urls différentes:
 - Format [Swagger](localhost/api/doc)
 - Format [JSON](localhost/api/doc.json)
+- 
+## Maquettage
+
+Le maquettage du site est réalisé avec l'outils collaboratif [Figma](https://www.figma.com/fr/design/).
+
+<details>
+<summary>Apperçu d'un extrait du Design Sytem</summary>
+
+![DesignSystem](docs/designsystem.png)
+</details>
+
+<details>
+<summary>Apperçu d'une Wireframe</summary>
+
+![Wireframe](docs/wireframe.png)
+</details>
