@@ -28,14 +28,14 @@ export default function OutlinedCard() {
                     backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${winecave})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
-                    minHeight: "600px",
-                    maxHeight: "70vh",
+                    height: "70vh"
                 }}
             >
+                <Navbar transparent={true} />
                 <div style={{ textAlign: 'center', marginTop: 'auto', marginBottom: 'auto', textShadow: '1px 1px 2px black' }}>
-                    <h2 className="d-shadow" style={{ fontWeight: 400 }}>Découverte et dégustations de vins</h2>
-                    <p className="d-shadow" style={{ marginBottom: '2rem' }}>Un voyage à travers les saveurs</p>
-                    <ColorButton href="/workshops" variant='contained' startIcon={<Diversity3Icon />} className="d-shadow">
+                    <h1 className="d-shadow" style={{ fontWeight: 400 }}>Découverte et dégustations de vins</h1>
+                    <p className="d-shadow" style={{ marginBottom: '2rem', fontSize: '20px' }}>Un voyage à travers les saveurs</p>
+                    <ColorButton variant='contained' startIcon={<Diversity3Icon />} className="d-shadow">
                         Participer aux ateliers
                     </ColorButton>
                 </div>
@@ -167,8 +167,17 @@ export default function OutlinedCard() {
                         <h3>Les modalités</h3>
                         <p>Pour participer à notre atelier de vin, remplissez le formulaire d'inscription en ligne et effectuez le paiement selon les instructions fournies. Assurez-vous de consulter notre calendrier pour la date et l'heure de l'atelier, et prévoyez d'arriver à l'heure pour profiter pleinement de l'expérience.</p>
                         <Stack direction='row' width={'600px'} height={'200px'} justifyContent={'center'}>
-                            <Card sx={{ display: 'flex', alignItems: 'center', backgroundColor: '#f5f9ee', width: 1, borderRadius: '6px 0 0 6px', borderRight: 'dashed' }}>
-                                <span style={{ padding: '24px 25px', borderRadius: '50%', backgroundColor: '#fff', position: 'absolute', right: '800px' }}></span>
+                            <Card sx={{ display: 'flex', alignItems: 'center', backgroundColor: '#f5f9ee', width: 1, borderRadius: '6px 0 0 6px', borderRight: 'dashed', position: 'relative' }}>
+                                <span style={{
+                                    width: '50px',
+                                    height: '50px',
+                                    borderRadius: '50%',
+                                    backgroundColor: '#fff',
+                                    position: 'absolute',
+                                    left: '-35px',
+                                    top: '50%',
+                                    transform: 'translateY(-50%)'
+                                }}></span>
                                 <CardContent sx={{ flex: 1, justifyContent: 'center', display: 'flex', flexDirection: 'column', padding: 5, textAlign: 'center' }}>
                                     <p style={{ marginBottom: '10px' }}>
                                         Comprend la dégustation des vins et des planches apéritives
@@ -180,7 +189,6 @@ export default function OutlinedCard() {
                                 </CardContent>
                             </Card>
                             <Card sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#BA9878', width: '50%', borderRadius: '0 6px 6px 0', position: 'relative', borderRight: 0, borderStyle: 'none', color: '#fff' }}>
-                                <span style={{ padding: '24px 25px', borderRadius: '50%', backgroundColor: '#fff', position: 'absolute', left: '190px' }}></span>
                                 <CardContent sx={{ textAlign: 'center' }}>
                                     <p style={{ color: '#fff' }}>À partir de</p>
                                     <p style={{ marginLeft: 5, marginRight: 5, fontSize: '22px', fontWeight: 600 }}>
@@ -193,11 +201,24 @@ export default function OutlinedCard() {
                                         * Prix variable selon l'activité
                                     </p>
                                 </CardContent>
+                                <span style={{
+                                    position: 'absolute',
+                                    top: '50%',
+                                    right: '-35px',
+                                    transform: 'translateY(-50%)',
+                                    width: '50px',
+                                    height: '50px',
+                                    borderRadius: '50%',
+                                    backgroundColor: '#fff',
+                                }}></span>
                             </Card>
+
                         </Stack>
                         <p style={{ marginTop: '2rem' }}><strong>Réservez vite votre place !</strong></p>
                     </Box>
                 </Box>
+
+
 
                 <Box
                     component={'section'}
