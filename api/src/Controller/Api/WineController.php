@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use OpenApi\Attributes as OA;
 
 #[Route('/wines', name: 'wines_')]
 class WineController extends AbstractController
@@ -45,6 +46,22 @@ class WineController extends AbstractController
         );
     }
 
+    #[OA\RequestBody(
+        required: true,
+        content: new OA\JsonContent(
+            type: Wine::class,
+            example: [
+                'label' => 'required',
+                'producerPassword' => 'required',
+                'grapeVariety' => 'required',
+                'alcoholLevel' => 'required',
+                'color' => 'required',
+                'quantity' => 'required',
+                'bottleSize' => 'required',
+                'comments' => 'required',
+            ]
+        )
+    )]
     #[Route('', name: 'new', methods: ["POST"])]
     #[IsGranted("ROLE_ADMIN")]
     public function new(
@@ -77,6 +94,22 @@ class WineController extends AbstractController
         );
     }
 
+    #[OA\RequestBody(
+        required: true,
+        content: new OA\JsonContent(
+            type: Wine::class,
+            example: [
+                'label' => 'required',
+                'producerPassword' => 'required',
+                'grapeVariety' => 'required',
+                'alcoholLevel' => 'required',
+                'color' => 'required',
+                'quantity' => 'required',
+                'bottleSize' => 'required',
+                'comments' => 'required',
+            ]
+        )
+    )]
     #[Route('/{id}', name: 'edit', methods: ["PUT"])]
     #[IsGranted("ROLE_ADMIN")]
     public function edit(

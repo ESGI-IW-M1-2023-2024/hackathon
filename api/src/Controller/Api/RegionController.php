@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use OpenApi\Attributes as OA;
 
 #[Route("/regions", name: "regions_")]
 class RegionController extends AbstractController
@@ -45,6 +46,16 @@ class RegionController extends AbstractController
         );
     }
 
+    #[OA\RequestBody(
+        required: true,
+        content: new OA\JsonContent(
+            type: Region::class,
+            example: [
+                'label' => 'Rhônes-Alpes',
+                'country' => 'FR'
+            ]
+        )
+    )]
     #[Route('', name: 'new', methods: ['POST'])]
     #[IsGranted("ROLE_ADMIN")]
     public function new(
@@ -70,6 +81,16 @@ class RegionController extends AbstractController
         );
     }
 
+    #[OA\RequestBody(
+        required: true,
+        content: new OA\JsonContent(
+            type: Region::class,
+            example: [
+                'label' => 'Rhônes-Alpes',
+                'country' => 'FR'
+            ]
+        )
+    )]
     #[Route('/{id}', name: 'edit', methods: ['PUT'])]
     #[IsGranted("ROLE_ADMIN")]
     public function edit(

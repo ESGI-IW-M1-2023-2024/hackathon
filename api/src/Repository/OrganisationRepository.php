@@ -25,8 +25,15 @@ class OrganisationRepository extends ServiceEntityRepository
     /**
      * Requête de base
      */
-    public function getBaseQueryBuilder(): QueryBuilder
+    public function getBaseQueryBuilder(array $filters): QueryBuilder
     {
-        return $this->createQueryBuilder('u');
+        $queryBuilder = $this->createQueryBuilder('o');
+
+        if (!empty($filters["archived"])) {
+            $queryBuilder->andWhere('o.archived = :archived')
+                ->setParameter('archived', $filters['archived']);
+        }
+
+        return $queryBuilder;
     }
 }

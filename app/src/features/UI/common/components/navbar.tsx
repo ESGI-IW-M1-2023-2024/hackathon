@@ -1,10 +1,10 @@
 import logoImg from '@/assets/common/navbar/logo.svg'
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import { useTheme } from '@mui/material';
+import { Link, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 
-const Navbar = (props: any) => {
+const Navbar = () => {
     const { palette } = useTheme()
 
     return (
@@ -15,7 +15,7 @@ const Navbar = (props: any) => {
             alignItems="center"
             paddingInline={5}
             sx={{
-                backgroundColor: props.transparent ? palette.secondary.main : "transparent",
+                backgroundColor: palette.secondary.main,
                 color: palette.secondary.contrastText,
                 width: '100%',
             }}
@@ -29,20 +29,23 @@ const Navbar = (props: any) => {
                     component="a"
                     href="/"
                     display="block"
-                    width="100px"
+                    height="90px"
+                    padding={2}
                 >
                     <Box
                         component="img"
                         src={logoImg}
                         alt="logo"
-                        width="120%"
+                        height="100%"
                         className='d-shadow'
                     />
                 </Box>
                 <Box
+                    component="a"
+                    href="/"
                     className="d-shadow"
                     sx={{
-                        fontSize: "3rem",
+                        fontSize: "2.5rem",
                         fontFamily: 'MonteCarlo',
                         fontWeight: 400,
                         fontStyle: 'normal',
@@ -54,14 +57,17 @@ const Navbar = (props: any) => {
             <Stack direction="row" spacing={2}
                 sx={{
                     '& > a': {
-                        'font-weight': 'bold',
+                        'fontWeight': 'bold',
+                        'color': 'white',
+                        'textDecoration': 'none',
                     }
                 }}
             >
-                <a href="#">Ateliers</a>
-                <a href="#">Ressources</a>
-                <a href="#">A propos</a>
-                <a href="#"><LinkedInIcon /></a>
+                <Link href="/">Accueil</Link>
+                <Link href="/concept">Concept</Link>
+                <Link href="/workshops">Ateliers</Link>
+                <Link href="/about">A propos</Link>
+                <Link href="https://www.linkedin.com/in/olivier-bonneton-5a320020"><LinkedInIcon /></Link>
             </Stack>
         </Stack>
     )

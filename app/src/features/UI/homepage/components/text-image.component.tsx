@@ -1,14 +1,17 @@
-import { Box, Stack, Typography } from "@mui/material"
+import { Box, Stack, SxProps, Theme, Typography } from "@mui/material"
+import { ReactNode } from "react"
 
 interface TextImageProps {
     reverse?: boolean
+    button?: JSX.Element
     title: string
-    text: string | JSX.Element
     src: string
     alt?: string
+    sx?: SxProps<Theme>
+    children?: ReactNode
 }
 
-const TextImage = ({ reverse, title, text, src, alt }: TextImageProps) => {
+const TextImage = ({ reverse, title, src, alt, button, sx, children }: TextImageProps) => {
     return (
         <>
             <Stack
@@ -16,7 +19,9 @@ const TextImage = ({ reverse, title, text, src, alt }: TextImageProps) => {
                 direction={reverse ? "row-reverse" : "row"}
                 justifyContent="space-between"
                 alignItems="center"
+                gap="20px"
                 sx={{
+                    ...sx,
                     marginTop: "2rem",
                     marginBottom: "2rem"
                 }}
@@ -27,17 +32,19 @@ const TextImage = ({ reverse, title, text, src, alt }: TextImageProps) => {
                     alignItems={"flex-start"}
                     gap={2}
                     sx={{
-                        width: "50%",
+                        width: "auto",
+                        paddingRight: reverse ? "20px" : "0px",
                         "& > h3": {
                             fontSize: "2rem",
                             fontWeight: "bold"
                         }
                     }}
                 >
-                    <h3>{title}</h3>
-                    <p>
-                        {text}
-                    </p>
+                    <Typography variant="h3">{title}</Typography>
+                    <Typography>
+                        {children}
+                    </Typography>
+                    {button}
                 </Stack>
                 <Box
                     component={"img"}
@@ -46,7 +53,9 @@ const TextImage = ({ reverse, title, text, src, alt }: TextImageProps) => {
                     sx={{
                         width: "400px",
                         height: "400px",
-                        objectFit: "cover"
+                        objectFit: "cover",
+                        borderRadius: "4px",
+                        aspectRatio: "1/1",
                     }}
                     className="d-shadow"
                 />

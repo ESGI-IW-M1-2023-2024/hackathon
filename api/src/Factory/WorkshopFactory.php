@@ -46,7 +46,7 @@ final class WorkshopFactory extends ModelFactory
      */
     protected function getDefaults(): array
     {
-        $date = self::faker()->dateTimeThisMonth();
+        $date = self::faker()->dateTimeBetween('-1 month', '+1 month');
         return [
             'dateStart' => \DateTimeImmutable::createFromMutable($date),
             'length' => self::faker()->randomNumber(3),

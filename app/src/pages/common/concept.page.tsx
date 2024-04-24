@@ -1,4 +1,3 @@
-import Navbar from "@/features/UI/common/components/navbar";
 import winecave from "@/assets/concept/wine-cave.jpg";
 import wineglasses from "@/assets/concept/wine-glasses.jpg";
 import Chip from '@mui/material/Chip';
@@ -6,24 +5,14 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import LiquorIcon from '@mui/icons-material/Liquor';
-import Button, { ButtonProps } from '@mui/material/Button';
 import Diversity3Icon from '@mui/icons-material/Diversity3';
-import { styled } from '@mui/material/styles';
 import Stack from '@mui/material/Stack';
 import { Container } from '@mui/material';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListSubheader from '@mui/material/ListSubheader';
 import WatchLaterIcon from '@mui/icons-material/WatchLater';
-
-const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
-    color: theme.palette.getContrastText('#660033'),
-    backgroundColor: '#660033',
-    textTransform: 'none',
-    '&:hover': {
-        backgroundColor: '#B9515B',
-    },
-}));
+import ColorButton from "@/features/UI/custom-mui-components/components/custom-button.component";
 
 export default function OutlinedCard() {
 
@@ -147,7 +136,7 @@ export default function OutlinedCard() {
                     <Box
                         component={'img'}
                         className="d-shadow"
-                        sx={{ width: 400, height: 400, objectFit: 'cover' }}
+                        sx={{ width: 400, height: 400, objectFit: 'cover', borderRadius: '4px' }}
                         src={wineglasses}
                     />
                 </Box>
@@ -166,7 +155,7 @@ export default function OutlinedCard() {
                     <Box
                         component={'img'}
                         className="d-shadow"
-                        sx={{ width: 400, height: 400, objectFit: 'cover' }}
+                        sx={{ width: 400, height: 400, objectFit: 'cover', borderRadius: '4px' }}
                         src={wineglasses}
                     />
                     <Box
@@ -240,7 +229,7 @@ export default function OutlinedCard() {
                     marginTop={'2rem'}
                     marginBottom={'2rem'}
                 >
-                    <ColorButton variant='contained' startIcon={<Diversity3Icon />} className="d-shadow">
+                    <ColorButton href="/workshops" variant='contained' startIcon={<Diversity3Icon />} className="d-shadow">
                         Participer aux ateliers
                     </ColorButton>
                 </Box>

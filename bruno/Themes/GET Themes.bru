@@ -5,7 +5,15 @@ meta {
 }
 
 get {
-  url: {{baseUrl}}/api/themes
+  url: {{baseUrl}}/api/themes?archived=1
   body: none
-  auth: none
+  auth: bearer
+}
+
+query {
+  archived: 1
+}
+
+auth:bearer {
+  token: db96fa4fa9120c64bf9d3dc02f3bbd8981006d0eeb36faa4e30bc3e0e2480274
 }
