@@ -5,7 +5,7 @@ import {RootState} from '../store';
 import {CustomPaginationParams, PaginatedResponse} from '@/types/pagination.types';
 import {NewRegion, Region} from "@/features/admin/types/region.types";
 import {Country} from "@/features/admin/types/country.types";
-import {Workshop} from '@/features/admin/types/workshop.types';
+import { Workshop } from '@/features/admin/types/workshop.types';
 
 export const apiSlice = createApi({
   reducerPath: 'api',
@@ -61,28 +61,6 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['Themes'],
     }),
-      getCountries: builder.query<Country[], void>({
-          query: () => ({
-              url: 'countries',
-              method: 'GET',
-          }),
-          providesTags: ['Countries'],
-      }),
-      getRegions: builder.query<PaginatedResponse<Region>, CustomPaginationParams>({
-          query: (params) => ({
-              url: 'regions',
-              method: 'GET',
-              params,
-          }),
-          providesTags: ['Regions'],
-      }),
-      createRegion: builder.mutation<Region, NewRegion>({
-          query: (body) => ({
-              url: 'regions/',
-              method: 'POST',
-              body,
-          }),
-      }),
     getWorkshops: builder.query<PaginatedResponse<Workshop>, void>({
       query: () => ({
         url: 'workshops',
