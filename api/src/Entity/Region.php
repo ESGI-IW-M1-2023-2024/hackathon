@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Intl\Countries;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -40,6 +41,16 @@ class Region
     #[ORM\Column]
     #[Groups(["region:list", "region:detail", "wine:list", "wine:detail"])]
     private bool $archived = false;
+
+    #[Groups(["region:list", "region:detail", "wine:list", "wine:detail"])]
+    public function getCountryName(): string
+    {
+        return Countries::getName($this->country);
+    }
+
+    /********************************/
+    /* CONTENT AUTO GENERATED BELOW */
+    /********************************/
 
     public function __construct()
     {

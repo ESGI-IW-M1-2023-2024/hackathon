@@ -1,13 +1,15 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { LoggedUser, UserCredentials } from '../../features/auth/types/logged-user.type';
-import { EditTheme, NewTheme, Theme } from '@/features/admin/types/theme.types';
-import { RootState } from '../store';
-import { CustomPaginationParams, PaginatedResponse } from '@/types/pagination.types';
-import { Workshop } from '@/features/admin/types/workshop.types';
+import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
+import {LoggedUser, UserCredentials} from '../../features/auth/types/logged-user.type';
+import {EditTheme, NewTheme, Theme} from '@/features/admin/types/theme.types';
+import {RootState} from '../store';
+import {CustomPaginationParams, PaginatedResponse} from '@/types/pagination.types';
+import {EditRegion, NewRegion, Region} from "@/features/admin/types/region.types";
+import {Country} from "@/features/admin/types/country.types";
+import {Workshop} from '@/features/admin/types/workshop.types';
 
 export const apiSlice = createApi({
   reducerPath: 'api',
-  tagTypes: ['Themes'],
+    tagTypes: ['Themes', 'Regions', 'Countries'],
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_API_BASE_URL,
     prepareHeaders: (headers, api) => {
@@ -71,6 +73,53 @@ export const apiSlice = createApi({
         method: 'GET',
       }),
     }),
+      getCountries: builder.query<Country[], void>({
+          query: () => ({
+              url: 'countries',
+              method: 'GET',
+          }),
+          providesTags: ['Countries'],
+      }),
+      getRegions: builder.query<PaginatedResponse<Region>, CustomPaginationParams>({
+          query: (params) => ({
+              url: 'regions',
+              method: 'GET',
+              params,
+          }),
+          providesTags: ['Regions'],
+      }),
+      createRegion: builder.mutation<Region, NewRegion>({
+          query: (body) => ({
+              url: 'regions',
+              method: 'POST',
+              body,
+          }),
+      }),
+      editRegion: builder.mutation<Region, EditRegion>({
+          query: (body) => ({
+              url: `regions/${body.id}`,
+              method: 'PUT',
+              body: {
+                  label: body.label,
+                  country: body.country,
+              },
+          }),
+          invalidatesTags: ['Regions']
+      }),
+      getOneRegion: builder.query<Region, number>({
+          query: (id) => ({
+              url: `regions/${id}`,
+              method: 'GET',
+          }),
+          providesTags: ['Regions'],
+      }),
+      deleteRegion: builder.mutation<void, number>({
+          query: (id) => ({
+              url: `regions/${id}`,
+              method: 'DELETE',
+          }),
+          invalidatesTags: ['Regions'],
+      }),
   }),
 });
 
@@ -83,4 +132,10 @@ export const {
   useDeleteThemeMutation,
   useGetWorkshopsQuery,
   useGetOneThemeQuery,
+    useGetRegionsQuery,
+    useGetOneRegionQuery,
+    useCreateRegionMutation,
+    useEditRegionMutation,
+    useDeleteRegionMutation,
+    useGetCountriesQuery
 } = apiSlice;
