@@ -7,6 +7,7 @@ import { customErrorMap } from '@/utils/customZodErrorMap';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 
 const zodSchema = () =>
@@ -19,6 +20,7 @@ const zodSchema = () =>
 
 const CreateTheme = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [createTheme] = useCreateThemeMutation();
 
   const { control, handleSubmit, setValue } = useForm({
@@ -37,6 +39,7 @@ const CreateTheme = () => {
     try {
       await createTheme(formData).unwrap();
       dispatch(openSnackBar({ message: 'Thème créé avec succès', severity: 'success' }));
+      navigate('/themes');
     } catch (error: unknown) {
       console.log(error);
       dispatch(openSnackBar({ message: 'Impossible de créer le thème', severity: 'error' }));
@@ -71,6 +74,9 @@ const CreateTheme = () => {
       />
       <Button variant='contained' type='submit'>
         Créer le thème
+      </Button>
+      <Button variant='contained' onClick={() => navigate('/themes')}>
+        Retour à la liste
       </Button>
     </Box>
   );

@@ -7,7 +7,7 @@ import { customErrorMap } from '@/utils/customZodErrorMap';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { z } from 'zod';
 
 const zodSchema = () =>
@@ -21,6 +21,7 @@ const zodSchema = () =>
 
 const EditTheme = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { id } = useParams();
 
   const [editTheme] = useEditThemeMutation();
@@ -58,6 +59,7 @@ const EditTheme = () => {
     try {
       await editTheme(formData).unwrap();
       dispatch(openSnackBar({ message: 'Thème modifié avec succès', severity: 'success' }));
+      navigate('/themes');
     } catch (error: unknown) {
       console.log(error);
       dispatch(openSnackBar({ message: 'Impossible de modifier le thème', severity: 'error' }));
@@ -92,6 +94,9 @@ const EditTheme = () => {
       />
       <Button variant='contained' type='submit'>
         Modifier le thème
+      </Button>
+      <Button variant='contained' onClick={() => navigate('/themes')}>
+        Retour à la liste
       </Button>
     </Box>
   );
