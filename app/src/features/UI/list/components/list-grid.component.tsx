@@ -1,5 +1,5 @@
 import { ListGridProps } from '@/types/data-grid.types';
-import { Box, Container, Pagination, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Container, Pagination, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { DataGrid, DataGridProps, GridSortDirection, GridSortModel } from '@mui/x-data-grid';
 
 const ListGridComponent = <Row,>({ columns, rows, loading, defaultSort, pagination }: ListGridProps<Row>) => {
@@ -32,7 +32,7 @@ const ListGridComponent = <Row,>({ columns, rows, loading, defaultSort, paginati
   };
 
   const getDisplayRange = () => {
-    const firstRow = (page - 1) * limit;
+    const firstRow = (page - 1) * limit + 1;
     const lastRow = Math.min(limit * page, totalResults ?? 1);
     return (
       <Box sx={{ position: 'absolute', right: 0, mr: 3 }}>

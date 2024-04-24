@@ -19,11 +19,11 @@ const useRegionColumns = ({ handleDeleteRegion }: { handleDeleteRegion: (id: num
       headerName: 'Nom',
       flex: 1,
     },
-      {
-          field: 'countryName',
-          headerName: 'Pays',
-          flex: 1,
-      },
+    {
+      field: 'countryName',
+      headerName: 'Pays',
+      flex: 1,
+    },
     {
       field: 'actions',
       headerName: 'Actions',
@@ -34,12 +34,12 @@ const useRegionColumns = ({ handleDeleteRegion }: { handleDeleteRegion: (id: num
       renderCell: (params) => {
         return [
           <Tooltip key='editRegion' title='Editer'>
-            <IconButton onClick={() => navigate(`/admin/regions/${params.row.id}`)}>
+            <IconButton onClick={() => navigate(`/admin/regions/${params.row.id}`)} color='primary'>
               <EditIcon />
             </IconButton>
           </Tooltip>,
           <Tooltip key='deleteRegion' title='Supprimer'>
-            <IconButton onClick={() => handleDeleteRegion(params.row.id)}>
+            <IconButton onClick={() => handleDeleteRegion(params.row.id)} color='secondary'>
               <DeleteIcon />
             </IconButton>
           </Tooltip>,
