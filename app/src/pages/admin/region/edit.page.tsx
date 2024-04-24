@@ -1,46 +1,63 @@
 import CustomFormField from '@/features/UI/custom-mui-components/components/custom-form-field.component';
-import {useCreateRegionMutation, useGetCountriesQuery} from '@/redux/api/api.slice';
+import {useEditRegionMutation, useGetCountriesQuery, useGetOneRegionQuery} from '@/redux/api/api.slice';
 import {useAppDispatch} from '@/redux/hooks';
 import {openSnackBar} from '@/redux/slices/notification.slice';
 import {customErrorMap} from '@/utils/customZodErrorMap';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {Box, Button, LinearProgress} from '@mui/material';
 import {useForm} from 'react-hook-form';
+import {useNavigate, useParams} from 'react-router-dom';
 import {z} from 'zod';
-import {NewRegion} from "@/features/admin/types/region.types";
-import {useNavigate} from "react-router-dom";
+import {EditRegion as EditRegionType} from "@/features/admin/types/region.types";
 
 const zodSchema = () =>
     z.object({
+        id: z.number(),
         label: z.string(),
         country: z.string(),
     });
 
-const CreateRegion = () => {
-    const navigate = useNavigate();
+const EditRegion = () => {
     const dispatch = useAppDispatch();
-    const [createRegion] = useCreateRegionMutation();
+    const navigate = useNavigate();
+    const {id} = useParams();
+
+    const [editTheme] = useEditRegionMutation();
+    const {data} = useGetOneRegionQuery(Number(id));
+    const defaultValues = data
+        ? {
+            id: data.id,
+            label: data.label,
+            country: data.country,
+        }
+        : {
+            id: Number(id),
+            label: null,
+            country: null,
+        };
 
     const {data: countries, isLoading} = useGetCountriesQuery();
 
-    const {control, handleSubmit} = useForm({
+    const {control, handleSubmit, setValue} = useForm({
         resolver: zodResolver(zodSchema(), {errorMap: customErrorMap}),
         mode: 'onChange',
         reValidateMode: 'onChange',
-        defaultValues: {
-            label: null,
-            country: null,
-        },
+        defaultValues,
     });
 
-    const handleFormSubmit = async (formData: NewRegion): Promise<void> => {
-        try {
-            await createRegion(formData).unwrap();
-            dispatch(openSnackBar({message: 'Région créée avec succès', severity: 'success'}));
+    if (data) {
+        setValue('label', data.label);
+        setValue('country', data.country);
+    }
 
-            navigate(`/admin/regions`)
+    const handleFormSubmit = async (formData: EditRegionType): Promise<void> => {
+        try {
+            console.log(formData)
+            await editTheme(formData).unwrap();
+            dispatch(openSnackBar({message: 'Région modifiée avec succès', severity: 'success'}));
+            navigate('/admin/regions');
         } catch (error: unknown) {
-            dispatch(openSnackBar({message: 'Impossible de créer la région', severity: 'error'}));
+            dispatch(openSnackBar({message: 'Impossible de modifier le région', severity: 'error'}));
         }
     };
 
@@ -66,10 +83,13 @@ const CreateRegion = () => {
                 }}
             />
             <Button variant='contained' type='submit'>
-                Créer la région
+                Modifier la région
+            </Button>
+            <Button variant='contained' onClick={() => navigate('/regions')}>
+                Retour à la liste
             </Button>
         </Box>
     );
 };
 
-export default CreateRegion;
+export default EditRegion;
