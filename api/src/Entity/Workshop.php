@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\BookingStatus;
 use App\Repository\WorkshopRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -81,9 +82,12 @@ class Workshop
 
     #[ORM\Column]
     #[Groups(["workshop:list", "workshop:detail", "booking:list"])]
-    #[Assert\NotBlank(groups: ["workshop:new", "workshop:edit"])]
-    #[Assert\PositiveOrZero(groups: ["workshop:new", "workshop:edit"])]
+    #[Assert\NotBlank(groups: ["workshop:new"])]
+    #[Assert\PositiveOrZero(groups: ["workshop:new"])]
     private ?float $price = null;
+
+    #[ORM\Column]
+    private ?bool $reminderSent = false;
 
     public function __construct()
     {
@@ -288,6 +292,33 @@ class Workshop
     public function setPrice(float $price): static
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+
+    // Custom function
+    public function getValidatedBookings()
+    {
+        $bookings = [];
+
+        foreach ($this->getBookings() as $booking) {
+            if ($booking->getStatus() == BookingStatus::PAID) {
+                $bookings[] = $booking;
+            }
+        }
+
+        return $bookings;
+    }
+
+    public function isReminderSent(): ?bool
+    {
+        return $this->reminderSent;
+    }
+
+    public function setReminderSent(bool $reminderSent): static
+    {
+        $this->reminderSent = $reminderSent;
 
         return $this;
     }

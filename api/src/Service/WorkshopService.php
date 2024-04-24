@@ -3,6 +3,8 @@
 namespace App\Service;
 
 use App\Repository\WorkshopRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use MailerEnum;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
@@ -10,7 +12,9 @@ class WorkshopService
 {
     public function __construct(
         private ParameterBagInterface $parameterBag,
-        private WorkshopRepository $workshopRepository
+        private WorkshopRepository $workshopRepository,
+        private MailerService $mailerService,
+        private EntityManagerInterface $entityManager
     ) {
     }
 
@@ -25,10 +29,22 @@ class WorkshopService
             return;
         }
 
-        // Send email for each bookers
+        $outputInterface->writeln(sizeof($workshops) . ' ateliers à venir');
+
+        /** @var App\Entity\Workshop $workshop */
         foreach ($workshops as $workshop) {
-            foreach ($workshop->getValidatedBookings as $booking) {
-                
+
+            $outputInterface->writeln(
+                sizeof($workshop->getValidatedBookings())
+                    . ' mails à envoyer pour l\'atelier ' . $workshop->getTheme()->getLabel()
+            );
+
+            foreach ($workshop->getValidatedBookings() as $booking) {
+                $this->mailerService->sendMail(MailerEnum::WORKSHOP_REMINDER, ['booking' => $booking]);
             }
+            $workshop->setReminderSent(true);
         }
+
+        $this->entityManager->flush();
+    }
 }

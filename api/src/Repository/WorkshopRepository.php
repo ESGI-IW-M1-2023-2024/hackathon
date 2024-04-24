@@ -39,6 +39,7 @@ class WorkshopRepository extends ServiceEntityRepository
             ->andWhere('w.dateStart <= :dateDelayed')
             ->setParameter('date', new DateTime())
             ->setParameter('dateDelayed', (new DateTime())->modify('+' . $delay . ' days'))
+            ->andWhere('w.reminderSent = false')
             ->getQuery()
             ->getResult();
     }
