@@ -25,8 +25,20 @@ class BookingRepository extends ServiceEntityRepository
     /**
      * Requête de base
      */
-    public function getBaseQueryBuilder(): QueryBuilder
+    public function getBaseQueryBuilder(array $filter): QueryBuilder
     {
-        return $this->createQueryBuilder('u');
+        $queryBuilder = $this->createQueryBuilder('b');
+
+        if (!empty($filter["status"])) {
+            $queryBuilder->andWhere('b.status = :status')
+            ->setParameter('status', $filter["status"]);
+        }
+
+        if (!empty($filter["archived"])) {
+            $queryBuilder->andWhere('b.archived = :archived')
+                ->setParameter('archived', $filter["archived"]);
+        }
+
+        return $queryBuilder;
     }
 }

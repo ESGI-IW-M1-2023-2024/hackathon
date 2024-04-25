@@ -49,6 +49,11 @@ class WineRepository extends ServiceEntityRepository
                 ->setParameter('region', $filter['region']);
         }
 
+        if (!empty($filter["archived"])) {
+            $queryBuilder->andWhere('w.archived = :archived')
+                ->setParameter('archived', $filter["archived"]);
+        }
+
 
         return $queryBuilder;
     }
