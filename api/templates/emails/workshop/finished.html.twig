@@ -15,4 +15,9 @@
         <li>{{ wine.label }} - {{ wine.productYear }}</li>
     {% endfor %}
 </ul>
+
+<p>
+    Nous vous invitons également à remplir un formulaire de feedback disponible en pièce-jointe du mail ou en ligne en suivant le codeQR suivant: <br>
+    <img src="{{ absolute_url(asset('qr_code_feedback.png'))}}" style="width: 12rem;" />
+</p>
 {% endblock %}

@@ -9,6 +9,8 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Part\DataPart;
+use Symfony\Component\Mime\Part\File;
 
 class MailerService
 {
@@ -35,7 +37,7 @@ class MailerService
             MailerEnum::BOOKING_VALIDATION => $this->sendMailBookingValidation($context),
             MailerEnum::BOOKING_CANCELED => $this->sendMailBookingCanceled($context),
             MailerEnum::WORKSHOP_REMINDER => $this->sendMailWorkshopReminder($context),
-            MailerEnum::WORKSHOP_CANCELED => null,
+            MailerEnum::WORKSHOP_CANCELED => $this->sendMailWorkshopCancel($context),
             MailerEnum::WORKSHOP_FINISHED => $this->sendMailWorkshopFinished($context)
         };
 
@@ -101,16 +103,31 @@ class MailerService
             ->context(['workshop' => $booking->getWorkshop()]);
     }
 
+    private function sendMailWorkshopCancel(array $context)
+    {
+        $booking = $context["booking"];
+
+        return (new TemplatedEmail())
+            ->from($this->sender)
+            ->to($booking->getEmail())
+            ->subject('Boennologie - Annulation d\'un atelier')
+            ->htmlTemplate('emails/workshop/cancel.html.twig')
+            ->context(['workshop' => $booking->getWorkshop()]);
+    }
+
     private function sendMailWorkshopFinished(array $context)
     {
         /** @var Booking $booking */
         $booking = $context['booking'];
+
+        $projectDir = $this->parameterBag->get('kernel.project_dir');
 
         return (new TemplatedEmail())
             ->from($this->sender)
             ->to($booking->getEmail())
             ->subject('Boennologie - Récapitulatif d\'atelier')
             ->htmlTemplate('emails/workshop/finished.html.twig')
-            ->context(['workshop' => $booking->getWorkshop()]);
+            ->context(['workshop' => $booking->getWorkshop()])
+            ->addPart(new DataPart(new File($projectDir . '/public/Questionnaire_evaluation_atelier.pdf')));
     }
 }

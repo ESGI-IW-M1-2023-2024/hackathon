@@ -52,15 +52,27 @@ class WorkshopController extends AbstractController
         );
     }
 
-    #[Route('/{id}/finished', name: 'get_finished', methods: ["GET"])]
+    #[Route('/{id}/finished', name: 'finish', methods: ["GET"])]
     #[IsGranted('ROLE_ADMIN')]
-    public function getFinished(Workshop $workshop, WorkshopService $workshopService): JsonResponse
+    public function finish(Workshop $workshop, WorkshopService $workshopService): JsonResponse
     {
         $workshopService->workshopFinishedHandler($workshop);
 
         return $this->json(
             $workshop,
-            context: ["groups" => ["workshop:list", "workshop:list:status:finished"]]
+            context: ["groups" => ["workshop:detail"]]
+        );
+    }
+
+    #[Route('/{id}/cancel', name: 'cancel', methods: ["GET"])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function cancel(Workshop $workshop, WorkshopService $workshopService): JsonResponse
+    {
+        $workshopService->workshopCancelHandler($workshop);
+
+        return $this->json(
+            $workshop,
+            context: ["groups" => ["workshop:detail"]]
         );
     }
 

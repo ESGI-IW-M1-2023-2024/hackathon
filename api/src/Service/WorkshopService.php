@@ -64,4 +64,19 @@ class WorkshopService
 
         $this->entityManager->flush();
     }
+
+    public function workshopCancelHandler(Workshop $workshop)
+    {
+        if (WorkshopStatus::FINISHED != $workshop->getStatus()) {
+            return;
+        }
+
+        foreach ($workshop->getValidatedBookings() as $booking) {
+            $this->mailerService->sendMail(MailerEnum::WORKSHOP_CANCELED, ['booking' => $booking]);
+        }
+
+        $workshop->setStatus(WorkshopStatus::CANCELED);
+
+        $this->entityManager->flush();
+    }
 }
