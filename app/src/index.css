@@ -21,6 +21,11 @@ a {
   color: inherit;
 }
 
+h1.title-calendar {
+  text-align: center;
+  margin-top: 2rem;
+}
+
 /*
   ombre portée avec filtre drop-shadow avec hover et transition
 */
@@ -66,7 +71,7 @@ a {
   z-index: -1;
 }
 
-/* 
+/*
   paragraphe à propos
 */
 p.about::first-letter {
@@ -76,14 +81,14 @@ p.about::first-letter {
   font-family: 'Montecarlo';
 }
 
-/* 
-  galerie photo 
+/*
+  galerie photo
 */
 .grid {
   display: grid;
-  grid-template-rows: 
+  grid-template-rows:
     repeat(4, 180px);
-  grid-template-columns: 
+  grid-template-columns:
     repeat(3, 1fr);
   grid-gap: 5px;
 }
@@ -113,7 +118,6 @@ p.about::first-letter {
 }
 
 .grid {
-  
   max-width:1080px;
 }
 
@@ -121,4 +125,18 @@ p.about::first-letter {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+/*
+ Surcharge FullCalendarjs
+ */
+
+.fc .fc-button-primary {
+  background-color: #8F0047;
+  border-color: #8F0047;
+}
+
+.fc .fc-button-primary:hover {
+  background-color: #3D001F;
+  border-color: #3D001F;
 }
