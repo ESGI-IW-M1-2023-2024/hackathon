@@ -68,7 +68,7 @@ const ThemesList = () => {
   }
 
   return (
-    <Stack width={'80%'} alignItems={'left'} margin={'1rem auto'} spacing={2} direction={'column'} >
+    <Stack width={'80%'} alignItems={'left'} margin={'1rem auto'} spacing={2} direction={'column'}>
       <Box textAlign={'center'}>
         <h1>Liste des Thèmes</h1>
       </Box>

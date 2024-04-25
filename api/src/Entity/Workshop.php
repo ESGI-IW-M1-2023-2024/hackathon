@@ -106,6 +106,12 @@ class Workshop
         return $this->getWines()->count();
     }
 
+    #[Groups(["workshop:list", "workshop:detail"])]
+    public function getNumberOfBookings(): int
+    {
+        return $this->getBookings()->count();
+    }
+
     /********************************/
     /* CONTENT AUTO GENERATED BELOW */
     /********************************/

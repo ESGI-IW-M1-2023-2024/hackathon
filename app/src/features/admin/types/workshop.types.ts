@@ -21,7 +21,8 @@ export interface Workshop {
   maxBookingDate: Date;
   organisation: Organisation;
   theme: Theme;
-  bookings: WorkshopBooking[];
+  numberOfWines: number;
+  numberOfBookings: number;
   price: number;
 }
 
@@ -35,4 +36,8 @@ export interface BookingGivenWorkshop {
   maxBookingDate: Date;
   organisation: Organisation;
   price: number;
+}
+
+export enum WorkshopSortableField {
+  'ID' = 'id',
 }
