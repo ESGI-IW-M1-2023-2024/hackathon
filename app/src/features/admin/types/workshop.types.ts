@@ -11,13 +11,21 @@ export interface WorkshopBooking {
   reference: string;
 }
 
+export enum WorkshopStatus {
+  'HIDDEN' = 'hidden',
+  'BOOKING' = 'booking',
+  'CLOSED' = 'closed',
+  'FINISHED' = 'finished',
+  'CANCELED' = 'canceled',
+}
+
 export interface Workshop {
   id: number;
   dateStart: Date;
   length: number;
   maxPerson: number;
   location: string;
-  status: string;
+  status: WorkshopStatus;
   maxBookingDate: Date;
   organisation: Organisation;
   theme: Theme;

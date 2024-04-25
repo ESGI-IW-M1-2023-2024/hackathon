@@ -3,6 +3,22 @@ import { GridColDef } from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { WorkshopStatus } from '../types/workshop.types';
+
+const renderStatus = (status: WorkshopStatus) => {
+  switch (status) {
+    case WorkshopStatus.BOOKING:
+      return 'Ouvert au inscriptions';
+    case WorkshopStatus.CANCELED:
+      return 'Annulé';
+    case WorkshopStatus.CLOSED:
+      return 'Fermé';
+    case WorkshopStatus.FINISHED:
+      return 'Terminé';
+    case WorkshopStatus.HIDDEN:
+      return 'Non visible';
+  }
+};
 
 const useWorkshopColumns = ({
   handleDeleteWorkshop,
@@ -35,6 +51,14 @@ const useWorkshopColumns = ({
       flex: 0.5,
       align: 'center',
       headerAlign: 'center',
+    },
+    {
+      field: 'status',
+      headerName: 'Statut',
+      flex: 0.5,
+      align: 'center',
+      headerAlign: 'center',
+      renderCell: (params) => renderStatus(params.value),
     },
     {
       field: 'actions',
