@@ -46,10 +46,10 @@ final class WorkshopFactory extends ModelFactory
      */
     protected function getDefaults(): array
     {
-        $date = self::faker()->dateTimeBetween('-1 month', '+1 month');
+        $date = self::faker()->dateTimeBetween('-1 month', '+1 month')->setTime(18, 0);
         return [
             'dateStart' => \DateTimeImmutable::createFromMutable($date),
-            'length' => self::faker()->randomNumber(3),
+            'length' => self::faker()->numberBetween(60, 120),
             'location' => self::faker()->text(30),
             'maxBookingDate' => \DateTimeImmutable::createFromMutable($date->modify('-7 day')),
             'maxPerson' => self::faker()->randomNumber(2),
