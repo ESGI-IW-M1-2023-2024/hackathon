@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Workshop;
+use App\Enum\BookingStatus;
 use App\Repository\WorkshopRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use MailerEnum;
@@ -67,11 +68,11 @@ class WorkshopService
 
     public function workshopCancelHandler(Workshop $workshop)
     {
-        if (WorkshopStatus::FINISHED != $workshop->getStatus()) {
+        if (WorkshopStatus::FINISHED == $workshop->getStatus()) {
             return;
         }
 
-        foreach ($workshop->getValidatedBookings() as $booking) {
+        foreach ($workshop->getBookingsByStatus([BookingStatus::PAID, BookingStatus::PENDING]) as $booking) {
             $this->mailerService->sendMail(MailerEnum::WORKSHOP_CANCELED, ['booking' => $booking]);
         }
 
