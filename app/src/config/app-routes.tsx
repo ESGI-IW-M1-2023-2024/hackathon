@@ -16,6 +16,7 @@ import CreateOrganisation from '@/pages/admin/organisation/create.page';
 import EditOrganisation from '@/pages/admin/organisation/edit.page';
 import WorkshopList from '@/pages/common/workshop-list.page';
 import WorkshopDetails from '@/pages/common/workshop-details.page';
+import AdminWorkshopList from '@/pages/admin/workshop/workshop-list.page';
 
 const AppRoutes = () => (
   <Routes>
@@ -26,15 +27,16 @@ const AppRoutes = () => (
     <Route path='/workshops/:id' element={<WorkshopDetails />} />
     <Route element={<SecureRoute />}>
       <Route path='/admin' element={<Dashboard />} />
-      <Route path='/themes' element={<ThemesList />} />
-      <Route path='/themes/create' element={<CreateTheme />} />
-      <Route path='/themes/:id' element={<EditTheme />} />
+      <Route path='/admin/themes' element={<ThemesList />} />
+      <Route path='/admin/themes/create' element={<CreateTheme />} />
+      <Route path='/admin/themes/:id' element={<EditTheme />} />
       <Route path='/admin/regions' element={<RegionList />} />
       <Route path='/admin/regions/create' element={<CreateRegion />} />
       <Route path='/admin/regions/:id' element={<EditRegion />} />
       <Route path='/admin/organisations' element={<OrganisationList />} />
       <Route path='/admin/organisations/create' element={<CreateOrganisation />} />
       <Route path='/admin/organisations/:id' element={<EditOrganisation />} />
+      <Route path='/admin/workshops' element={<AdminWorkshopList />} />
     </Route>
     <Route path='*' element={<NotFound />} />
   </Routes>
