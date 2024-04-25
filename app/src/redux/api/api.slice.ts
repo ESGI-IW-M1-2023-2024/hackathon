@@ -234,6 +234,5 @@ export const {
   useGetThreeLastWorkshopsQuery,
   useGetOneWorkshopQuery,
   useCreateBookingMutation,
-  useGetWorkshopsQuery,
   useGetWorkshopsForCalendarQuery,
 } = apiSlice;
