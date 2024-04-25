@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { WorkshopStatus } from '../types/workshop.types';
+import CancelIcon from '@mui/icons-material/Cancel';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 const renderStatus = (status: WorkshopStatus) => {
   switch (status) {
@@ -59,6 +61,14 @@ const useWorkshopColumns = ({
       align: 'center',
       headerAlign: 'center',
       renderCell: (params) => renderStatus(params.value),
+    },
+    {
+      field: 'archived',
+      headerName: 'Archivé',
+      headerAlign: 'center',
+      align: 'center',
+      flex: 1,
+      renderCell: (params) => (params.value ? <CancelIcon color='error' /> : <CheckCircleIcon color='success' />),
     },
     {
       field: 'actions',

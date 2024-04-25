@@ -1,7 +1,9 @@
 import ListGridComponent from '@/features/UI/list/components/list-grid.component';
 import { Workshop, WorkshopSortableField } from '@/features/admin/types/workshop.types';
 import useWorkshopColumns from '@/features/admin/utils/workshop-config';
-import { useGetWorkshopsQuery } from '@/redux/api/api.slice';
+import { useDeleteWorkshopMutation, useGetWorkshopsQuery } from '@/redux/api/api.slice';
+import { useAppDispatch } from '@/redux/hooks';
+import { openSnackBar } from '@/redux/slices/notification.slice';
 import { ListGridProps } from '@/types/data-grid.types';
 import { Box, Button, CircularProgress, FormControlLabel, Stack, Switch } from '@mui/material';
 import { useState } from 'react';
@@ -10,6 +12,9 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 const AdminWorkshopList = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const [deleteWorkshop] = useDeleteWorkshopMutation();
+
   const [showArchived, setShowArchived] = useState<0 | 1>(Number(searchParams.get('archived')) === 1 ? 1 : 0 || 0);
 
   // Pagination
@@ -28,7 +33,15 @@ const AdminWorkshopList = () => {
     setSearchParams(newSearchParams);
   };
 
-  const handleDeleteWorkshop = async (id: number) => console.log(`TODO delete workshop ${id}`);
+  const handleDeleteWorkshop = async (id: number) => {
+    try {
+      await deleteWorkshop(id.toString());
+      dispatch(openSnackBar({ message: 'Atelier supprimé avec succès', severity: 'success' }));
+    } catch (error: unknown) {
+      console.error(error);
+      dispatch(openSnackBar({ message: "Erreur lors de la suppression de l'atelier", severity: 'error' }));
+    }
+  };
 
   // Api Data
   const { data, isLoading } = useGetWorkshopsQuery({ page, limit, orderBy, orderByDirection, archived: showArchived });

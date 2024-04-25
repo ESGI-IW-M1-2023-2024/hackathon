@@ -132,6 +132,13 @@ export const apiSlice = createApi({
       },
       invalidatesTags: ['Workshop'],
     }),
+    deleteWorkshop: builder.mutation<void, string>({
+      query: (id) => ({
+        url: `workshops/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Workshop'],
+    }),
     getCountries: builder.query<Country[], void>({
       query: () => ({
         url: 'countries',
@@ -309,4 +316,5 @@ export const {
   useGetWorkshopsForCalendarQuery,
   useCreateWorkshopMutation,
   useEditWorkshopMutation,
+  useDeleteWorkshopMutation,
 } = apiSlice;
