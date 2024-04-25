@@ -15,10 +15,6 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import WineBarIcon from '@mui/icons-material/WineBar';
-import InfoIcon from '@mui/icons-material/Info';
-import GroupsIcon from '@mui/icons-material/Groups';
-import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
 
 import logoImg from '@/assets/common/navbar/logo.svg'
 import {LoggedUser} from "@/features/auth/types/logged-user.type";
@@ -29,6 +25,15 @@ import { Menu } from '@mui/base/Menu';
 import { MenuButton as BaseMenuButton } from '@mui/base/MenuButton';
 import { MenuItem as BaseMenuItem, menuItemClasses } from '@mui/base/MenuItem';
 import { styled } from '@mui/system';
+
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import PersonIcon from '@mui/icons-material/Person';
+
 export default function MainNavigation() {
 
     /*
@@ -117,7 +122,7 @@ export default function MainNavigation() {
                     >
                       {!user ?
                         <>
-                          <Link href="/">Accueil testeee  </Link>
+                          <Link href="/">Accueil</Link>
                           <Link href="/concept">Concept</Link>
                           <Link href="/workshops">Ateliers</Link>
                           <Link href="/about">A propos</Link>
@@ -127,10 +132,7 @@ export default function MainNavigation() {
                         <>
                             <Dropdown>
                                 <MenuButton<typeof Link> slots={{ root: Link}} style={{background: "none"}}>Admin</MenuButton>
-                                <Menu slots={{ listbox: Listbox }}>
-                                    <MenuItem>
-                                        <Link href={"/admin"}>Dashboard</Link>
-                                    </MenuItem>
+                                <Menu slots={{ listbox: Listbox }} style={{zIndex:1}}>
                                     <MenuItem>
                                         <Link href={"/themes"}>Liste des thèmes</Link>
                                     </MenuItem>
@@ -141,10 +143,14 @@ export default function MainNavigation() {
                                         <Link href={"/admin/organisations"}>Liste des organisation</Link>
                                     </MenuItem>
                                     <MenuItem>
+                                        <Link href={"/admin/workshops"}>Liste des ateliers</Link>
+                                    </MenuItem>
+                                    <MenuItem>
                                         <Link href={"/admin/workshops/calendar"}>Calendrier des ateliers</Link>
                                     </MenuItem>
                                 </Menu>
                             </Dropdown>
+                            <Link href={"/admin"}>Dashboard</Link>
                             <Link href={"/"}>Retour au site client</Link>
                         </>
                       }
@@ -201,36 +207,51 @@ export default function MainNavigation() {
                                         'textDecoration': 'none',
                                     }
                                 }}>
+                                <Accordion
+                                  expandicon={<ArrowDropDownIcon  />}
+                                  aria-controls="panel1-content"
+                                  id="panel1-header"
+                                  style={{background: palette.secondary.light, color: palette.secondary.contrastText}}
+                                  className={"navbar-accordion"}
+                                >
+                                    <AccordionSummary>
+                                        <ListItemButton>
+                                            <ListItemIcon>
+                                                <AdminPanelSettingsIcon sx={{ color: palette.secondary.contrastText }} />
+                                            </ListItemIcon>
+                                            <ListItemText primary="Admin" />
+                                        </ListItemButton>
+                                    </AccordionSummary>
+                                    <AccordionDetails>
+                                        <Link href={"/themes"} onClick={toggleDrawer(false)}>Liste des thèmes</Link>
+                                    </AccordionDetails>
+                                    <AccordionDetails>
+                                        <Link href={"/admin/regions"} onClick={toggleDrawer(false)}>Liste des régions</Link>
+                                    </AccordionDetails>
+                                    <AccordionDetails>
+                                        <Link href={"/admin/organisations"} onClick={toggleDrawer(false)}>Liste des organisations</Link>
+                                    </AccordionDetails>
+                                    <AccordionDetails>
+                                        <Link href={"/admin/workshops"} onClick={toggleDrawer(false)}>Liste des ateliers</Link>
+                                    </AccordionDetails>
+                                    <AccordionDetails>
+                                        <Link href={"/admin/workshops/calendar"} onClick={toggleDrawer(false)}>Calendrier des ateliers</Link>
+                                    </AccordionDetails>
+                                </Accordion>
+                                <Link href="/admin" onClick={toggleDrawer(false)}>
+                                    <ListItemButton>
+                                        <ListItemIcon>
+                                            <DashboardIcon sx={{ color: palette.secondary.contrastText }} />
+                                        </ListItemIcon>
+                                        <ListItemText primary="Dashboard" />
+                                    </ListItemButton>
+                                </Link>
                                 <Link href="/" onClick={toggleDrawer(false)}>
                                     <ListItemButton>
                                         <ListItemIcon>
-                                            <WineBarIcon sx={{ color: palette.secondary.contrastText }} />
-                                        </ListItemIcon>
-                                        <ListItemText primary="Accueil" />
-                                    </ListItemButton>
-                                </Link>
-                                <Link href="/concept" onClick={toggleDrawer(false)}>
-                                    <ListItemButton>
-                                        <ListItemIcon>
-                                            <TipsAndUpdatesIcon sx={{ color: palette.secondary.contrastText }} />
+                                            <PersonIcon sx={{ color: palette.secondary.contrastText }} />
                                         </ListItemIcon >
-                                        <ListItemText primary="Concept" />
-                                    </ListItemButton>
-                                </Link>
-                                <Link href="/workshops" onClick={toggleDrawer(false)}>
-                                    <ListItemButton>
-                                        <ListItemIcon>
-                                            <GroupsIcon sx={{ color: palette.secondary.contrastText }} />
-                                        </ListItemIcon>
-                                        <ListItemText primary="Ateliers" />
-                                    </ListItemButton>
-                                </Link>
-                                <Link href="/about" onClick={toggleDrawer(false)}>
-                                    <ListItemButton>
-                                        <ListItemIcon>
-                                            <InfoIcon sx={{ color: palette.secondary.contrastText }} />
-                                        </ListItemIcon>
-                                        <ListItemText primary="A propos" />
+                                        <ListItemText primary="Retour vers le site client" />
                                     </ListItemButton>
                                 </Link>
                             </Box>
@@ -277,13 +298,12 @@ const Listbox = styled('ul')(
   overflow: auto;
   outline: 0px;
   z-index: 500  ;
-  background: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
+  background: #fff;
   border: 1px solid ${theme.palette.mode === 'dark' ? grey[700] : grey[200]};
   color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
   box-shadow: 0px 4px 6px ${
     theme.palette.mode === 'dark' ? 'rgba(0,0,0, 0.50)' : 'rgba(0,0,0, 0.05)'
   };
-  z-index: 1;
   `,
 );
 
@@ -308,6 +328,9 @@ const MenuItem = styled(BaseMenuItem)(
   &.${menuItemClasses.disabled} {
     color: ${theme.palette.mode === 'dark' ? grey[700] : grey[400]};
   }
+  a {
+    color: black;
+  }
   `,
 );
 
@@ -322,7 +345,6 @@ const MenuButton = styled(BaseMenuButton)(
   color: white;
   transition: all 150ms ease;
   cursor: pointer;
-  background: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
   border: 1px solid ${theme.palette.mode === 'dark' ? grey[700] : grey[200]};
   color: ${theme.palette.mode === 'dark' ? grey[200] : grey[900]};
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);

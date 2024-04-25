@@ -59,7 +59,7 @@ const WorkshopCalendar = () => {
     <>
       <Typography variant={'h1'} className={'title-calendar'}>Calendrier des ateliers</Typography>
       {modalContent}
-      <Container style={{marginBottom: '2rem'}}>
+      <Container style={{marginBottom: '2rem', zIndex:"0"}}>
         <FullCalendar
           plugins={[ dayGridPlugin ]}
           initialView="dayGridMonth"
