@@ -23,7 +23,7 @@ class Article
     private ?string $headerFilename = null;
 
     #[Assert\NotBlank(groups: ["article:new"])]
-    private ?string $headerFile = null;
+    public ?string $headerFile = null;
 
     #[ORM\Column(length: 255)]
     #[Groups(["article:list", "article:detail"])]
@@ -44,7 +44,7 @@ class Article
     private ?string $imageFilename = null;
 
     #[Assert\NotBlank(groups: ["article:new"])]
-    private ?string $imageFile = null;
+    public ?string $imageFile = null;
 
     #[ORM\Column]
     #[Groups(["article:list", "article:detail"])]

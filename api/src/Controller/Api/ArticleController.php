@@ -3,6 +3,7 @@
 namespace App\Controller\Api;
 
 use App\Entity\Article;
+use App\Entity\Workshop;
 use App\Service\ApiUploadFileService;
 use App\Service\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -19,11 +21,11 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class ArticleController extends AbstractController
 {
     #[Route('', name: 'list', methods: ['GET'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function index(
         PaginationService $paginationService,
         Request           $request
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $pagination = $paginationService->getPagination($request, Article::class);
 
         return $this->json(
@@ -39,8 +41,7 @@ class ArticleController extends AbstractController
     #[Route('/{id}', name: 'get', methods: ['GET'])]
     public function get(
         Article $article
-    ): JsonResponse
-    {
+    ): JsonResponse {
         return $this->json(
             $article,
             context: ["groups" => ["article:detail"]]
@@ -48,16 +49,15 @@ class ArticleController extends AbstractController
     }
 
     #[Route('', name: 'new', methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function new(
         Request                $request,
         SerializerInterface    $serializer,
         ValidatorInterface     $validator,
         EntityManagerInterface $em,
         ApiUploadFileService $apiUploadFileService
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $article = $serializer->deserialize($request->getContent(), Article::class, 'json');
-
         $violations = $validator->validate($article, groups: ["article:new"]);
 
         if ($violations->count() > 0) {
@@ -68,11 +68,11 @@ class ArticleController extends AbstractController
         $headerFile = $data->headerFile;
         $imageFile = $data->imageFile;
 
-        $filename = $apiUploadFileService->uploadFile($headerFile, "articles_headers_directory", $article?->getFilename());
-        $article->setFilename($filename);
+        $filename = $apiUploadFileService->uploadFile($headerFile, "articles_headers_directory", $article?->getHeaderFilename());
+        $article->setHeaderFilename($filename);
 
-        $filename = $apiUploadFileService->uploadFile($imageFile, "articles_images_directory", $article?->getFilename());
-        $article->setFilename($filename);
+        $filename = $apiUploadFileService->uploadFile($imageFile, "articles_images_directory", $article?->getImageFilename());
+        $article->setImageFilename($filename);
 
         $em->persist($article);
         $em->flush();
@@ -84,6 +84,7 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/{id}', name: 'edit', methods: ['PUT'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function edit(
         Request                   $request,
         SerializerInterface       $serializer,
@@ -92,8 +93,7 @@ class ArticleController extends AbstractController
         ApiUploadFileService      $apiUploadFileService,
         EntityManagerInterface    $em,
         Article                   $article
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $articleRequest = $serializer->deserialize(
             $request->getContent(),
             Article::class,
@@ -135,5 +135,17 @@ class ArticleController extends AbstractController
             $article,
             context: ["groups" => ["article:detail"]]
         );
+    }
+
+    #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function delete(
+        Article $workshop,
+        EntityManagerInterface $entityManager
+    ) {
+        $workshop->setArchived(true);
+        $entityManager->flush();
+
+        return $this->json([], Response::HTTP_NO_CONTENT);
     }
 }

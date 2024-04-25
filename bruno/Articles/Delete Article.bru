@@ -1,11 +1,11 @@
 meta {
-  name: GET Articles
+  name: Delete Article
   type: http
-  seq: 1
+  seq: 5
 }
 
-get {
-  url: {{baseUrl}}/api/articles
+delete {
+  url: {{baseUrl}}/api/articles/11
   body: none
   auth: bearer
 }
