@@ -25,9 +25,14 @@ class RegionRepository extends ServiceEntityRepository
     /**
      * Requête de base
      */
-    public function getBaseQueryBuilder(): QueryBuilder
+    public function getBaseQueryBuilder(array $filters): QueryBuilder
     {
         $queryBuilder = $this->createQueryBuilder('u');
+
+        if (!empty($filters["archived"])) {
+            $queryBuilder->andWhere('u.archived = :archived')
+                ->setParameter('archived', $filters["archived"]);
+        }
 
         return $queryBuilder;
     }

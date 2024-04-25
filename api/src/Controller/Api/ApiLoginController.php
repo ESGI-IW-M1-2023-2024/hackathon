@@ -10,9 +10,20 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use OpenApi\Attributes as OA;
 
 class ApiLoginController extends AbstractController
 {
+    #[OA\RequestBody(
+        content: new OA\JsonContent(
+            type: User::class,
+            example: [
+                'username' => 'required',
+                'password' => 'required'
+            ]
+        ),
+        required: true
+    )]
     #[Route('/login', name: 'login', methods: ["POST"])]
     public function index(#[CurrentUser] ?User $user, ApiTokenFactory $apiTokenFactory, EntityManagerInterface $em): JsonResponse
     {

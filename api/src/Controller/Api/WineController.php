@@ -9,21 +9,22 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use OpenApi\Attributes as OA;
 
 #[Route('/wines', name: 'wines_')]
 class WineController extends AbstractController
 {
-    #[Route('/', name: 'list', methods: ["GET"])]
+    #[Route('', name: 'list', methods: ["GET"])]
     public function index(
         Request           $request,
         PaginationService $paginationService
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $pagination = $paginationService->getPagination($request, Wine::class);
 
         return $this->json(
@@ -38,15 +39,30 @@ class WineController extends AbstractController
     #[Route('/{id}', name: 'get', methods: ["GET"])]
     public function get(
         Wine $wine,
-    ): JsonResponse
-    {
+    ): JsonResponse {
         return $this->json(
             $wine,
             context: ["groups" => ["wine:detail"]]
         );
     }
 
-    #[Route('/', name: 'new', methods: ["POST"])]
+    #[OA\RequestBody(
+        required: true,
+        content: new OA\JsonContent(
+            type: Wine::class,
+            example: [
+                'label' => 'required',
+                'producerPassword' => 'required',
+                'grapeVariety' => 'required',
+                'alcoholLevel' => 'required',
+                'color' => 'required',
+                'quantity' => 'required',
+                'bottleSize' => 'required',
+                'comments' => 'required',
+            ]
+        )
+    )]
+    #[Route('', name: 'new', methods: ["POST"])]
     #[IsGranted("ROLE_ADMIN")]
     public function new(
         Request                $request,
@@ -54,14 +70,13 @@ class WineController extends AbstractController
         ValidatorInterface     $validator,
         EntityManagerInterface $em,
         ApiUploadFileService $apiUploadFileService
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $wine = $serializer->deserialize($request->getContent(), Wine::class, 'json');
 
         $violations = $validator->validate($wine, groups: ["wine:new"]);
 
         if ($violations->count() > 0) {
-            return $this->json($violations);
+            return $this->json($violations, Response::HTTP_BAD_REQUEST);
         }
 
         $data = json_decode($request->getContent());
@@ -79,6 +94,22 @@ class WineController extends AbstractController
         );
     }
 
+    #[OA\RequestBody(
+        required: true,
+        content: new OA\JsonContent(
+            type: Wine::class,
+            example: [
+                'label' => 'required',
+                'producerPassword' => 'required',
+                'grapeVariety' => 'required',
+                'alcoholLevel' => 'required',
+                'color' => 'required',
+                'quantity' => 'required',
+                'bottleSize' => 'required',
+                'comments' => 'required',
+            ]
+        )
+    )]
     #[Route('/{id}', name: 'edit', methods: ["PUT"])]
     #[IsGranted("ROLE_ADMIN")]
     public function edit(
@@ -89,14 +120,13 @@ class WineController extends AbstractController
         PropertyAccessorInterface $propertyAccessor,
         ApiUploadFileService $apiUploadFileService,
         Wine $wine
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $wineRequest = $serializer->deserialize($request->getContent(), Wine::class, 'json');
 
         $violations = $validator->validate($wineRequest, groups: ["wine:edit"]);
 
         if ($violations->count() > 0) {
-            return $this->json($violations);
+            return $this->json($violations, Response::HTTP_BAD_REQUEST);
         }
 
         $reflect = new \ReflectionClass($wineRequest);
@@ -128,14 +158,10 @@ class WineController extends AbstractController
     public function delete(
         EntityManagerInterface $em,
         Wine $wine
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $wine->setArchived(false);
         $em->flush();
 
-        return $this->json(
-            $wine,
-            context: ["groups" => ["region:list"]]
-        );
+        return $this->json([], Response::HTTP_NO_CONTENT);
     }
 }

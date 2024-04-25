@@ -11,7 +11,7 @@ class WorkshopFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
-        WorkshopFactory::createMany(10);
+        WorkshopFactory::createMany(15);
 
         $manager->flush();
     }

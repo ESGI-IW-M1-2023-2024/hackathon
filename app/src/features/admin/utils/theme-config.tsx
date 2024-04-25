@@ -3,8 +3,10 @@ import { GridColDef } from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import CancelIcon from '@mui/icons-material/Cancel';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
-const useThemeColumns = (): GridColDef[] => {
+const useThemeColumns = ({ handleDeleteTheme }: { handleDeleteTheme: (id: number) => Promise<void> }): GridColDef[] => {
   const navigate = useNavigate();
 
   return [
@@ -20,6 +22,14 @@ const useThemeColumns = (): GridColDef[] => {
       flex: 1,
     },
     {
+      field: 'archived',
+      headerName: 'Archivé',
+      headerAlign: 'center',
+      align: 'center',
+      flex: 1,
+      renderCell: (params) => (params.value ? <CancelIcon color='error' /> : <CheckCircleIcon color='success' />),
+    },
+    {
       field: 'actions',
       headerName: 'Actions',
       sortable: false,
@@ -29,12 +39,12 @@ const useThemeColumns = (): GridColDef[] => {
       renderCell: (params) => {
         return [
           <Tooltip key='editTheme' title='Editer'>
-            <IconButton onClick={() => navigate(`/themes/${params.row.id}`)}>
+            <IconButton onClick={() => navigate(`/themes/${params.row.id}`)} color='primary'>
               <EditIcon />
             </IconButton>
           </Tooltip>,
           <Tooltip key='deleteTheme' title='Supprimer'>
-            <IconButton onClick={() => console.log('TODO supprimer')}>
+            <IconButton onClick={() => handleDeleteTheme(params.row.id)} color='secondary'>
               <DeleteIcon />
             </IconButton>
           </Tooltip>,

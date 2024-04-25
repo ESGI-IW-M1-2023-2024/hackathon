@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use OpenApi\Attributes as OA;
 
 #[Route('/workshops', name: 'workshops_')]
 class WorkshopController extends AbstractController
@@ -25,7 +26,7 @@ class WorkshopController extends AbstractController
     ) {
     }
 
-    #[Route('/', name: 'list', methods: ["GET"])]
+    #[Route('', name: 'list', methods: ["GET"])]
     public function index(
         Request $request,
         PaginationService $paginationService
@@ -74,7 +75,23 @@ class WorkshopController extends AbstractController
         );
     }
 
-    #[Route('/', name: 'new', methods: ["POST"])]
+    #[OA\RequestBody(
+        required: true,
+        content: new OA\JsonContent(
+            type: Workshop::class,
+            example: [
+                'label' => 'required',
+                'dateStart' => 'required',
+                'length' => 90,
+                'maxPerson' => 14,
+                'location' => 'required',
+                'status' => 'required',
+                'maxBookingDate' => 'required',
+                'price' => 35,
+            ]
+        ),
+    )]
+    #[Route('', name: 'new', methods: ["POST"])]
     #[IsGranted("ROLE_ADMIN")]
     public function new(
         Request                     $request,
@@ -86,15 +103,31 @@ class WorkshopController extends AbstractController
         $violations = $validator->validate($workshop, groups: ["workshop:new"]);
 
         if ($violations->count() > 0) {
-            return $this->json($violations);
+            return $this->json($violations, Response::HTTP_BAD_REQUEST);
         }
 
         $this->em->persist($workshop);
         $this->em->flush();
 
-        return $this->json($workshop, context: ["groups" => ["workshop:list"]]);
+        return $this->json($workshop, context: ["groups" => ["workshop:detail"]]);
     }
 
+    #[OA\RequestBody(
+        required: true,
+        content: new OA\JsonContent(
+            type: Workshop::class,
+            example: [
+                'label' => 'required',
+                'dateStart' => 'required',
+                'length' => 90,
+                'maxPerson' => 14,
+                'location' => 'required',
+                'status' => 'required',
+                'maxBookingDate' => 'required',
+                'price' => 35,
+            ]
+        )
+    )]
     #[Route('/{id}', name: 'update', methods: ["PUT"])]
     #[IsGranted("ROLE_ADMIN")]
     public function update(
@@ -109,7 +142,7 @@ class WorkshopController extends AbstractController
         $violations = $validator->validate($workshopRequest, groups: ["workshop:edit"]);
 
         if ($violations->count() > 0) {
-            return $this->json($violations);
+            return $this->json($violations, Response::HTTP_BAD_REQUEST);
         }
 
         $reflect = new \ReflectionClass($workshopRequest);
@@ -133,9 +166,6 @@ class WorkshopController extends AbstractController
         //        $workshop->setArchived(true);
         $this->em->flush();
 
-        return $this->json(
-            $workshop,
-            context: ["groups" => ["workshop:list"]]
-        );
+        return $this->json([], Response::HTTP_NO_CONTENT);
     }
 }

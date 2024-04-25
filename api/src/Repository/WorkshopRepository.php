@@ -7,7 +7,6 @@ use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\Validator\Constraints\Date;
 
 /**
  * @extends ServiceEntityRepository<Workshop>
@@ -27,9 +26,40 @@ class WorkshopRepository extends ServiceEntityRepository
     /**
      * Requête de base
      */
-    public function getBaseQueryBuilder(): QueryBuilder
+    public function getBaseQueryBuilder(array $filter): QueryBuilder
     {
-        return $this->createQueryBuilder('u');
+
+        $queryBuilder = $this->createQueryBuilder('w')
+            ->innerJoin('w.theme', "t");
+
+        if (!empty($filter["archived"])) {
+            $queryBuilder->andWhere('w.archived = :archived')
+                ->setParameter('archived', $filter["archived"]);
+        }
+
+        if (!empty($filter['label'])) {
+            $queryBuilder
+                ->andWhere('t.label LIKE :label')
+                ->setParameter('label', '%' . $filter['label'] . '%');
+        }
+
+        if (!empty($filter['theme'])) {
+            $queryBuilder
+                ->andWhere('w.theme = :theme')
+                ->setParameter('theme', $filter['theme']);
+        }
+
+        if (!empty($filter['dateStart'])) {
+            $queryBuilder
+                ->andWhere('w.dateStart >= :dateStart')
+                ->setParameter('dateStart', $filter['dateStart']);
+        }
+
+        if (!empty($filter['orderBy']) && !empty($filter['orderByDirection'])) {
+            $queryBuilder->orderBy('w.' . $filter['orderBy'], $filter['orderByDirection']);
+        }
+
+        return $queryBuilder;
     }
 
     public function findByDelay($delay)

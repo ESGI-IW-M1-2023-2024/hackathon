@@ -25,9 +25,18 @@ class ThemeRepository extends ServiceEntityRepository
     /**
      * Requête de base
      */
-    public function getBaseQueryBuilder(): QueryBuilder
+    public function getBaseQueryBuilder(array $filter): QueryBuilder
     {
         $queryBuilder = $this->createQueryBuilder('t');
+
+        if (!empty($filter["archived"])) {
+            $queryBuilder->andWhere('t.archived = :archived')
+            ->setParameter("archived", $filter["archived"]);
+        }
+
+        if (!empty($filter["orderBy"]) && !empty($filter["orderByDirection"])) {
+            $queryBuilder->orderBy("t.".$filter["orderBy"], $filter["orderByDirection"]);
+        }
 
         return $queryBuilder;
     }
