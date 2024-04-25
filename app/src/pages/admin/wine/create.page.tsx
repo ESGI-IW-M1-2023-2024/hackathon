@@ -1,10 +1,10 @@
 import CustomFormField from '@/features/UI/custom-mui-components/components/custom-form-field.component';
-import {useCreateWineMutation} from '@/redux/api/api.slice';
+import {useCreateWineMutation, useGetRegionsQuery} from '@/redux/api/api.slice';
 import {useAppDispatch} from '@/redux/hooks';
 import {openSnackBar} from '@/redux/slices/notification.slice';
 import {customErrorMap} from '@/utils/customZodErrorMap';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {Box, Button} from '@mui/material';
+import {Box, Button, LinearProgress} from '@mui/material';
 import {useForm} from 'react-hook-form';
 import {z} from 'zod';
 import {useNavigate} from "react-router-dom";
@@ -22,16 +22,16 @@ const zodSchema = () =>
         bottleSize: z.string(),
         comments: z.string(),
         region: z.string(),
-        servingTemperature: z.string(),
-        storage: z.string(),
-        upTo: z.string(),
-        byTaste: z.string(),
-        byEye: z.string(),
-        onTheNose: z.string(),
-        inTheMouth: z.string(),
-        winePairing: z.string(),
-        recommandedPairing: z.string(),
-        content: z.string(),
+        servingTemperature: z.string().optional(),
+        storage: z.string().optional(),
+        upTo: z.string().optional(),
+        byTaste: z.string().optional(),
+        byEye: z.string().optional(),
+        onTheNose: z.string().optional(),
+        inTheMouth: z.string().optional(),
+        winePairing: z.string().optional(),
+        recommandedPairing: z.string().optional(),
+        content: z.string().optional(),
         file: z.string().base64(),
     });
 
@@ -52,22 +52,24 @@ const CreateWine = () => {
             alcoholLevel: null,
             color: null,
             quantity: null,
-            bottleSize: null,
+            bottleSize: 'piccolo',
             comments: null,
             region: null,
-            servingTemperature: null,
-            storage: null,
-            upTo: null,
-            byTaste: null,
-            byEye: null,
-            onTheNose: null,
-            inTheMouth: null,
-            winePairing: null,
-            recommandedPairing: null,
-            content: null,
+            servingTemperature: '',
+            storage: '',
+            upTo: '',
+            byTaste: '',
+            byEye: '',
+            onTheNose: '',
+            inTheMouth: '',
+            winePairing: '',
+            recommandedPairing: '',
+            content: '',
             file: null,
         },
     });
+
+    const {data: regionData, isLoading} = useGetRegionsQuery({pagination: false});
 
     const handleFormSubmit = async (formData: NewWine): Promise<void> => {
         try {
@@ -79,6 +81,10 @@ const CreateWine = () => {
             dispatch(openSnackBar({message: 'Impossible de créer le vin', severity: 'error'}));
         }
     };
+
+    if (isLoading) {
+        return <LinearProgress/>;
+    }
 
     return (
         <Box component='form' onSubmit={handleSubmit((data) => handleFormSubmit(data))}>
@@ -128,10 +134,62 @@ const CreateWine = () => {
                 props={{type: "number"}}
             />
             <CustomFormField
-                childrenComponentType='TEXT_FIELD'
+                childrenComponentType='SELECT'
                 control={control}
                 controlName='bottleSize'
-                options={{label: 'bottleSize'}}
+                options={{
+                    label: 'bottleSize',
+                    items: [
+                        {
+                            text: "Piccolo",
+                            value: "piccolo"
+                        },
+                        {
+                            text: "Demi",
+                            value: "half"
+                        },
+                        {
+                            text: "Standard",
+                            value: "standard"
+                        },
+                        {
+                            text: "Magnum",
+                            value: "magnum"
+                        },
+                        {
+                            text: "Double magnum",
+                            value: "double magnum",
+                        },
+                        {
+                            text: "Jeroboam",
+                            value: "jeroboam",
+                        },
+                        {
+                            text: "Mathusalem",
+                            value: "methuselah",
+                        },
+                        {
+                            text: "Salmanazar",
+                            value: "salmanazar",
+                        },
+                        {
+                            text: "Balthazar",
+                            value: "balthazar",
+                        },
+                        {
+                            text: "Nabuchodonosor",
+                            value: "nebuchadnezar",
+                        },
+                        {
+                            text: "Melchior",
+                            value: "melchior",
+                        },
+                        {
+                            text: "Melchisédek",
+                            value: "melchizedek",
+                        },
+                    ]
+                }}
             />
             <CustomFormField
                 childrenComponentType='TEXT_FIELD'
@@ -143,7 +201,17 @@ const CreateWine = () => {
                 childrenComponentType='AUTOCOMPLETE'
                 control={control}
                 controlName='region'
-                options={{label: 'region'}}
+                options={{
+                    inputLabel: 'region',
+                    items: regionData ? [
+                        ...(regionData.items.map(
+                            (region) => ({
+                                label: region.label + '(' + region.countryName + ')',
+                                id: region.id,
+                            })
+                        ))] : [],
+                    noOptionsText: "Aucune région"
+                }}
             />
             <CustomFormField
                 childrenComponentType='TEXT_FIELD'

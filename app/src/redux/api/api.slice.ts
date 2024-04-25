@@ -2,7 +2,7 @@ import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import {LoggedUser, UserCredentials} from '../../features/auth/types/logged-user.type';
 import {EditTheme, NewTheme, Theme} from '@/features/admin/types/theme.types';
 import {RootState} from '../store';
-import {CustomPaginationParams, PaginatedResponse} from '@/types/pagination.types';
+import {CustomPaginationParams, PaginatedResponse, RegionPaginationParams} from '@/types/pagination.types';
 import {EditRegion, NewRegion, Region} from "@/features/admin/types/region.types";
 import {Country} from "@/features/admin/types/country.types";
 import {Workshop} from '@/features/admin/types/workshop.types';
@@ -99,7 +99,7 @@ export const apiSlice = createApi({
           }),
           providesTags: ['Countries'],
       }),
-      getRegions: builder.query<PaginatedResponse<Region>, CustomPaginationParams>({
+      getRegions: builder.query<PaginatedResponse<Region>, RegionPaginationParams>({
           query: (params) => ({
               url: 'regions',
               method: 'GET',

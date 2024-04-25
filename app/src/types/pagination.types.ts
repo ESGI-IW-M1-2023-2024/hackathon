@@ -1,9 +1,13 @@
 export interface CustomPaginationParams {
-  page: number;
-  limit: number;
+  page?: number;
+  limit?: number;
   orderBy?: string;
   orderByDirection?: string;
-  archived: 0 | 1;
+  archived?: 0 | 1;
+}
+
+export interface RegionPaginationParams extends CustomPaginationParams {
+    pagination: boolean;
 }
 
 export interface PaginatedResponse<ResultsType = any> {
