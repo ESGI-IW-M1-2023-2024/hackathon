@@ -56,22 +56,28 @@ const Home = () => {
                 alignItems="center"
                 sx={{
                     color: "white",
-                    '& > h1': {
-                        fontSize: "3rem",
-                        fontWeight: "bold",
-                        textShadow: "2px 2px 4px rgba(0,0,0,0.5)"
-                    },
                     backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${herobanner})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
-                    minHeight: "600px",
-                    maxHeight: "70vh",
+                    minHeight: { xs: "calc(100vh - 90px)", sm: "600px" },
+                    maxHeight: { xs: "calc(100vh - 90px)", sm: "70vh" },
                     filter: "drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5))"
                 }}
             >
 
-                <Stack spacing={2} alignItems="center" marginTop='auto' marginBottom='auto'>
-                    <Typography variant="h1" className="d-shadow" sx={{ fontSize: '4.5rem' }}>Participez à des ateliers de dégustation de vin</Typography>
+                <Stack
+                    spacing={2}
+                    alignItems="center"
+                    marginTop='auto'
+                    marginBottom='auto'
+                    sx={{
+                        padding: { xs: 2, sm: 4 },
+                        textAlign: 'center',
+                    }}
+                >
+                    <Typography variant="h1" className="d-shadow" sx={{
+                        fontSize: { xs: '2rem', sm: '4.5rem' }
+                    }}>Participez à des ateliers de dégustation de vin</Typography>
                     <Typography className="d-shadow">Envolez-vous dans un monde de saveurs et de découvertes</Typography>
                     <br />
                     <ColorButton variant='contained' startIcon={<Diversity3Icon />}>
@@ -125,7 +131,7 @@ const Home = () => {
                             </ColorButton>
                         }
                         sx={{
-                            backgroundColor: 'rgba(199, 172, 146, 0.2)',
+                            backgroundColor: { sm: 'rgba(199, 172, 146, 0.2)' },
                             borderRadius: '4px'
                         }}
                     >
