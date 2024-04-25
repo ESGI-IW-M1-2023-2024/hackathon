@@ -1,43 +1,18 @@
-import { Button, Card, CardActions, CardContent, Grid, Stack } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import DashboardButton from '@/features/UI/admin/dashboard-button.component';
+import { Stack } from '@mui/material';
 
 const Dashboard = () => {
-  const navigate = useNavigate();
-
   return (
-    <Stack
-      margin={'2rem auto'}
-      alignItems={'center'}
-      paddingInline={'2rem'}
-      width={'100%'}>
+    <Stack margin={'2rem auto'} alignItems={'center'} paddingInline={'2rem'} width={'100%'}>
       <h1>Admin dashboard</h1>
       <Stack direction={'row'}>
-        <Card onClick={() => navigate('/themes')}
-          sx={{ backgroundColor: '#c7ac92', fontSize: '36px', textAlign: 'center', alignContent: 'center', alignItems: 'center', justifyContent: 'center', maxWidth: 300, minWidth: 300, height: 150, margin: 2, display: 'flex', flexDirection: 'column' }}
-        >
-          Liste des Thèmes
-        </Card>
-        <Card onClick={() => navigate('/admin/regions')}
-          sx={{ backgroundColor: '#c7ac92', fontSize: '36px', textAlign: 'center', alignContent: 'center', alignItems: 'center', justifyContent: 'center', maxWidth: 300, minWidth: 300, height: 150, margin: 2, display: 'flex', flexDirection: 'column' }}
-        >
-          Liste des Régions
-        </Card>
-        <Card onClick={() => navigate('/admin/organisations')}
-          sx={{ backgroundColor: '#c7ac92', fontSize: '36px', textAlign: 'center', alignContent: 'center', alignItems: 'center', justifyContent: 'center', maxWidth: 300, minWidth: 300, height: 150, margin: 2, display: 'flex', flexDirection: 'column' }}
-        >
-          Liste des Organisations
-        </Card>
+        <DashboardButton redirectPath='/themes' text='Liste des Thèmes' />
+        <DashboardButton redirectPath='/admin/regions' text='Liste des Régions' />
+        <DashboardButton redirectPath='/admin/organisations' text='Liste des Organisations' />
+        <DashboardButton redirectPath='/admin/workshops' text='Liste des Ateliers' />
+        <DashboardButton redirectPath='/admin/workshops/calendar' text='Calendriers des Ateliers' />
       </Stack>
-      <Stack direction={"row"}>
-        <Card onClick={() => navigate('/admin/workshops/calendar') }
-          sx={{ backgroundColor: '#c7ac92', fontSize: '36px', textAlign: 'center', alignContent: 'center', alignItems: 'center', justifyContent: 'center', maxWidth: 300, minWidth: 300, height: 150, margin: 2, display: 'flex', flexDirection: 'column' }}
-        >
-          Calendrier des Ateliers
-        </Card>
-      </Stack>
-
     </Stack>
-
   );
 };
 

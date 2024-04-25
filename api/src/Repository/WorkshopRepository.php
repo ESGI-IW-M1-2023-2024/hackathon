@@ -56,7 +56,11 @@ class WorkshopRepository extends ServiceEntityRepository
         }
 
         if (!empty($filter['orderBy']) && !empty($filter['orderByDirection'])) {
-            $queryBuilder->orderBy('w.' . $filter['orderBy'], $filter['orderByDirection']);
+            if ($filter['orderBy'] === 'label') {
+                $queryBuilder->orderBy('t.' . $filter['orderBy'], $filter['orderByDirection']);
+            } else {
+                $queryBuilder->orderBy('w.' . $filter['orderBy'], $filter['orderByDirection']);
+            }
         }
 
         return $queryBuilder;

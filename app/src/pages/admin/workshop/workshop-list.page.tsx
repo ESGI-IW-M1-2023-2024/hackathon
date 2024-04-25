@@ -1,20 +1,15 @@
 import ListGridComponent from '@/features/UI/list/components/list-grid.component';
-import { Theme, ThemesSortableField } from '@/features/admin/types/theme.types';
-import useThemeColumns from '@/features/admin/utils/theme-config';
-import { useDeleteThemeMutation, useGetThemesQuery } from '@/redux/api/api.slice';
-import { openSnackBar } from '@/redux/slices/notification.slice';
+import { Workshop, WorkshopSortableField } from '@/features/admin/types/workshop.types';
+import useWorkshopColumns from '@/features/admin/utils/workshop-config';
+import { useGetWorkshopsQuery } from '@/redux/api/api.slice';
 import { ListGridProps } from '@/types/data-grid.types';
-import { Box, Button, FormControlLabel, LinearProgress, Stack, Switch } from '@mui/material';
+import { Box, Button, CircularProgress, FormControlLabel, Stack, Switch } from '@mui/material';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-const ThemesList = () => {
+const AdminWorkshopList = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [deleteTheme] = useDeleteThemeMutation();
-
   const [showArchived, setShowArchived] = useState<0 | 1>(Number(searchParams.get('archived')) === 1 ? 1 : 0 || 0);
 
   // Pagination
@@ -33,25 +28,17 @@ const ThemesList = () => {
     setSearchParams(newSearchParams);
   };
 
-  const handleDeleteTheme = async (id: number) => {
-    try {
-      await deleteTheme(id).unwrap();
-      dispatch(openSnackBar({ message: 'Thème supprimé avec succès', severity: 'success' }));
-    } catch (error) {
-      console.log(error);
-      dispatch(openSnackBar({ message: 'Erreur lors de la suppression du thème', severity: 'error' }));
-    }
-  };
+  const handleDeleteWorkshop = async (id: number) => console.log(`TODO delete workshop ${id}`);
 
   // Api Data
-  const { data, isLoading } = useGetThemesQuery({ page, limit, orderBy, orderByDirection, archived: showArchived });
-
-  const listProps: ListGridProps<Theme> = {
-    columns: [...useThemeColumns({ handleDeleteTheme })],
+  const { data, isLoading } = useGetWorkshopsQuery({ page, limit, orderBy, orderByDirection, archived: showArchived });
+  console.log(data);
+  const listProps: ListGridProps<Workshop> = {
+    columns: [...useWorkshopColumns({ handleDeleteWorkshop })],
     rows: data ? data.items : [],
     loading: isLoading,
     defaultSort: {
-      field: ThemesSortableField.ID,
+      field: WorkshopSortableField.ID,
       order: 'asc',
     },
     pagination: {
@@ -64,7 +51,7 @@ const ThemesList = () => {
   };
 
   if (isLoading) {
-    return <LinearProgress />;
+    return <CircularProgress />;
   }
 
   return (
@@ -74,8 +61,8 @@ const ThemesList = () => {
       </Box>
 
       <Stack width={'100%'} direction={'row'}>
-        <Button variant='contained' onClick={() => navigate('/themes/create')} sx={{ width: 'fit-content' }}>
-          Créer un thème
+        <Button variant='contained' onClick={() => navigate('/workshops/create')} sx={{ width: 'fit-content' }}>
+          Créer un atelier
         </Button>
         <FormControlLabel
           sx={{ ml: 2 }}
@@ -88,4 +75,4 @@ const ThemesList = () => {
   );
 };
 
-export default ThemesList;
+export default AdminWorkshopList;

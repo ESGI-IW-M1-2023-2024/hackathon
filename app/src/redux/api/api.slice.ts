@@ -84,10 +84,11 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['Themes'],
     }),
-    getWorkshops: builder.query<PaginatedResponse<Workshop>, void>({
-      query: () => ({
+    getWorkshops: builder.query<PaginatedResponse<Workshop>, CustomPaginationParams>({
+      query: (params) => ({
         url: 'workshops',
         method: 'GET',
+        params,
       }),
       providesTags: ['Workshop'],
     }),
