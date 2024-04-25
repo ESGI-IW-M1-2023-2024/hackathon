@@ -1,57 +1,47 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
-import {EventClickArg, EventSourceInput} from "@fullcalendar/core"; // a plugin!
-import { useGetWorkshopsForCalendarQuery } from "@/redux/api/api.slice";
-import {Button, LinearProgress, Modal, Typography} from "@mui/material";
-import {useEffect, useRef, useState} from 'react';
+import {EventClickArg} from "@fullcalendar/core"; // a plugin!
+import {Button, Modal, Typography} from "@mui/material";
+import {useEffect, useState} from 'react';
 import {Workshop} from "@/features/admin/types/workshop.types";
 import { useTheme } from '@mui/material';
-import {CalendarParams} from "@/types/calendarParams.types";
 
 const WorkshopCalendar = () => {
 
   const [modalOpen, setModalOpen] = useState(false); // State to handle modal visibility
   const [selectedWorkshop, setSelectedWorkshop] = useState<Workshop|undefined>(undefined); // State to hold the clicked workshop's data
   const {palette} = useTheme();
-  const calendarRef = useRef(null);
-  const [currentDateRange, setCurrentDateRange] = useState<CalendarParams>({ start: null, end: null });
-  useEffect(() => {
-    if (calendarRef.current) {
-      const api = calendarRef.current.getApi();
-      const newDateRange = {
-        start: api.view.activeStart,
-        end: api.view.activeEnd
-      };
-      setCurrentDateRange(newDateRange);
-    }
-  }, [calendarRef.current]);
+  let workshops : Workshop[] = []
+  // const [currentDateRange, setCurrentDateRange] = useState<CalendarParams>({ start: null, end: null });
 
-  const { data, isLoading } = useGetWorkshopsForCalendarQuery(currentDateRange);
+  useEffect(() => {
+    console.log('WorkshopCalendar mounted');
+  }, []);
+
+  // const { data, isLoading, isError, error, refetch} = useGetWorkshopsForCalendarQuery(currentDateRange);
   const handleClose = () => {
     setModalOpen(false);
   };
 
   const handleEventClick = (arg :  EventClickArg) => {
-    setSelectedWorkshop(data?.items.find((item : Workshop) => item.id.toString() === arg.event.id));
+    setSelectedWorkshop(workshops?.find((item : Workshop) => item.id.toString() === arg.event.id));
     setModalOpen(true); // Open modal on event click
   };
 
-  if (isLoading) {
-    return <LinearProgress />;
-  }
+  // if (isLoading) {
+  //   return <LinearProgress />;
+  // }
 
 
-  const events: EventSourceInput |undefined = data?.items.map((item) => ({
-    id: item.id.toString(),
-    start: item.dateStart,
-    title: item.theme.label
-  }));
+  // const events: EventSourceInput |undefined = data?.items.map((item) => ({
+  //   id: item.id.toString(),
+  //   start: item.dateStart,
+  //   title: item.theme.label
+  // }));
 
   const transformDate = (date: string) => {
     return new Date(date).toLocaleString();
   }
-
-  console.log(calendarRef?.current?.getApi().getDate());
 
   const modalContent = modalOpen && (
     <Modal open={modalOpen} onClose={handleClose}>
@@ -69,11 +59,28 @@ const WorkshopCalendar = () => {
     <>
       {modalContent}
       <FullCalendar
-        ref={calendarRef}
         plugins={[ dayGridPlugin ]}
         initialView="dayGridMonth"
         weekends={true}
-        events={events}
+        eventSources={
+          [
+            {
+              url: `${import.meta.env.VITE_API_BASE_URL}/workshops/calendar`,
+              success: (data) => {
+                console.log(data);
+                workshops = data;
+              },
+              eventDataTransform: (data) => {
+                return {
+                  id: data?.id?.toString(),
+                  start: data.dateStart,
+                  title: data.theme.label
+                };
+              }
+            }
+          ]
+        }
+        lazyFetching={true}
         eventClick={handleEventClick}
         locale={'fr'}
         eventColor={palette.secondary.main}

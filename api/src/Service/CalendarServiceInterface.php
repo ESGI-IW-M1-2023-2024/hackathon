@@ -2,7 +2,9 @@
 
 namespace App\Service;
 
+use Symfony\Component\HttpFoundation\Request;
+
 interface CalendarServiceInterface
 {
-    public function handleRequest(\Symfony\Component\HttpFoundation\Request $request): ?array;
+    public function handleRequest(Request $request): ?array;
 }

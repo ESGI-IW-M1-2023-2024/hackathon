@@ -61,10 +61,10 @@ export const apiSlice = createApi({
       }),
     }),
     getWorkshopsForCalendar: builder.query<Workshop[], CalendarParams>({
-      query: (body) => ({
-        url: 'workshops/calendar',
-        method: 'POST',
-        body,
+      query: (params) => ({
+        url: `workshops/calendar`,
+        method: 'GET',
+        params,
       }),
     }),
   }),

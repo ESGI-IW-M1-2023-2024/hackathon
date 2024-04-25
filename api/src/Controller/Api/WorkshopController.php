@@ -42,7 +42,7 @@ class WorkshopController extends AbstractController
         );
     }
 
-    #[Route('/calendar', name: 'list_calendar', methods: ["POST"])]
+    #[Route('/calendar', name: 'list_calendar', methods: ["GET"])]
     public function calendar(
         Request $request,
         CalendarServiceInterface $calendarService
@@ -50,10 +50,7 @@ class WorkshopController extends AbstractController
 
         $data = $calendarService->handleRequest($request);
 
-        return $this->json(
-            [
-                'items' => $data,
-            ],
+        return $this->json($data,
             Response::HTTP_OK,
             context: ["groups" => ["workshop:list"]]
 
