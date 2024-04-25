@@ -11,6 +11,7 @@ import {
   MenuItem,
   Select,
   TextField,
+  useTheme,
 } from '@mui/material';
 import { HTMLAttributes } from 'react';
 import { AutoCompleteFieldOpts, CheckboxField, ChoiceField, FileField, SimpleField } from '@/types/formField.types';
@@ -60,6 +61,8 @@ export const CustomSelect = (
   options: ChoiceField,
   props: { [key: string]: any },
 ): JSX.Element => {
+  const { palette } = useTheme();
+
   const generateSelectOptions = () => {
     return options.items.map((option, index) => (
       <MenuItem key={option.value + index} value={option.value}>
@@ -74,7 +77,7 @@ export const CustomSelect = (
       <Select label={options.label} {...field} {...props}>
         {generateSelectOptions()}
       </Select>
-      <FormHelperText>{fieldState.error?.message}</FormHelperText>
+      <FormHelperText sx={{ color: palette.error.main }}>{fieldState.error?.message}</FormHelperText>
     </FormControl>
   );
 };

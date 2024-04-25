@@ -21,8 +21,8 @@ const zodSchema = () =>
     quantity: z.string(),
     bottleSize: z.string(),
     comments: z.string(),
-    region: z.string(),
-    servingTemperature: z.number().optional(),
+    region: z.number(),
+    servingTemperature: z.string().optional(),
     storage: z.string().optional(),
     upTo: z.string().optional(),
     byTaste: z.string().optional(),
@@ -198,16 +198,18 @@ const CreateWine = () => {
         options={{ label: 'comments' }}
       />
       <CustomFormField
-        childrenComponentType='AUTOCOMPLETE'
+        childrenComponentType='SELECT'
         control={control}
         controlName='region'
         options={{
-          inputLabel: 'region',
+          label: 'region',
           items: regionData
             ? [
                 ...regionData.items.map((region) => ({
                   label: region.label + '(' + region.countryName + ')',
                   id: region.id,
+                  text: region.label + '(' + region.countryName + ')',
+                  value: region.id,
                 })),
               ]
             : [],
