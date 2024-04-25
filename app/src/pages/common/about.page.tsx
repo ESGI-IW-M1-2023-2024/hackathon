@@ -1,15 +1,11 @@
 import Stack from '@mui/material/Stack';
 import { Container, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import Button, { ButtonProps } from '@mui/material/Button';
 import bottles from "@/assets/about/bottle.jpg";
-import Diversity3Icon from '@mui/icons-material/Diversity3';
 import Box from '@mui/material/Box';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import EmailIcon from '@mui/icons-material/Email';
 import FormControl from '@mui/material/FormControl';
 import Input from '@mui/material/Input';
-import wineglasses from "@/assets/concept/wine-glasses.jpg";
 import FormHelperText from '@mui/material/FormHelperText';
 import TextField from '@mui/material/TextField';
 import Avatar from '@mui/material/Avatar';
@@ -19,6 +15,8 @@ import CardContent from '@mui/material/CardContent';
 import WineBarIcon from '@mui/icons-material/WineBar';
 import WorkIcon from '@mui/icons-material/Work';
 import SchoolIcon from '@mui/icons-material/School';
+import Message from '@/assets/about/message.svg';
+import Contact from '@/assets/about/contact.png';
 
 const data = [
     {
@@ -59,15 +57,6 @@ const cardData = [
 
 const About = () => {
 
-    const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
-        color: theme.palette.getContrastText('#660033'),
-        backgroundColor: '#660033',
-        textTransform: 'none',
-        '&:hover': {
-            backgroundColor: '#B9515B',
-        },
-    }));
-
     return (
         <>
             <Stack
@@ -84,9 +73,9 @@ const About = () => {
                     marginBottom: '2rem'
                 }}
             >
-                <Typography component='div' style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', width: '100%', padding: '4rem 0 0 15rem'}}>
+                <Typography component='div' style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', width: '100%', padding: '4rem 0 0 15rem' }}>
                     <Typography component='div' style={{ textAlign: 'left', width: '30%' }}>
-                        <Typography variant='h1' className="d-shadow" style={{ fontWeight: 400, fontSize: '80px', marginBottom: '2rem'}}>À propos</Typography>
+                        <Typography variant='h1' className="d-shadow" style={{ fontWeight: 400, fontSize: '80px', marginBottom: '2rem' }}>À propos</Typography>
                         <Typography className="d-shadow" style={{ marginBottom: '2rem' }}>Dans le monde du vin, chaque bouteille raconte une histoire. Découvrez la passion et l'expertise qui animent Olivier Bonneton, votre guide dans cette aventure gustative.</Typography>
                     </Typography>
                 </Typography>
@@ -182,12 +171,14 @@ const About = () => {
                     width={'90%'}
                 >
                     <Typography variant='h1' sx={{ marginBottom: '2rem', marginTop: '2rem' }}>Galerie photos</Typography>
-                    <Box
-                        className='grid'
-                    >
-                        {data.map((index) => (
-                            <div className="item" style={{ backgroundImage: `url(${index.link})` }}></div>
-                        ))}
+                    <Box component={'div'}>
+                        <Box
+                            className='grid'
+                        >
+                            {data.map((index) => (
+                                <div className="item" style={{ backgroundImage: `url(${index.link})` }}></div>
+                            ))}
+                        </Box>
                     </Box>
                 </Box>
 
@@ -197,21 +188,14 @@ const About = () => {
                     width={'90%'}
                     display={'flex'}
                     flexDirection={'row'}
+                    justifyContent={'center'}
                     margin={'auto'}
                     paddingTop={'4rem'}
                     paddingBottom={'4rem'}
                 >
-                    <Stack gap={'4rem'} flexDirection={'row'} alignContent={'center'} alignItems={'flex-end'}>
-                        <Stack alignItems={'center'} alignContent={'center'}>
-                            <Typography variant='h1' sx={{ fontSize: '80px', marginBottom: '2rem' }}>Une question ?</Typography>
-                            <Box
-                                component={'img'}
-                                className="d-shadow"
-                                sx={{ width: 600, height: 300, objectFit: 'cover' }}
-                                src='https://images.unsplash.com/photo-1616531770192-6eaea74c2456?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-                            />
-                        </Stack>
-                        <FormControl sx={{ gap: 2 }}>
+                    <Stack alignItems={'center'} alignContent={'center'} width={1}>
+                        <Typography variant='h1' sx={{ fontSize: '80px', marginBottom: '2rem' }}>Une question ?</Typography>
+                        <FormControl sx={{ gap: 2, width: 1 }}>
                             <Input placeholder='Email' aria-describedby="my-helper-text" />
                             <FormHelperText id="my-helper-text">Nous ne partagerons jamais votre adresse mail.</FormHelperText>
                             <Input placeholder='Nom' />
