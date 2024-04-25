@@ -11,6 +11,7 @@ import {
   MenuItem,
   Select,
   TextField,
+  useTheme,
 } from '@mui/material';
 import { HTMLAttributes } from 'react';
 import { AutoCompleteFieldOpts, CheckboxField, ChoiceField, FileField, SimpleField } from '@/types/formField.types';
@@ -40,17 +41,22 @@ export const CustomTextField = (
 
 export const CustomCheckboxField = (
   field: ControllerRenderProps<FieldValues, string>,
+  fieldState: ControllerFieldState,
   options: CheckboxField,
   props: { [key: string]: any },
 ): JSX.Element => {
+  const { palette } = useTheme();
   return (
-    <FormControlLabel
-      label={options.label}
-      control={<Checkbox checked={options.checked ? true : false} />}
-      {...field}
-      {...props}
-      sx={{ '& .MuiSvgIcon-root': { fontSize: options.size ?? 24 } }}
-    />
+    <FormControl fullWidth>
+      <FormControlLabel
+        label={options.label}
+        control={<Checkbox checked={options.checked ? true : false} />}
+        {...field}
+        {...props}
+        sx={{ '& .MuiSvgIcon-root': { fontSize: options.size ?? 24 } }}
+      />
+      <FormHelperText sx={{ color: palette.error.main, mt: '-10px' }}>{fieldState.error?.message}</FormHelperText>
+    </FormControl>
   );
 };
 
