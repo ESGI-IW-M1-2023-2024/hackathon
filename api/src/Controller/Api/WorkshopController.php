@@ -4,6 +4,7 @@ namespace App\Controller\Api;
 
 use App\Entity\Workshop;
 use App\Service\PaginationService;
+use App\Service\WorkshopService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -51,8 +52,10 @@ class WorkshopController extends AbstractController
         );
     }
     #[Route('/{id}/finished', name: 'get_finished', methods: ["GET"])]
-    public function getFinished(Workshop $workshop): JsonResponse
+    public function getFinished(Workshop $workshop, WorkshopService $workshopService): JsonResponse
     {
+        $workshopService->workshopFinishedHandler($workshop);
+
         return $this->json(
             $workshop,
             context: ["groups" => ["workshop:list", "workshop:list:status:finished"]]
