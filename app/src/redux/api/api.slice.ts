@@ -198,17 +198,18 @@ export const apiSlice = createApi({
         url: `wines/${id}`,
         method: 'GET',
       }),
-      createBooking: builder.mutation<Booking, CreateBooking>({
-        query: (body) => ({
-          url: 'bookings',
-          method: 'POST',
-          body,
-        }),
-        invalidatesTags: ['Booking'],
-      }),
     }),
-  })
-});
+    createBooking: builder.mutation<Booking, CreateBooking>({
+      query: (body) => ({
+        url: 'bookings',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Booking'],
+    }),
+  }),
+})
+
 
 // Export the auto-generated hook for the `getPosts` query endpoint
 export const {
