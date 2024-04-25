@@ -26,8 +26,9 @@ export interface Wine {
   archived: 0 | 1;
 }
 
-export interface NewWine extends Omit<Wine, 'id' | 'imageFilename' | 'archived'> {
+export interface NewWine extends Omit<Wine, 'id' | 'imageFilename' | 'archived' | 'region'> {
   file: string | null;
+  regionId: number | null;
 }
 
 export interface EditWine extends Wine {}
