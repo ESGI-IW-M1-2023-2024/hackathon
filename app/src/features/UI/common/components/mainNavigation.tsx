@@ -15,6 +15,10 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import WineBarIcon from '@mui/icons-material/WineBar';
+import InfoIcon from '@mui/icons-material/Info';
+import GroupsIcon from '@mui/icons-material/Groups';
+import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
 
 import logoImg from '@/assets/common/navbar/logo.svg'
 import {LoggedUser} from "@/features/auth/types/logged-user.type";
@@ -207,53 +211,93 @@ export default function MainNavigation() {
                                         'textDecoration': 'none',
                                     }
                                 }}>
-                                <Accordion
-                                  expandicon={<ArrowDropDownIcon  />}
-                                  aria-controls="panel1-content"
-                                  id="panel1-header"
-                                  style={{background: palette.secondary.light, color: palette.secondary.contrastText}}
-                                  className={"navbar-accordion"}
-                                >
-                                    <AccordionSummary>
+                                {!user ?
+                                    <>
+                                      <Link href="/" onClick={toggleDrawer(false)}>
                                         <ListItemButton>
-                                            <ListItemIcon>
-                                                <AdminPanelSettingsIcon sx={{ color: palette.secondary.contrastText }} />
-                                            </ListItemIcon>
-                                            <ListItemText primary="Admin" />
+                                          <ListItemIcon>
+                                            <WineBarIcon sx={{ color: palette.secondary.contrastText }} />
+                                          </ListItemIcon>
+                                          <ListItemText primary="Accueil" />
                                         </ListItemButton>
-                                    </AccordionSummary>
-                                    <AccordionDetails>
-                                        <Link href={"/themes"} onClick={toggleDrawer(false)}>Liste des thèmes</Link>
-                                    </AccordionDetails>
-                                    <AccordionDetails>
-                                        <Link href={"/admin/regions"} onClick={toggleDrawer(false)}>Liste des régions</Link>
-                                    </AccordionDetails>
-                                    <AccordionDetails>
-                                        <Link href={"/admin/organisations"} onClick={toggleDrawer(false)}>Liste des organisations</Link>
-                                    </AccordionDetails>
-                                    <AccordionDetails>
-                                        <Link href={"/admin/workshops"} onClick={toggleDrawer(false)}>Liste des ateliers</Link>
-                                    </AccordionDetails>
-                                    <AccordionDetails>
-                                        <Link href={"/admin/workshops/calendar"} onClick={toggleDrawer(false)}>Calendrier des ateliers</Link>
-                                    </AccordionDetails>
-                                </Accordion>
-                                <Link href="/admin" onClick={toggleDrawer(false)}>
-                                    <ListItemButton>
-                                        <ListItemIcon>
-                                            <DashboardIcon sx={{ color: palette.secondary.contrastText }} />
-                                        </ListItemIcon>
-                                        <ListItemText primary="Dashboard" />
-                                    </ListItemButton>
-                                </Link>
-                                <Link href="/" onClick={toggleDrawer(false)}>
-                                    <ListItemButton>
-                                        <ListItemIcon>
-                                            <PersonIcon sx={{ color: palette.secondary.contrastText }} />
-                                        </ListItemIcon >
-                                        <ListItemText primary="Retour vers le site client" />
-                                    </ListItemButton>
-                                </Link>
+                                      </Link>
+                                      <Link href="/concept" onClick={toggleDrawer(false)}>
+                                        <ListItemButton>
+                                          <ListItemIcon>
+                                            <TipsAndUpdatesIcon sx={{ color: palette.secondary.contrastText }} />
+                                          </ListItemIcon >
+                                          <ListItemText primary="Concept" />
+                                        </ListItemButton>
+                                      </Link>
+                                      <Link href="/workshops" onClick={toggleDrawer(false)}>
+                                        <ListItemButton>
+                                          <ListItemIcon>
+                                            <GroupsIcon sx={{ color: palette.secondary.contrastText }} />
+                                          </ListItemIcon>
+                                          <ListItemText primary="Ateliers" />
+                                        </ListItemButton>
+                                      </Link>
+                                      <Link href="/about" onClick={toggleDrawer(false)}>
+                                        <ListItemButton>
+                                          <ListItemIcon>
+                                            <InfoIcon sx={{ color: palette.secondary.contrastText }} />
+                                          </ListItemIcon>
+                                          <ListItemText primary="A propos" />
+                                        </ListItemButton>
+                                      </Link>
+                                    </>
+                                    :
+                                    <>
+                                        <Accordion
+                                          expandicon={<ArrowDropDownIcon  />}
+                                          aria-controls="panel1-content"
+                                          id="panel1-header"
+                                          style={{background: palette.secondary.light, color: palette.secondary.contrastText}}
+                                          className={"navbar-accordion"}
+                                        >
+                                            <AccordionSummary>
+                                                <ListItemButton>
+                                                    <ListItemIcon>
+                                                        <AdminPanelSettingsIcon sx={{ color: palette.secondary.contrastText }} />
+                                                    </ListItemIcon>
+                                                    <ListItemText primary="Admin" />
+                                                </ListItemButton>
+                                            </AccordionSummary>
+                                            <AccordionDetails>
+                                                <Link href={"/themes"} onClick={toggleDrawer(false)}>Liste des thèmes</Link>
+                                            </AccordionDetails>
+                                            <AccordionDetails>
+                                                <Link href={"/admin/regions"} onClick={toggleDrawer(false)}>Liste des régions</Link>
+                                            </AccordionDetails>
+                                            <AccordionDetails>
+                                                <Link href={"/admin/organisations"} onClick={toggleDrawer(false)}>Liste des organisations</Link>
+                                            </AccordionDetails>
+                                            <AccordionDetails>
+                                                <Link href={"/admin/workshops"} onClick={toggleDrawer(false)}>Liste des ateliers</Link>
+                                            </AccordionDetails>
+                                            <AccordionDetails>
+                                                <Link href={"/admin/workshops/calendar"} onClick={toggleDrawer(false)}>Calendrier des ateliers</Link>
+                                            </AccordionDetails>
+                                        </Accordion>
+                                        <Link href="/admin" onClick={toggleDrawer(false)}>
+                                            <ListItemButton>
+                                                <ListItemIcon>
+                                                    <DashboardIcon sx={{ color: palette.secondary.contrastText }} />
+                                                </ListItemIcon>
+                                                <ListItemText primary="Dashboard" />
+                                            </ListItemButton>
+                                        </Link>
+                                        <Link href="/" onClick={toggleDrawer(false)}>
+                                            <ListItemButton>
+                                                <ListItemIcon>
+                                                    <PersonIcon sx={{ color: palette.secondary.contrastText }} />
+                                                </ListItemIcon >
+                                                <ListItemText primary="Retour vers le site client" />
+                                            </ListItemButton>
+                                        </Link>
+                                    </>
+                                }
+
                             </Box>
                         </Box>
 
