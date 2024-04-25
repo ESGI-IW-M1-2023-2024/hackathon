@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { useNavigate } from "react-router-dom";
 import { NewOrganisation } from "@/features/admin/types/organisation.types";
+import ColorButton from '@/features/UI/custom-mui-components/components/custom-button.component';
 
 const zodSchema = () =>
     z.object({
@@ -66,10 +67,15 @@ const CreateOrganisation = () => {
                 />
             </Stack>
 
-            <Button variant='contained' type='submit'>
-                Créer la région
-            </Button>
-        </Box>
+            <Stack direction={"row"} spacing={2}>
+                <Button variant='contained' type='submit'>
+                    Créer la région
+                </Button>
+                <ColorButton variant='contained' type='button' onClick={() => navigate('/admin/organisations')} sx={{ textTransform: 'uppercase' }}>
+                    Retour à la liste
+                </ColorButton>
+            </Stack>
+        </Stack>
     );
 };
 

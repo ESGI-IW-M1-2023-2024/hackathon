@@ -70,7 +70,7 @@ const OrganisationList = () => {
   return (
     <Stack width={'80%'} alignItems={'left'} margin={'1rem auto'} spacing={2} direction={'column'} >
       <Box textAlign={'center'}>
-        <h1>Liste des Organisation</h1>
+        <h1>Liste des Organisations</h1>
       </Box>
       <Stack width={'100%'} direction={'row'}>
         <Button variant='contained' onClick={() => navigate('/admin/organisations/create')} sx={{ width: 'fit-content' }}>
