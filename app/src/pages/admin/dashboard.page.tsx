@@ -29,10 +29,10 @@ const Dashboard = () => {
         </Card>
       </Stack>
       <Stack direction={"row"}>
-        <Card onClick={() => navigate('/admin/workshops') }
+        <Card onClick={() => navigate('/admin/workshops/calendar') }
           sx={{ backgroundColor: '#c7ac92', fontSize: '36px', textAlign: 'center', alignContent: 'center', alignItems: 'center', justifyContent: 'center', maxWidth: 300, minWidth: 300, height: 150, margin: 2, display: 'flex', flexDirection: 'column' }}
         >
-          Liste des Ateliers
+          Calendrier des Ateliers
         </Card>
       </Stack>
 

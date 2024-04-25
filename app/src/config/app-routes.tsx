@@ -39,7 +39,7 @@ const AppRoutes = () => (
       <Route path='/admin/organisations' element={<OrganisationList />} />
       <Route path='/admin/organisations/create' element={<CreateOrganisation />} />
       <Route path='/admin/organisations/:id' element={<EditOrganisation />} />
-      <Route path='/admin/workshops' element={<WorkshopCalendar />} />
+      <Route path='/admin/workshops/calendar' element={<WorkshopCalendar />} />
     </Route>
     <Route path='*' element={<NotFound />} />
   </Routes>
