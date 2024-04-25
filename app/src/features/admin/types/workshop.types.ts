@@ -24,3 +24,15 @@ export interface Workshop {
   bookings: WorkshopBooking[];
   price: number;
 }
+
+export interface BookingGivenWorkshop {
+  id: number;
+  dateStart: Date;
+  length: number;
+  maxPerson: number;
+  location: string;
+  status: string;
+  maxBookingDate: Date;
+  organisation: Organisation;
+  price: number;
+}

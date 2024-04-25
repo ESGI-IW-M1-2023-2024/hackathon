@@ -27,7 +27,7 @@ const CustomFormField = ({ control, controlName, options, childrenComponentType,
       }
       case 'CHECKBOX': {
         const opts = options as CheckboxField;
-        return CustomCheckboxField(field, opts, props || {});
+        return CustomCheckboxField(field, fieldState, opts, props || {});
       }
       case 'SELECT': {
         const opts = options as ChoiceField;
