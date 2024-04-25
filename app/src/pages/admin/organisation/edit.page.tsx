@@ -68,7 +68,7 @@ const EditOrganisation = () => {
 
             <h1>Édition d'une organisation</h1>
 
-            <Stack direction={'row'} spacing={2} minWidth={'100%'}>
+            <Stack direction={'row'} spacing={2} minWidth={'100%'} justifyContent={'space-evenly'}>
                 <CustomFormField
                     childrenComponentType='TEXT_FIELD'
                     control={control}
@@ -83,7 +83,7 @@ const EditOrganisation = () => {
                 />
             </Stack>
 
-            <Stack direction={"row"} spacing={2} justifyContent={'center'}>
+            <Stack direction={"row"} spacing={2} alignItems={'center'} justifyContent={'space-evenly'}>
                 <Button variant='contained' type='submit'>
                     Modifier l'organisation
                 </Button>
