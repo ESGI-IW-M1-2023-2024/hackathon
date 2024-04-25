@@ -93,7 +93,7 @@ class WorkshopController extends AbstractController
         $this->em->persist($workshop);
         $this->em->flush();
 
-        return $this->json($workshop, context: ["groups" => ["workshop:list"]]);
+        return $this->json($workshop, context: ["groups" => ["workshop:detail"]]);
     }
 
     #[OA\RequestBody(
