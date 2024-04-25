@@ -21,7 +21,14 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
 
 import logoImg from '@/assets/common/navbar/logo.svg'
-
+import {LoggedUser} from "@/features/auth/types/logged-user.type";
+import {useAppSelector} from "@/redux/hooks";
+import {RootState} from "@/redux/store";
+import { Dropdown } from '@mui/base/Dropdown';
+import { Menu } from '@mui/base/Menu';
+import { MenuButton as BaseMenuButton } from '@mui/base/MenuButton';
+import { MenuItem as BaseMenuItem, menuItemClasses } from '@mui/base/MenuItem';
+import { styled } from '@mui/system';
 export default function MainNavigation() {
 
     /*
@@ -29,7 +36,8 @@ export default function MainNavigation() {
     normally variables dissapear afte the function was executed
     */
     const [open, setState] = useState(false);
-    const { palette } = useTheme()
+    const { palette } = useTheme();
+    const user: LoggedUser | null = useAppSelector((state: RootState) => state.user);
 
     /*
     function that is being called every time the drawer should open or close,
@@ -107,11 +115,39 @@ export default function MainNavigation() {
                             }
                         }}
                     >
-                        <Link href="/">Accueil</Link>
-                        <Link href="/concept">Concept</Link>
-                        <Link href="/workshops">Ateliers</Link>
-                        <Link href="/about">A propos</Link>
-                        <Link href="https://www.linkedin.com/in/olivier-bonneton-5a320020"><LinkedInIcon /></Link>
+                      {!user ?
+                        <>
+                          <Link href="/">Accueil testeee  </Link>
+                          <Link href="/concept">Concept</Link>
+                          <Link href="/workshops">Ateliers</Link>
+                          <Link href="/about">A propos</Link>
+                          <Link href="https://www.linkedin.com/in/olivier-bonneton-5a320020"><LinkedInIcon /></Link>
+                        </>
+                        :
+                        <>
+                            <Dropdown>
+                                <MenuButton<typeof Link> slots={{ root: Link}} style={{background: "none"}}>Admin</MenuButton>
+                                <Menu slots={{ listbox: Listbox }}>
+                                    <MenuItem>
+                                        <Link href={"/admin"}>Dashboard</Link>
+                                    </MenuItem>
+                                    <MenuItem>
+                                        <Link href={"/themes"}>Liste des thèmes</Link>
+                                    </MenuItem>
+                                    <MenuItem>
+                                        <Link href={"/admin/regions"}>Liste des régions</Link>
+                                    </MenuItem>
+                                    <MenuItem>
+                                        <Link href={"/admin/organisations"}>Liste des organisation</Link>
+                                    </MenuItem>
+                                    <MenuItem>
+                                        <Link href={"/admin/workshops/calendar"}>Calendrier des ateliers</Link>
+                                    </MenuItem>
+                                </Menu>
+                            </Dropdown>
+                            <Link href={"/"}>Retour au site client</Link>
+                        </>
+                      }
                     </Stack>
 
                     <IconButton
@@ -209,3 +245,100 @@ export default function MainNavigation() {
 
     );
 }
+
+const red = {
+    200: '#8F0047',
+    300: '#660033',
+    600: '#3D001F',
+};
+
+const grey = {
+    50: '#F3F6F9',
+    100: '#E5EAF2',
+    200: '#DAE2ED',
+    300: '#C7D0DD',
+    400: '#B0B8C4',
+    500: '#9DA8B7',
+    600: '#6B7A90',
+    700: '#434D5B',
+    800: '#303740',
+    900: '#1C2025',
+};
+
+const Listbox = styled('ul')(
+  ({ theme }) => `
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.875rem;
+  box-sizing: border-box;
+  padding: 6px;
+  margin: 12px 0;
+  min-width: 200px;
+  border-radius: 12px;
+  overflow: auto;
+  outline: 0px;
+  z-index: 500  ;
+  background: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
+  border: 1px solid ${theme.palette.mode === 'dark' ? grey[700] : grey[200]};
+  color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
+  box-shadow: 0px 4px 6px ${
+    theme.palette.mode === 'dark' ? 'rgba(0,0,0, 0.50)' : 'rgba(0,0,0, 0.05)'
+  };
+  z-index: 1;
+  `,
+);
+
+const MenuItem = styled(BaseMenuItem)(
+  ({ theme }) => `
+  list-style: none;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: default;
+  user-select: none;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+
+  &:focus {
+    outline: 3px solid ${theme.palette.mode === 'dark' ? red[600] : red[200]};
+    background-color: ${theme.palette.mode === 'dark' ? grey[800] : grey[100]};
+    color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
+  }
+
+  &.${menuItemClasses.disabled} {
+    color: ${theme.palette.mode === 'dark' ? grey[700] : grey[400]};
+  }
+  `,
+);
+
+const MenuButton = styled(BaseMenuButton)(
+  ({ theme }) => `
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  padding: 8px 16px;
+  border-radius: 8px;
+  color: white;
+  transition: all 150ms ease;
+  cursor: pointer;
+  background: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
+  border: 1px solid ${theme.palette.mode === 'dark' ? grey[700] : grey[200]};
+  color: ${theme.palette.mode === 'dark' ? grey[200] : grey[900]};
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+
+  &:hover {
+    background: ${theme.palette.mode === 'dark' ? grey[800] : grey[50]};
+    border-color: ${theme.palette.mode === 'dark' ? grey[600] : grey[300]};
+  }
+
+  &:active {
+    background: ${theme.palette.mode === 'dark' ? grey[700] : grey[100]};
+  }
+
+  &:focus-visible {
+    box-shadow: 0 0 0 4px ${theme.palette.mode === 'dark' ? red[300] : red[200]};
+    outline: none;
+  }
+`,
+);
