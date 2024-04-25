@@ -1,7 +1,7 @@
 import ListGridComponent from '@/features/UI/list/components/list-grid.component';
 import {useDeleteWineMutation, useGetWinesQuery} from '@/redux/api/api.slice';
 import {ListGridProps} from '@/types/data-grid.types';
-import {Button, FormControlLabel, LinearProgress, Switch} from '@mui/material';
+import {Box, Button, FormControlLabel, LinearProgress, Stack, Switch} from '@mui/material';
 import {useNavigate, useSearchParams} from 'react-router-dom';
 import {openSnackBar} from "@/redux/slices/notification.slice";
 import {useDispatch} from "react-redux";
@@ -70,18 +70,20 @@ const WineList = () => {
 
     return (
         <>
-            <h1>Liste des vins</h1>
-            <Button variant='contained' onClick={() => navigate('/admin/wines/create')}>
-                Créer un vin
-            </Button>
-            <FormControlLabel
-                sx={{ ml: 2 }}
-                control={<Switch checked={showArchived === 1} onChange={() => setShowArchived(showArchived === 1 ? 0 : 1)} />}
-                label='Afficher les vins archivées'
-            />
-            <ListGridComponent {...listProps} />
+            <Stack width={'80%'} alignItems={'left'} margin={'1rem auto'} spacing={2} direction={'column'} >
+                <Box textAlign={'center'}>
+                    <h1>Liste des vins</h1>
+                </Box>
+                <Stack width={'100%'}>
+                    <Button variant='contained' onClick={() => navigate('/admin/wines/create')} sx={{ width: 'fit-content' }}>
+                        Créer un vin
+                    </Button>
+                </Stack>
+
+                <ListGridComponent {...listProps} />
+            </Stack>
         </>
-    );
+    )
 };
 
 export default WineList;

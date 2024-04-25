@@ -27,7 +27,8 @@ class WineRepository extends ServiceEntityRepository
      */
     public function getBaseQueryBuilder(array $filter): QueryBuilder
     {
-        $queryBuilder = $this->createQueryBuilder('w');
+        $queryBuilder = $this->createQueryBuilder('w')
+            ->innerJoin('w.region', 'r');
 
         if (!empty($filter['label'])) {
             $queryBuilder->andWhere('w.label LIKE :label')
@@ -55,6 +56,10 @@ class WineRepository extends ServiceEntityRepository
         }
 
         if (!empty($filter["orderBy"]) && !empty($filter["orderByDirection"])) {
+            if ($filter["orderBy"] === "region") {
+                $queryBuilder
+                    ->orderBy('r.label', $filter["orderByDirection"]);
+            }
             $queryBuilder->orderBy("w.".$filter["orderBy"], $filter["orderByDirection"]);
         }
 
