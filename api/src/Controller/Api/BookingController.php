@@ -22,7 +22,6 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use OpenApi\Attributes as OA;
 
 #[Route('/bookings', name: 'bookings_')]
-#[IsGranted("ROLE_ADMIN")]
 class BookingController extends AbstractController
 {
 
@@ -32,6 +31,7 @@ class BookingController extends AbstractController
     }
 
     #[Route('', name: 'list', methods: ["GET"])]
+    #[IsGranted("ROLE_ADMIN")]
     public function index(
         Request $request,
         PaginationService $paginationService
@@ -49,6 +49,7 @@ class BookingController extends AbstractController
     }
 
     #[Route('/{id}', name: 'get', methods: ["GET"])]
+    #[IsGranted("ROLE_ADMIN")]
     public function get(Booking $booking): JsonResponse
     {
         return $this->json(
@@ -112,6 +113,7 @@ class BookingController extends AbstractController
         )
     )]
     #[Route('/{id}', name: 'update', methods: ["PUT"])]
+    #[IsGranted("ROLE_ADMIN")]
     public function update(
         Booking                        $booking,
         Request                             $request,
@@ -147,6 +149,7 @@ class BookingController extends AbstractController
     }
 
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
+    #[IsGranted("ROLE_ADMIN")]
     public function delete(
         Booking $booking
     ): JsonResponse {
@@ -157,6 +160,7 @@ class BookingController extends AbstractController
     }
 
     #[Route('/{id}/validate', name: 'validate', methods: ["POST"])]
+    #[IsGranted("ROLE_ADMIN")]
     public function validate(
         Booking $booking,
         MailerService $mailerService
@@ -178,6 +182,7 @@ class BookingController extends AbstractController
     }
 
     #[Route('/{id}/cancel', name: 'cancel', methods: ["POST"])]
+    #[IsGranted("ROLE_ADMIN")]
     public function cancel(
         Booking $booking,
         MailerService $mailerService

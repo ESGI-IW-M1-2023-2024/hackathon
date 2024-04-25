@@ -4,7 +4,7 @@ import useThemeColumns from '@/features/admin/utils/theme-config';
 import { useDeleteThemeMutation, useGetThemesQuery } from '@/redux/api/api.slice';
 import { openSnackBar } from '@/redux/slices/notification.slice';
 import { ListGridProps } from '@/types/data-grid.types';
-import { Button, FormControlLabel, LinearProgress, Switch } from '@mui/material';
+import { Box, Button, FormControlLabel, LinearProgress, Stack, Switch } from '@mui/material';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -68,18 +68,23 @@ const ThemesList = () => {
   }
 
   return (
-    <>
-      <h1>Liste des Thèmes</h1>
-      <Button variant='contained' onClick={() => navigate('/themes/create')}>
-        Créer un thème
-      </Button>
-      <FormControlLabel
-        sx={{ ml: 2 }}
-        control={<Switch checked={showArchived === 1} onChange={() => setShowArchived(showArchived === 1 ? 0 : 1)} />}
-        label='Afficher les thèmes archivés'
-      />
+    <Stack width={'80%'} alignItems={'left'} margin={'1rem auto'} spacing={2} direction={'column'} >
+      <Box textAlign={'center'}>
+        <h1>Liste des Thèmes</h1>
+      </Box>
+
+      <Stack width={'100%'} direction={'row'}>
+        <Button variant='contained' onClick={() => navigate('/themes/create')} sx={{ width: 'fit-content' }}>
+          Créer un thème
+        </Button>
+        <FormControlLabel
+          sx={{ ml: 2 }}
+          control={<Switch checked={showArchived === 1} onChange={() => setShowArchived(showArchived === 1 ? 0 : 1)} />}
+          label='Afficher les thèmes archivés'
+        />
+      </Stack>
       <ListGridComponent {...listProps} />
-    </>
+    </Stack>
   );
 };
 

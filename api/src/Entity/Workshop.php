@@ -23,6 +23,7 @@ class Workshop
     #[ORM\Column]
     #[Groups(["workshop:list", "workshop:detail", "booking:list"])]
     #[Assert\NotBlank(groups: ["workshop:new"])]
+    #[Assert\Date()]
     private ?\DateTimeImmutable $dateStart = null;
 
     #[ORM\Column]
@@ -53,10 +54,12 @@ class Workshop
     #[ORM\ManyToOne(inversedBy: 'workshops')]
     #[ORM\JoinColumn(nullable: true)]
     #[Groups(["workshop:list", "workshop:detail", "booking:list"])]
+    #[Assert\NotNull(groups: ["workshop:new"])]
     private ?Organisation $organisation = null;
 
     #[ORM\ManyToOne(inversedBy: 'workshops')]
     #[Groups(["workshop:detail", "workshop:list"])]
+    #[Assert\NotNull(groups: ["workshop:new"])]
     private ?Theme $theme = null;
 
     /**
@@ -70,14 +73,15 @@ class Workshop
      * @var Collection<int, Booking>
      */
     #[ORM\OneToMany(targetEntity: Booking::class, mappedBy: 'workshop')]
-    #[Groups(["workshop:list", "workshop:detail"])]
+    #[Groups(["workshop:detail"])]
     private Collection $bookings;
 
     /**
      * @var Collection<int, Wine>
      */
     #[ORM\ManyToMany(targetEntity: Wine::class, mappedBy: 'workshops')]
-    #[Groups(["workshop:list:status:finished"])]
+    #[Groups(["workshop:list:status:finished", "workshop:detail"])]
+    #[Assert\Count(min: 1, groups: ["workshop:new"])]
     private Collection $wines;
 
     #[ORM\Column]
@@ -95,6 +99,16 @@ class Workshop
         $this->bookings = new ArrayCollection();
         $this->wines = new ArrayCollection();
     }
+
+    #[Groups(["workshop:list", "workshop:detail"])]
+    public function getNumberOfWines(): int
+    {
+        return $this->getWines()->count();
+    }
+
+    /********************************/
+    /* CONTENT AUTO GENERATED BELOW */
+    /********************************/
 
     public function getId(): ?int
     {

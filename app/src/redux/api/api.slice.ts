@@ -8,10 +8,11 @@ import { Country } from '@/features/admin/types/country.types';
 import { Workshop } from '@/features/admin/types/workshop.types';
 import { EditOrganisation, NewOrganisation, Organisation } from '@/features/admin/types/organisation.types';
 import { Wine } from '@/features/admin/types/wine.types';
+import { Booking, CreateBooking } from '@/features/admin/types/booking.types';
 
 export const apiSlice = createApi({
   reducerPath: 'api',
-  tagTypes: ['Themes', 'Regions', 'Countries', 'Organisations'],
+  tagTypes: ['Themes', 'Regions', 'Countries', 'Organisations', 'Workshop', 'Booking'],
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_API_BASE_URL,
     prepareHeaders: (headers, api) => {
@@ -48,6 +49,12 @@ export const apiSlice = createApi({
       }),
       providesTags: ['Themes'],
     }),
+    getOneTheme: builder.query<Theme, number>({
+      query: (id) => ({
+        url: `themes/${id}`,
+        method: 'GET',
+      }),
+    }),
     createTheme: builder.mutation<Theme, NewTheme>({
       query: (body) => ({
         url: 'themes',
@@ -81,18 +88,21 @@ export const apiSlice = createApi({
         url: 'workshops',
         method: 'GET',
       }),
+      providesTags: ['Workshop'],
     }),
     getThreeLastWorkshops: builder.query<PaginatedResponse<Workshop>, void>({
       query: () => ({
         url: 'workshops?limit=3&dateStart=2024-04-25&orderBy=dateStart&orderByDirection=ASC',
         method: 'GET',
       }),
+      providesTags: ['Workshop'],
     }),
-    getOneTheme: builder.query<Theme, number>({
+    getOneWorkshop: builder.query<Workshop, string>({
       query: (id) => ({
-        url: `themes/${id}`,
+        url: `workshops/${id}`,
         method: 'GET',
       }),
+      providesTags: ['Workshop'],
     }),
     getCountries: builder.query<Country[], void>({
       query: () => ({
@@ -188,6 +198,13 @@ export const apiSlice = createApi({
         url: `wines/${id}`,
         method: 'GET',
       }),
+    createBooking: builder.mutation<Booking, CreateBooking>({
+      query: (body) => ({
+        url: 'bookings',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Booking'],
     }),
   }),
 });
@@ -214,4 +231,6 @@ export const {
   useEditOrganisationMutation,
   useGetThreeLastWorkshopsQuery,
   useGetOneWineQuery,
+  useGetOneWorkshopQuery,
+  useCreateBookingMutation,
 } = apiSlice;

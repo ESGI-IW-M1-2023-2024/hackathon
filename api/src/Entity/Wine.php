@@ -18,21 +18,21 @@ class Wine
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["wine:list", "wine:detail"])]
+    #[Groups(["wine:list", "wine:detail", "workshop:detail"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["wine:list", "wine:detail"])]
+    #[Groups(["wine:list", "wine:detail", "workshop:detail"])]
     #[Assert\NotBlank(groups: ["wine:new"])]
     private ?string $label = null;
 
     #[ORM\Column]
-    #[Groups(["wine:list", "wine:detail"])]
+    #[Groups(["wine:list", "wine:detail", "workshop:detail"])]
     #[Assert\NotBlank(groups: ["wine:new"])]
     private ?int $productYear = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["wine:list", "wine:detail"])]
+    #[Groups(["wine:list", "wine:detail", "workshop:detail"])]
     #[Assert\NotBlank(groups: ["wine:new"])]
     private ?string $producer = null;
 
@@ -51,21 +51,21 @@ class Wine
     private ?string $color = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(["wine:list", "wine:detail"])]
+    #[Groups(["wine:list", "wine:detail", "workshop:detail"])]
     private ?int $quantity = null;
 
     #[ORM\Column(length: 255, enumType: WineBottleSize::class)]
-    #[Groups(["wine:list", "wine:detail"])]
+    #[Groups(["wine:list", "wine:detail", "workshop:detail"])]
     #[Assert\NotNull(groups: ["wine:new", "wine:edit"])]
     private ?WineBottleSize $bottleSize = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups(["wine:detail"])]
+    #[Groups(["wine:detail", "workshop:detail"])]
     private ?string $comments = null;
 
     #[ORM\ManyToOne(inversedBy: 'wines')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["wine:list", "wine:detail"])]
+    #[Groups(["wine:list", "wine:detail", "workshop:detail"])]
     #[Assert\NotNull(groups: ["wine:new"])]
     private ?Region $region = null;
 
@@ -76,58 +76,58 @@ class Wine
     private Collection $workshops;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(["wine:detail"])]
+    #[Groups(["wine:detail", "workshop:detail"])]
     private ?float $servingTemperature = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["wine:detail"])]
+    #[Groups(["wine:detail", "workshop:detail"])]
     private ?string $storage = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["wine:detail"])]
+    #[Groups(["wine:detail", "workshop:detail"])]
     private ?string $upTo = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["wine:detail"])]
+    #[Groups(["wine:detail", "workshop:detail"])]
     private ?string $taste = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["wine:detail"])]
+    #[Groups(["wine:detail", "workshop:detail"])]
     private ?string $byTaste = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["wine:detail"])]
+    #[Groups(["wine:detail", "workshop:detail"])]
     private ?string $byEye = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["wine:detail"])]
+    #[Groups(["wine:detail", "workshop:detail"])]
     private ?string $onTheNose = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["wine:detail"])]
+    #[Groups(["wine:detail", "workshop:detail"])]
     private ?string $inTheMouth = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["wine:detail"])]
+    #[Groups(["wine:detail", "workshop:detail"])]
     private ?string $winePairing = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["wine:detail"])]
+    #[Groups(["wine:detail", "workshop:detail"])]
     private ?string $recommandedPairing = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups(["wine:detail"])]
+    #[Groups(["wine:detail", "workshop:detail"])]
     private ?string $content = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["wine:detail"])]
+    #[Groups(["wine:detail", "workshop:detail"])]
     private ?string $imageFilename = null;
 
     #[Assert\NotBlank(groups: ["resource:new"])]
     public ?string $file = null;
 
     #[ORM\Column]
-    #[Groups(["wine:list", "wine:detail"])]
+    #[Groups(["wine:list", "wine:detail", "workshop:detail"])]
     private bool $archived = false;
 
     public function __construct()
