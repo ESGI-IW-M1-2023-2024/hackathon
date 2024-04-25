@@ -29,8 +29,13 @@ class WorkshopRepository extends ServiceEntityRepository
     public function getBaseQueryBuilder(array $filter): QueryBuilder
     {
 
-        $queryBuilder = $this->createQueryBuilder('u')
-            ->innerJoin('u.theme', "t");
+        $queryBuilder = $this->createQueryBuilder('w')
+            ->innerJoin('w.theme', "t");
+
+        if (!empty($filter["archived"])) {
+            $queryBuilder->andWhere('w.archived = :archived')
+                ->setParameter('archived', $filter["archived"]);
+        }
 
         if (!empty($filter['label'])) {
             $queryBuilder
@@ -40,18 +45,18 @@ class WorkshopRepository extends ServiceEntityRepository
 
         if (!empty($filter['theme'])) {
             $queryBuilder
-                ->andWhere('u.theme = :theme')
+                ->andWhere('w.theme = :theme')
                 ->setParameter('theme', $filter['theme']);
         }
 
         if (!empty($filter['dateStart'])) {
             $queryBuilder
-                ->andWhere('u.dateStart >= :dateStart')
+                ->andWhere('w.dateStart >= :dateStart')
                 ->setParameter('dateStart', $filter['dateStart']);
         }
 
         if (!empty($filter['orderBy']) && !empty($filter['orderByDirection'])) {
-            $queryBuilder->orderBy('u.' . $filter['orderBy'], $filter['orderByDirection']);
+            $queryBuilder->orderBy('w.' . $filter['orderBy'], $filter['orderByDirection']);
         }
 
         return $queryBuilder;
