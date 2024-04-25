@@ -6,7 +6,7 @@ import { CustomPaginationParams, PaginatedResponse } from '@/types/pagination.ty
 import { EditRegion, NewRegion, Region } from '@/features/admin/types/region.types';
 import { Country } from '@/features/admin/types/country.types';
 import { Workshop } from '@/features/admin/types/workshop.types';
-import {CalendarParams} from "@/types/calendarParams.types";
+import { CalendarParams } from "@/types/calendarParams.types";
 import { EditOrganisation, NewOrganisation, Organisation } from '@/features/admin/types/organisation.types';
 import { Wine } from '@/features/admin/types/wine.types';
 import { Booking, CreateBooking } from '@/features/admin/types/booking.types';
@@ -95,6 +95,13 @@ export const apiSlice = createApi({
     getThreeLastWorkshops: builder.query<PaginatedResponse<Workshop>, void>({
       query: () => ({
         url: 'workshops?limit=3&dateStart=2024-04-25&orderBy=dateStart&orderByDirection=ASC',
+        method: 'GET',
+      }),
+      providesTags: ['Workshop'],
+    }),
+    getWorkshopsOpened: builder.query<PaginatedResponse<Workshop>, void>({
+      query: () => ({
+        url: 'workshops?orderBy=dateStart&orderByDirection=ASC&status=booking',
         method: 'GET',
       }),
       providesTags: ['Workshop'],
@@ -241,6 +248,7 @@ export const {
   useGetOrganisationsQuery,
   useEditOrganisationMutation,
   useGetThreeLastWorkshopsQuery,
+  useGetWorkshopsOpenedQuery,
   useGetOneWineQuery,
   useGetOneWorkshopQuery,
   useCreateBookingMutation,

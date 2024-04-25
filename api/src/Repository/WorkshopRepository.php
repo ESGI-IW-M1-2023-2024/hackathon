@@ -37,6 +37,11 @@ class WorkshopRepository extends ServiceEntityRepository
                 ->setParameter('archived', $filter["archived"]);
         }
 
+        if (!empty($filter["status"])) {
+            $queryBuilder->andWhere('w.status = :status')
+                ->setParameter('status', $filter["status"]);
+        }
+
         if (!empty($filter['label'])) {
             $queryBuilder
                 ->andWhere('t.label LIKE :label')
