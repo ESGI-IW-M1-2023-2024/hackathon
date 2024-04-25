@@ -15,6 +15,7 @@ import OrganisationList from '@/pages/admin/organisation/list.page';
 import CreateOrganisation from '@/pages/admin/organisation/create.page';
 import EditOrganisation from '@/pages/admin/organisation/edit.page';
 import WorkshopList from '@/pages/common/workshop-list.page';
+import WorkshopDetails from '@/pages/common/workshop-details.page';
 
 const AppRoutes = () => (
   <Routes>
@@ -22,6 +23,7 @@ const AppRoutes = () => (
     <Route path='/login' element={<Login />} />
     <Route path='/concept' element={<Concept />} />
     <Route path='/workshops' element={<WorkshopList />} />
+    <Route path='/workshops/:id' element={<WorkshopDetails />} />
     <Route element={<SecureRoute />}>
       <Route path='/admin' element={<Dashboard />} />
       <Route path='/themes' element={<ThemesList />} />
