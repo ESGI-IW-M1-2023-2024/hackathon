@@ -1,4 +1,4 @@
-import {Route, Routes} from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Home from '../pages/common/home.page';
 import Login from '../pages/auth/login.page';
 import NotFound from '../pages/common/not-found.page';
@@ -6,32 +6,33 @@ import SecureRoute from '@/features/auth/components/secure-route';
 import Dashboard from '@/pages/admin/dashboard.page';
 import Concept from '../pages/common/concept.page';
 import ThemesList from '@/pages/admin/themes-list.page';
-import RegionList from "@/pages/admin/region/list.page";
-import CreateRegion from "@/pages/admin/region/create.page";
+import RegionList from '@/pages/admin/region/list.page';
+import CreateRegion from '@/pages/admin/region/create.page';
 import EditTheme from '@/pages/admin/themes-edit.page';
 import CreateTheme from '@/pages/admin/themes-create.page';
-import EditRegion from "@/pages/admin/region/edit.page";
-import OrganisationList from "@/pages/admin/organisation/list.page";
-import CreateOrganisation from "@/pages/admin/organisation/create.page";
-import EditOrganisation from "@/pages/admin/organisation/edit.page";
-
+import EditRegion from '@/pages/admin/region/edit.page';
+import OrganisationList from '@/pages/admin/organisation/list.page';
+import CreateOrganisation from '@/pages/admin/organisation/create.page';
+import EditOrganisation from '@/pages/admin/organisation/edit.page';
+import WorkshopList from '@/pages/common/workshop-list.page';
 
 const AppRoutes = () => (
   <Routes>
     <Route path='/' element={<Home />} />
     <Route path='/login' element={<Login />} />
     <Route path='/concept' element={<Concept />} />
+    <Route path='/workshops' element={<WorkshopList />} />
     <Route element={<SecureRoute />}>
       <Route path='/admin' element={<Dashboard />} />
       <Route path='/themes' element={<ThemesList />} />
       <Route path='/themes/create' element={<CreateTheme />} />
       <Route path='/themes/:id' element={<EditTheme />} />
-        <Route path='/admin/regions' element={<RegionList/>}/>
-        <Route path='/admin/regions/create' element={<CreateRegion/>}/>
-        <Route path='/admin/regions/:id' element={<EditRegion/>}/>
-        <Route path='/admin/organisations' element={<OrganisationList/>}/>
-        <Route path='/admin/organisations/create' element={<CreateOrganisation/>}/>
-        <Route path='/admin/organisations/:id' element={<EditOrganisation/>}/>
+      <Route path='/admin/regions' element={<RegionList />} />
+      <Route path='/admin/regions/create' element={<CreateRegion />} />
+      <Route path='/admin/regions/:id' element={<EditRegion />} />
+      <Route path='/admin/organisations' element={<OrganisationList />} />
+      <Route path='/admin/organisations/create' element={<CreateOrganisation />} />
+      <Route path='/admin/organisations/:id' element={<EditOrganisation />} />
     </Route>
     <Route path='*' element={<NotFound />} />
   </Routes>
