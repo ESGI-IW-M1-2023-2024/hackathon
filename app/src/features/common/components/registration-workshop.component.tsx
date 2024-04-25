@@ -5,7 +5,18 @@ import { useCreateBookingMutation } from '@/redux/api/api.slice';
 import { openSnackBar } from '@/redux/slices/notification.slice';
 import { customErrorMap } from '@/utils/customZodErrorMap';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Box, Button } from '@mui/material';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Slide,
+} from '@mui/material';
+import { TransitionProps } from '@mui/material/transitions';
+import { forwardRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { z } from 'zod';
@@ -22,12 +33,23 @@ const zodSchema = () =>
     }),
   });
 
+const Transition = forwardRef(function Transition(
+  props: TransitionProps & {
+    children: React.ReactElement<any, any>;
+  },
+  ref: React.Ref<unknown>,
+) {
+  return <Slide direction='up' ref={ref} {...props} />;
+});
+
 interface RegistrationWorkshopProps {
   workshop: Workshop;
 }
 
 const RegistrationWorkshop = ({ workshop }: RegistrationWorkshopProps) => {
   const dispatch = useDispatch();
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
+
   const [createBooking] = useCreateBookingMutation();
   const { control, handleSubmit, watch } = useForm({
     resolver: zodResolver(zodSchema(), { errorMap: customErrorMap }),
@@ -46,7 +68,7 @@ const RegistrationWorkshop = ({ workshop }: RegistrationWorkshopProps) => {
   const handleFormSubmit = async (formData: CreateBooking) => {
     try {
       await createBooking(formData).unwrap();
-      dispatch(openSnackBar({ message: 'Réservation effectuée !', severity: 'success' }));
+      setOpenDialog(true);
     } catch (error: unknown) {
       console.log(error);
       dispatch(openSnackBar({ message: "impossible de s'inscrire à l'atelier", severity: 'error' }));
@@ -89,6 +111,23 @@ const RegistrationWorkshop = ({ workshop }: RegistrationWorkshopProps) => {
       <Button variant='contained' type='submit'>
         S'inscrire
       </Button>
+      <Dialog
+        open={openDialog}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={() => setOpenDialog(false)}
+        aria-describedby='confirmation-dialog-slide-description'
+      >
+        <DialogTitle>Confirmation</DialogTitle>
+        <DialogContent>
+          <DialogContentText id='confirmation-dialog-slide-description'>
+            Votre inscription a été enregistrée. Un mail vous a été envoyé afin de confirmer votre inscription.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenDialog(false)}>J'ai compris</Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };
