@@ -5,7 +5,7 @@ const Dashboard = () => {
   return (
     <Stack margin={'2rem auto'} alignItems={'center'} paddingInline={'2rem'} width={'100%'}>
       <h1>Admin dashboard</h1>
-      <Stack direction={'row'}>
+      <Stack direction={'row'} flexWrap={"wrap"}>
         <DashboardButton redirectPath='/themes' text='Liste des Thèmes' />
         <DashboardButton redirectPath='/admin/regions' text='Liste des Régions' />
         <DashboardButton redirectPath='/admin/organisations' text='Liste des Organisations' />
