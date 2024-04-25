@@ -9,6 +9,7 @@ export type ChoiceItems = {
 export interface SimpleField {
   label: string;
   fieldId?: string;
+  shrink?: boolean;
 }
 
 export interface CheckboxField extends SimpleField {
