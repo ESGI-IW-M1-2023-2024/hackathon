@@ -21,6 +21,11 @@ a {
   color: inherit;
 }
 
+h1.title-calendar {
+  text-align: center;
+  margin-top: 2rem;
+}
+
 /*
   ombre portée avec filtre drop-shadow avec hover et transition
 */
@@ -64,4 +69,18 @@ a {
   background-color: #3c31dd;
   transform: translate(-4%, 40%);
   z-index: -1;
+}
+
+/*
+ Surcharge FullCalendarjs
+ */
+
+.fc .fc-button-primary {
+  background-color: #8F0047;
+  border-color: #8F0047;
+}
+
+.fc .fc-button-primary:hover {
+  background-color: #3D001F;
+  border-color: #3D001F;
 }

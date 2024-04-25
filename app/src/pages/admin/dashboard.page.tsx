@@ -28,6 +28,13 @@ const Dashboard = () => {
           Liste des Organisations
         </Card>
       </Stack>
+      <Stack direction={"row"}>
+        <Card onClick={() => navigate('/admin/workshops') }
+          sx={{ backgroundColor: '#c7ac92', fontSize: '36px', textAlign: 'center', alignContent: 'center', alignItems: 'center', justifyContent: 'center', maxWidth: 300, minWidth: 300, height: 150, margin: 2, display: 'flex', flexDirection: 'column' }}
+        >
+          Liste des Ateliers
+        </Card>
+      </Stack>
 
     </Stack>
 
