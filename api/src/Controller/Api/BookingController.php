@@ -4,6 +4,7 @@ namespace App\Controller\Api;
 
 use App\Entity\Booking;
 use App\Enum\BookingStatus;
+use App\Service\BookingService;
 use App\Service\MailerService;
 use App\Service\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -76,7 +77,7 @@ class BookingController extends AbstractController
         Request                     $request,
         SerializerInterface         $serializer,
         ValidatorInterface          $validator,
-        MailerService $mailerService
+        MailerService $mailerService,
     ): JsonResponse {
         $booking = $serializer->deserialize($request->getContent(), Booking::class, 'json');
 
@@ -86,15 +87,18 @@ class BookingController extends AbstractController
             return $this->json($violations, Response::HTTP_BAD_REQUEST);
         }
 
+        $this->em->persist($booking);
+        $this->em->flush();
+
+        $booking->setReference(rand(1000, 9999). $booking->getId());
+        $this->em->flush();
+
         $mailerService->sendMail(
             \MailerEnum::BOOKING,
             [
                 "booking" => $booking
             ]
         );
-
-        $this->em->persist($booking);
-        $this->em->flush();
 
         return $this->json($booking, context: ["groups" => ["booking:list"]]);
     }
