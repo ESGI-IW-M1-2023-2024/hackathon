@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use MailerEnum;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use WorkshopStatus;
 
 class WorkshopService
 {
@@ -51,8 +52,16 @@ class WorkshopService
 
     public function workshopFinishedHandler(Workshop $workshop)
     {
+        if (WorkshopStatus::CLOSED != $workshop->getStatus()) {
+            return;
+        }
+
         foreach ($workshop->getValidatedBookings() as $booking) {
             $this->mailerService->sendMail(MailerEnum::WORKSHOP_FINISHED, ['booking' => $booking]);
         }
+
+        $workshop->setStatus(WorkshopStatus::FINISHED);
+
+        $this->entityManager->flush();
     }
 }

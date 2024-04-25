@@ -51,7 +51,9 @@ class WorkshopController extends AbstractController
             context: ["groups" => ["workshop:list", "workshop:detail"]]
         );
     }
+
     #[Route('/{id}/finished', name: 'get_finished', methods: ["GET"])]
+    #[IsGranted('ROLE_ADMIN')]
     public function getFinished(Workshop $workshop, WorkshopService $workshopService): JsonResponse
     {
         $workshopService->workshopFinishedHandler($workshop);

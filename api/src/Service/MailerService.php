@@ -35,8 +35,8 @@ class MailerService
             MailerEnum::BOOKING_VALIDATION => $this->sendMailBookingValidation($context),
             MailerEnum::BOOKING_CANCELED => $this->sendMailBookingCanceled($context),
             MailerEnum::WORKSHOP_REMINDER => $this->sendMailWorkshopReminder($context),
-            MailerEnum::WORKSHOP_CANCELED => $this->sendMailWorkshopFinished($context),
-            MailerEnum::WORKSHOP_FINISHED => null
+            MailerEnum::WORKSHOP_CANCELED => null,
+            MailerEnum::WORKSHOP_FINISHED => $this->sendMailWorkshopFinished($context)
         };
 
         try {
