@@ -23,9 +23,11 @@ const WineList = () => {
         page: Number(searchParams.get('page') || 1),
         limit: Number(searchParams.get('limit') || import.meta.env.VITE_DEFAULT_PAGE_SIZE || 15),
         archived: showArchived,
+        orderBy: searchParams.get('orderBy') || '',
+        orderByDirection: searchParams.get('orderByDirection') || '',
     };
 
-    const {page, limit, archived} = pagination;
+    const {page, limit, archived, orderBy, orderByDirection} = pagination;
 
     const handlePageChange = (newPage: number) => {
         const newSearchParams = new URLSearchParams(searchParams);
@@ -43,7 +45,7 @@ const WineList = () => {
     };
 
     // Api Data
-    const {data, isLoading} = useGetWinesQuery({page, limit, archived});
+    const {data, isLoading} = useGetWinesQuery({page, limit, archived, orderBy, orderByDirection});
 
     const listProps: ListGridProps<Wine> = {
         columns: [...useWineColumns({handleDeleteWine})],

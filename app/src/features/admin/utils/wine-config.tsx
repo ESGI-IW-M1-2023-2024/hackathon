@@ -43,6 +43,7 @@ const useWineColumns = ({handleDeleteWine}: { handleDeleteWine: (id: number) => 
             field: 'region',
             headerName: 'Région',
             flex: 1,
+            renderCell: params => params.row.region.label
         },
         {
             field: 'actions',

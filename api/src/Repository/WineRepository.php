@@ -54,6 +54,9 @@ class WineRepository extends ServiceEntityRepository
                 ->setParameter('archived', $filter["archived"]);
         }
 
+        if (!empty($filter["orderBy"]) && !empty($filter["orderByDirection"])) {
+            $queryBuilder->orderBy("w.".$filter["orderBy"], $filter["orderByDirection"]);
+        }
 
         return $queryBuilder;
     }
