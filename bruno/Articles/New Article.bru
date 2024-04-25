@@ -1,0 +1,24 @@
+meta {
+  name: New Article
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/articles
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: c1ce6b5bae12f7a16c0ff8882f215bfc767609a8f3469d32e1012ad538712bef
+}
+
+body:json {
+  {
+    "title": "Article !",
+    "content": "Mon joli contenus d'article plop lop plop",
+    "headerFile": "eeOZFSQodEju+OFpij3Vly/okethIuk4qfgIiWYNE8k/nnX3aKe3qX6M9D7arnfY5bU2nCZiACZiACZiACQwAAQvJAWhEV8EETMAETMAETMAEekHAQrIX1J2nCZiACZiACZiACQwAAQvJAWhEV8EETMAETMAETMAEekHAQrIX1J2nCZiACZiACZiACQwAAQvJAWhEV8EETMAETMAETMAEekHAQrIX1J2nCZiACZiACZiACQwAAQvJAWhEV8EETMAETMAETMAEekHg/wEoFxHTuF52FgAAAABJRU5ErkJggg",
+    "imageFile": "iVBORw0KGgoAAAANSUhEUgAAApIAAAF7CAYAAABhK2uxAAAAAXNSR0IArs4c6QAAIABJREFUeF7sfQecXlWd9v+2t86kMCkkEBJ6CUFqKIKISBFpAoquYkF3v28tq58irgXLKivquuruWoBd166IIor0XpSSBKSEGjokIT1T3nLb+fKce5/JyJ2nCZiACZiACZiACQwAAQvJAWhEV8EETMAETMAETMAEekHAQrIX1J2nCZiACZiACZiACQwAAQvJAWhEV8EETMAETMAETMAEekHg/wEoFxHTuF52FgAAAABJRU5ErkJggg=="
+  }
+}
