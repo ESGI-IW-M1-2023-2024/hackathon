@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import ColorButton from "@/features/UI/custom-mui-components/components/custom-button.component";
 import herobanner from "@/assets/homepage/herobanner.jpg";
+import Chip from "@mui/material/Chip";
 
 const WorkshopList = () => {
   const { data, isLoading } = useGetWorkshopsQuery();
@@ -31,24 +32,46 @@ const WorkshopList = () => {
             const dateStart = new Date(workshop.dateStart);
             const formattedDate = dateStart.toLocaleDateString('fr-FR', {
                 day: '2-digit', // Affiche le jour avec deux chiffres
-                month: 'long'   // Affiche le mois en toute lettre
+                month: 'long',   // Affiche le mois en toute lettre,
+                year: 'numeric'
             });
 
             return (
                 <Card key={index}
-                      sx={{width: {lg: 'calc(97% / 4)', md: 'calc(97% / 3)', sm: 'calc(97% / 2)', xs: '100%'}, display: 'flex', flexWrap: "wrap", flexDirection: 'column'}}
+                      sx={{
+                          width: {md: 'calc(97% / 3)', sm: 'calc(97% / 2)', xs: '100%'},
+                          display: 'flex',
+                          flexWrap: "wrap",
+                          flexDirection: 'column'
+                      }}
 
                 >
                     <CardContent>
-                        <Typography variant="h4" component={"h4"}>
-                            {workshop.theme.label}
-                        </Typography>
+                        <Box sx={{
+                            display: "flex"
+                        }}>
+                            <Box>
+                                <Typography variant="h4" component={"h4"}>
+                                    {workshop.theme.label}
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary">
+                                    {workshop.theme.subtitle}
+                                </Typography>
+                            </Box>
+                            <Box sx={{
+                                marginLeft: "auto"
+                            }}>
+                                <Chip label={formattedDate}/>
+                            </Box>
+                        </Box>
+
                         <Divider sx={{mb: 2, mt: 2}}/>
-                        <Typography gutterBottom component="p">
-                            {formattedDate}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                            {workshop.theme.subtitle}
+                        <Box sx={{display: 'flex', gap: "8px"}}>
+                            <Chip sx={{backgroundColor:"primary.light"}} label={(Math.round(workshop.length / 60)) + "min"}/>
+                            <Chip sx={{backgroundColor:"primary.light"}} label={workshop.maxPerson + " personnes"}/>
+                        </Box>
+                        <Typography sx={{mt: 2}}>
+                            {workshop.theme.content.substring(0, 100) + "..."}
                         </Typography>
                     </CardContent>
                     <CardActions sx={{marginTop: 'auto'}}>
@@ -77,7 +100,7 @@ const WorkshopList = () => {
                 backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${herobanner})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                minHeight: {xs: "calc(100vh - 90px)", sm: "600px"},
+                minHeight: {xs: "calc(100vh - 90px)", sm: "400px"},
                 maxHeight: {xs: "calc(100vh - 90px)", sm: "70vh"},
                 filter: "drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5))"
             }}
