@@ -48,7 +48,7 @@ const WorkshopCalendar = () => {
       <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: 'white', padding: 20 }}>
         <Typography variant={'h2'}>{selectedWorkshop ? selectedWorkshop.theme.label : undefined}</Typography>
         <p>{selectedWorkshop ? 'Date : ' + transformDate(selectedWorkshop.dateStart.toString()) : undefined}</p>
-        <p>{selectedWorkshop ? `Durée : ${Math.round(selectedWorkshop.length/60)}h et ${selectedWorkshop.length%60}min` : undefined}</p>
+        <p>{selectedWorkshop ? `Durée : ${Math.trunc(selectedWorkshop.length/60)}h et ${selectedWorkshop.length%60}min` : undefined}</p>
         <p>{selectedWorkshop ? 'Lieu : ' + selectedWorkshop.location : undefined}</p>
         <Button variant={"contained"}>Accéder à l'atelier // TODO : Add a button to redirect to the workshop's page</Button>
       </div>
