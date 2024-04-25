@@ -198,33 +198,40 @@ const Home = () => {
                     )}
                 </Stack>
 
+                {/* Qui suis-je ? */}
+                <Typography sx={{
+                    fontWeight: '700',
+                    fontSize: '2rem'
+                }}>
+                    Qui suis-je ?
+                </Typography>
                 <Stack
                     direction="column"
                     justifyContent="center"
-                    alignItems="flex-start"
+                    alignItems="center"
                     sx={{
                         marginTop: "2rem",
-                        marginBottom: "2rem",
-                        width: '80%'
+                        marginBottom: "4rem",
+                        width: '100%'
                     }}
                 >
-                    <Typography variant="h2">Qui suis-je ?</Typography>
                     <Box
                         component={'section'}
-                        margin={'auto'}
+                        margin={'0'}
+                        width={1}
                     >
                         <Card sx={{
                             margin: 'auto',
                             boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
                             borderRadius: '10px',
-                            backgroundColor: '',
+                            backgroundColor: 'rgba(199, 172, 146, 0.2)',
                             transition: 'transform 0.3s',
                             '&:hover': {
                                 transform: 'translateY(-5px)',
                                 boxShadow: '0px 8px 20px rgba(0, 0, 0, 0.2)',
                             },
                             display: 'flex',
-                            width: '80%',
+                            width: '100%',
                             padding: '0 20px'
                         }}>
                             <CardContent sx={{
@@ -235,14 +242,14 @@ const Home = () => {
                                 <Typography sx={{ textAlign: 'center', fontSize: '20px' }}>
                                     Mon nom est
                                 </Typography>
-                                <Typography sx={{ marginBottom: '1rem', textAlign: 'center', fontSize: '60px' }}>
+                                <Typography variant='h1' sx={{ marginBottom: '1rem', textAlign: 'center' }}>
                                     Olivier Bonneton
                                 </Typography>
-                                <Typography variant="body1" component="p" sx={{ marginBottom: '1rem', width: '50%' }}>
-                                    Découvrez qui je suis et ce que je fais. Apprenez-en plus sur ma passion pour le vin et mon expertise dans le domaine.
+                                <Typography variant="body1" component="p" sx={{ marginBottom: '1rem' }}>
+                                    Découvrez qui je suis et ce que je fais. En tant que passionné de vin, je vous invite à explorer mon univers et à en apprendre davantage sur ma passion pour les cépages, les terroirs et les techniques de dégustation. Plongez dans mon expertise dans le domaine viticole et laissez-vous guider à travers un voyage gustatif unique et enrichissant.
                                 </Typography>
                                 <CardActions sx={{ justifyContent: 'center' }}>
-                                    <Button href="/about" variant="contained" color="primary">
+                                    <Button href="/about" variant="contained" color="secondary" sx={{ color: 'white' }}>
                                         Voir plus
                                     </Button>
                                 </CardActions>

@@ -106,11 +106,15 @@ export default function OutlinedCard() {
                             sx={{
                                 width: '100%',
                                 maxWidth: 1,
-                                bgcolor: 'background.paper',
+                                // bgcolor: 'background.paper',
+                                backgroundColor: 'rgba(199, 172, 146, 0.2)',
                                 position: 'relative',
                                 overflow: 'auto',
                                 mt: 2,
                                 maxHeight: 300,
+                                padding: 2,
+                                borderRadius: '4px',
+                                boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
                                 '& ul': { padding: 0 },
                                 '&::-webkit-scrollbar': {
                                     width: '6px',
@@ -130,7 +134,6 @@ export default function OutlinedCard() {
                         >
                             {[0, 1, 2, 3, 4].map((sectionId) => (
                                 <ul>
-                                    <ListSubheader sx={{ fontSize: '18px', padding: 0 }}>{'France'}</ListSubheader>
                                     {[0, 1, 2].map((item) => (
                                         <ListItem key={`item-${sectionId}-${item}`} sx={{ padding: 0, paddingRight: 2 }}>
                                             <Card sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', backgroundColor: '#D5C1AE80', gap: 4, width: 1, padding: 2, marginBottom: 2, position: 'relative' }}>

@@ -78,6 +78,7 @@ p.about::first-letter {
   font-size: 300%;
   float: left;
   padding-right: 10px;
+  font-family: 'Montecarlo';
 }
 
 /*
@@ -117,8 +118,7 @@ p.about::first-letter {
 }
 
 .grid {
-
-  max-width:1000px;
+  max-width:1080px;
 }
 
 .grid > .item {
