@@ -7,7 +7,6 @@ use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\Validator\Constraints\Date;
 
 /**
  * @extends ServiceEntityRepository<Workshop>
@@ -30,16 +29,43 @@ class WorkshopRepository extends ServiceEntityRepository
     public function getBaseQueryBuilder(array $filter): QueryBuilder
     {
 
-        $queryBuilder = $this->createQueryBuilder('u');
+        $queryBuilder = $this->createQueryBuilder('w')
+            ->innerJoin('w.theme', "t");
+
+        if (!empty($filter["archived"])) {
+            $queryBuilder->andWhere('w.archived = :archived')
+                ->setParameter('archived', $filter["archived"]);
+        }
+
+        if (!empty($filter["status"])) {
+            $queryBuilder->andWhere('w.status = :status')
+                ->setParameter('status', $filter["status"]);
+        }
+
+        if (!empty($filter['label'])) {
+            $queryBuilder
+                ->andWhere('t.label LIKE :label')
+                ->setParameter('label', '%' . $filter['label'] . '%');
+        }
+
+        if (!empty($filter['theme'])) {
+            $queryBuilder
+                ->andWhere('w.theme = :theme')
+                ->setParameter('theme', $filter['theme']);
+        }
 
         if (!empty($filter['dateStart'])) {
             $queryBuilder
-                ->andWhere('u.dateStart >= :dateStart')
+                ->andWhere('w.dateStart >= :dateStart')
                 ->setParameter('dateStart', $filter['dateStart']);
         }
 
         if (!empty($filter['orderBy']) && !empty($filter['orderByDirection'])) {
-            $queryBuilder->orderBy('u.' . $filter['orderBy'], $filter['orderByDirection']);
+            if ($filter['orderBy'] === 'label') {
+                $queryBuilder->orderBy('t.' . $filter['orderBy'], $filter['orderByDirection']);
+            } else {
+                $queryBuilder->orderBy('w.' . $filter['orderBy'], $filter['orderByDirection']);
+            }
         }
 
         return $queryBuilder;
@@ -53,6 +79,17 @@ class WorkshopRepository extends ServiceEntityRepository
             ->setParameter('date', new DateTime())
             ->setParameter('dateDelayed', (new DateTime())->modify('+' . $delay . ' days'))
             ->andWhere('w.reminderSent = false')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByInterval($start, $end)
+    {
+        return $this->createQueryBuilder('w')
+            ->where('w.dateStart >= :start')
+            ->andWhere('w.dateStart <= :end')
+            ->setParameter('start', $start)
+            ->setParameter('end', $end)
             ->getQuery()
             ->getResult();
     }

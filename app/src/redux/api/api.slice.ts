@@ -1,17 +1,19 @@
-import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import {LoggedUser, UserCredentials} from '../../features/auth/types/logged-user.type';
-import {EditTheme, NewTheme, Theme} from '@/features/admin/types/theme.types';
-import {RootState} from '../store';
-import {CustomPaginationParams, PaginatedResponse, RegionPaginationParams} from '@/types/pagination.types';
-import {EditRegion, NewRegion, Region} from "@/features/admin/types/region.types";
-import {Country} from "@/features/admin/types/country.types";
-import {Workshop} from '@/features/admin/types/workshop.types';
-import {EditOrganisation, NewOrganisation, Organisation} from "@/features/admin/types/organisation.types";
-import {EditWine, NewWine, Wine} from "@/features/admin/types/wine.types";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { LoggedUser, UserCredentials } from '../../features/auth/types/logged-user.type';
+import { EditTheme, NewTheme, Theme } from '@/features/admin/types/theme.types';
+import { RootState } from '../store';
+import { CustomPaginationParams, PaginatedResponse, RegionPaginationParams } from '@/types/pagination.types';
+import { EditRegion, NewRegion, Region } from '@/features/admin/types/region.types';
+import { Country } from '@/features/admin/types/country.types';
+import { Workshop } from '@/features/admin/types/workshop.types';
+import { EditOrganisation, NewOrganisation, Organisation } from '@/features/admin/types/organisation.types';
+import { EditWine, NewWine, Wine } from '@/features/admin/types/wine.types';
+import { CalendarParams } from '@/types/calendarParams.types';
+import { Booking, CreateBooking } from '@/features/admin/types/booking.types';
 
 export const apiSlice = createApi({
   reducerPath: 'api',
-    tagTypes: ['Themes', 'Regions', 'Countries', 'Organisations'],
+  tagTypes: ['Themes', 'Regions', 'Countries', 'Organisations', 'Workshop', 'Booking'],
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_API_BASE_URL,
     prepareHeaders: (headers, api) => {
@@ -48,12 +50,19 @@ export const apiSlice = createApi({
       }),
       providesTags: ['Themes'],
     }),
+    getOneTheme: builder.query<Theme, number>({
+      query: (id) => ({
+        url: `themes/${id}`,
+        method: 'GET',
+      }),
+    }),
     createTheme: builder.mutation<Theme, NewTheme>({
       query: (body) => ({
         url: 'themes',
         method: 'POST',
         body,
       }),
+      invalidatesTags: ['Themes'],
     }),
     editTheme: builder.mutation<Theme, EditTheme>({
       query: (body) => ({
@@ -66,6 +75,7 @@ export const apiSlice = createApi({
           file: body.file,
         },
       }),
+      invalidatesTags: ['Themes'],
     }),
     deleteTheme: builder.mutation<void, number>({
       query: (id) => ({
@@ -74,152 +84,177 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['Themes'],
     }),
-    getWorkshops: builder.query<PaginatedResponse<Workshop>, void>({
-      query: () => ({
+    getWorkshops: builder.query<PaginatedResponse<Workshop>, CustomPaginationParams>({
+      query: (params) => ({
         url: 'workshops',
         method: 'GET',
+        params,
       }),
+      providesTags: ['Workshop'],
     }),
     getThreeLastWorkshops: builder.query<PaginatedResponse<Workshop>, void>({
       query: () => ({
         url: 'workshops?limit=3&dateStart=2024-04-25&orderBy=dateStart&orderByDirection=ASC',
         method: 'GET',
       }),
+      providesTags: ['Workshop'],
     }),
-    getOneTheme: builder.query<Theme, number>({
-      query: (id) => ({
-        url: `themes/${id}`,
+    getWorkshopsOpened: builder.query<PaginatedResponse<Workshop>, void>({
+      query: () => ({
+        url: 'workshops?orderBy=dateStart&orderByDirection=ASC&status=booking',
         method: 'GET',
       }),
+      providesTags: ['Workshop'],
     }),
-      getCountries: builder.query<Country[], void>({
-          query: () => ({
-              url: 'countries',
-              method: 'GET',
-          }),
-          providesTags: ['Countries'],
+    getOneWorkshop: builder.query<Workshop, string>({
+      query: (id) => ({
+        url: `workshops/${id}`,
+        method: 'GET',
       }),
-      getRegions: builder.query<PaginatedResponse<Region>, RegionPaginationParams>({
-          query: (params) => ({
-              url: 'regions',
-              method: 'GET',
-              params,
-          }),
-          providesTags: ['Regions'],
-      }),
-      createRegion: builder.mutation<Region, NewRegion>({
-          query: (body) => ({
-              url: 'regions',
-              method: 'POST',
-              body,
-          }),
-      }),
-      editRegion: builder.mutation<Region, EditRegion>({
-          query: (body) => ({
-              url: `regions/${body.id}`,
-              method: 'PUT',
-              body: {
-                  label: body.label,
-                  country: body.country,
-              },
-          }),
-          invalidatesTags: ['Regions']
-      }),
-      getOneRegion: builder.query<Region, number>({
-          query: (id) => ({
-              url: `regions/${id}`,
-              method: 'GET',
-          }),
-          providesTags: ['Regions'],
+      providesTags: ['Workshop'],
     }),
-      deleteRegion: builder.mutation<void, number>({
-          query: (id) => ({
-              url: `regions/${id}`,
-              method: 'DELETE',
-          }),
-          invalidatesTags: ['Regions'],
+    getCountries: builder.query<Country[], void>({
+      query: () => ({
+        url: 'countries',
+        method: 'GET',
       }),
-      getOrganisations: builder.query<PaginatedResponse<Organisation>, CustomPaginationParams>({
-          query: (params) => ({
-              url: 'organisations',
-              method: 'GET',
-              params,
-          }),
-          providesTags: ['Organisations'],
+      providesTags: ['Countries'],
+    }),
+    getRegions: builder.query<PaginatedResponse<Region>, RegionPaginationParams>({
+      query: (params) => ({
+        url: 'regions',
+        method: 'GET',
+        params,
       }),
-      createOrganisation: builder.mutation<Organisation, NewOrganisation>({
-          query: (body) => ({
-              url: 'organisations',
-              method: 'POST',
-              body,
-          }),
+      providesTags: ['Regions'],
+    }),
+    createRegion: builder.mutation<Region, NewRegion>({
+      query: (body) => ({
+        url: 'regions',
+        method: 'POST',
+        body,
       }),
-      editOrganisation: builder.mutation<Organisation, EditOrganisation>({
-          query: (body) => ({
-              url: `organisations/${body.id}`,
-              method: 'PUT',
-              body: {
-                  label: body.label,
-                  file: body.logoFile,
-              },
-          }),
-          invalidatesTags: ["Organisations"]
+    }),
+    editRegion: builder.mutation<Region, EditRegion>({
+      query: (body) => ({
+        url: `regions/${body.id}`,
+        method: 'PUT',
+        body: {
+          label: body.label,
+          country: body.country,
+        },
       }),
-      getOneOrganisation: builder.query<Organisation, number>({
-          query: (id) => ({
-              url: `organisations/${id}`,
-              method: 'GET',
-          }),
-          providesTags: ['Organisations'],
+      invalidatesTags: ['Regions'],
+    }),
+    getOneRegion: builder.query<Region, number>({
+      query: (id) => ({
+        url: `regions/${id}`,
+        method: 'GET',
       }),
-      deleteOrganisation: builder.mutation<void, number>({
-          query: (id) => ({
-              url: `organisations/${id}`,
-              method: 'DELETE',
-          }),
-          invalidatesTags: ['Organisations'],
+      providesTags: ['Regions'],
+    }),
+    deleteRegion: builder.mutation<void, number>({
+      query: (id) => ({
+        url: `regions/${id}`,
+        method: 'DELETE',
       }),
-
-
-      getWines: builder.query<PaginatedResponse<Wine>, CustomPaginationParams>({
-          query: (params) => ({
-              url: 'wines',
-              method: 'GET',
-              params,
-          }),
-          providesTags: ['Regions'],
+      invalidatesTags: ['Regions'],
+    }),
+    getWines: builder.query<PaginatedResponse<Wine>, CustomPaginationParams>({
+      query: (params) => ({
+        url: 'wines',
+        method: 'GET',
+        params,
       }),
-      createWine: builder.mutation<Wine, NewWine>({
-          query: (body) => ({
-              url: 'wines',
-              method: 'POST',
-              body,
-          }),
+      providesTags: ['Regions'],
+    }),
+    createWine: builder.mutation<Wine, NewWine>({
+      query: (body) => ({
+        url: 'wines',
+        method: 'POST',
+        body,
       }),
-      editWine: builder.mutation<Wine, EditWine>({
-          query: (body) => ({
-              url: `wines/${body.id}`,
-              method: 'PUT',
-              body: {
-                  label: body.label,
-              },
-          }),
-          invalidatesTags: ['Regions']
+    }),
+    editWine: builder.mutation<Wine, EditWine>({
+      query: (body) => ({
+        url: `wines/${body.id}`,
+        method: 'PUT',
+        body: {
+          label: body.label,
+        },
       }),
-      getOneWine: builder.query<Wine, number>({
-          query: (id) => ({
-              url: `wines/${id}`,
-              method: 'GET',
-          }),
-          providesTags: ['Regions'],
+      invalidatesTags: ['Regions'],
+    }),
+    getOneWine: builder.query<Wine, number>({
+      query: (id) => ({
+        url: `wines/${id}`,
+        method: 'GET',
       }),
-      deleteWine: builder.mutation<void, number>({
-          query: (id) => ({
-              url: `wines/${id}`,
-              method: 'DELETE',
-          }),
-          invalidatesTags: ['Regions'],
+      providesTags: ['Regions'],
+    }),
+    deleteWine: builder.mutation<void, number>({
+      query: (id) => ({
+        url: `wines/${id}`,
+        method: 'DELETE',
       }),
+      invalidatesTags: ['Regions'],
+    }),
+    getOrganisations: builder.query<PaginatedResponse<Organisation>, CustomPaginationParams>({
+      query: (params) => ({
+        url: 'organisations',
+        method: 'GET',
+        params,
+      }),
+      providesTags: ['Organisations'],
+    }),
+    createOrganisation: builder.mutation<Organisation, NewOrganisation>({
+      query: (body) => ({
+        url: 'organisations',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Organisations'],
+    }),
+    editOrganisation: builder.mutation<Organisation, EditOrganisation>({
+      query: (body) => ({
+        url: `organisations/${body.id}`,
+        method: 'PUT',
+        body: {
+          label: body.label,
+          file: body.logoFile,
+        },
+      }),
+      invalidatesTags: ['Organisations'],
+    }),
+    getOneOrganisation: builder.query<Organisation, number>({
+      query: (id) => ({
+        url: `organisations/${id}`,
+        method: 'GET',
+      }),
+      providesTags: ['Organisations'],
+    }),
+    deleteOrganisation: builder.mutation<void, number>({
+      query: (id) => ({
+        url: `organisations/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Organisations'],
+    }),
+    createBooking: builder.mutation<Booking, CreateBooking>({
+      query: (body) => ({
+        url: 'bookings',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Booking'],
+    }),
+    getWorkshopsForCalendar: builder.query<Workshop[], CalendarParams>({
+      query: (params) => ({
+        url: `workshops/calendar`,
+        method: 'GET',
+        params,
+      }),
+    }),
   }),
 });
 
@@ -232,21 +267,25 @@ export const {
   useDeleteThemeMutation,
   useGetWorkshopsQuery,
   useGetOneThemeQuery,
-    useGetRegionsQuery,
-    useGetOneRegionQuery,
-    useCreateRegionMutation,
-    useEditRegionMutation,
-    useDeleteRegionMutation,
-    useGetCountriesQuery,
-    useCreateOrganisationMutation,
-    useDeleteOrganisationMutation,
-    useGetOneOrganisationQuery,
-    useGetOrganisationsQuery,
-    useEditOrganisationMutation,
-    useGetThreeLastWorkshopsQuery,
-    useGetWinesQuery,
-    useCreateWineMutation,
-    useEditWineMutation,
-    useGetOneWineQuery,
-    useDeleteWineMutation
+  useGetRegionsQuery,
+  useGetOneRegionQuery,
+  useCreateRegionMutation,
+  useEditRegionMutation,
+  useDeleteRegionMutation,
+  useGetCountriesQuery,
+  useCreateOrganisationMutation,
+  useDeleteOrganisationMutation,
+  useGetOneOrganisationQuery,
+  useGetOrganisationsQuery,
+  useEditOrganisationMutation,
+  useGetThreeLastWorkshopsQuery,
+  useGetWinesQuery,
+  useCreateWineMutation,
+  useEditWineMutation,
+  useGetOneWineQuery,
+  useDeleteWineMutation,
+  useGetWorkshopsOpenedQuery,
+  useGetOneWorkshopQuery,
+  useCreateBookingMutation,
+  useGetWorkshopsForCalendarQuery,
 } = apiSlice;

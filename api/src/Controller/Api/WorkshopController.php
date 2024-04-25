@@ -3,7 +3,9 @@
 namespace App\Controller\Api;
 
 use App\Entity\Workshop;
+use App\Service\CalendarServiceInterface;
 use App\Service\PaginationService;
+use App\Service\WorkshopService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -42,6 +44,21 @@ class WorkshopController extends AbstractController
         );
     }
 
+    #[Route('/calendar', name: 'list_calendar', methods: ["GET"])]
+    public function calendar(
+        Request $request,
+        CalendarServiceInterface $calendarService
+    ): JsonResponse {
+
+        $data = $calendarService->handleRequest($request);
+
+        return $this->json($data,
+            Response::HTTP_OK,
+            context: ["groups" => ["workshop:list"]]
+
+        );
+    }
+
     #[Route('/{id}', name: 'get', methods: ["GET"])]
     public function get(Workshop $workshop): JsonResponse
     {
@@ -50,12 +67,28 @@ class WorkshopController extends AbstractController
             context: ["groups" => ["workshop:list", "workshop:detail"]]
         );
     }
-    #[Route('/{id}/finished', name: 'get_finished', methods: ["GET"])]
-    public function getFinished(Workshop $workshop): JsonResponse
+
+    #[Route('/{id}/finished', name: 'finish', methods: ["GET"])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function finish(Workshop $workshop, WorkshopService $workshopService): JsonResponse
     {
+        $workshopService->workshopFinishedHandler($workshop);
+
         return $this->json(
             $workshop,
-            context: ["groups" => ["workshop:list", "workshop:list:status:finished"]]
+            context: ["groups" => ["workshop:detail"]]
+        );
+    }
+
+    #[Route('/{id}/cancel', name: 'cancel', methods: ["GET"])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function cancel(Workshop $workshop, WorkshopService $workshopService): JsonResponse
+    {
+        $workshopService->workshopCancelHandler($workshop);
+
+        return $this->json(
+            $workshop,
+            context: ["groups" => ["workshop:detail"]]
         );
     }
 
@@ -93,7 +126,7 @@ class WorkshopController extends AbstractController
         $this->em->persist($workshop);
         $this->em->flush();
 
-        return $this->json($workshop, context: ["groups" => ["workshop:list"]]);
+        return $this->json($workshop, context: ["groups" => ["workshop:detail"]]);
     }
 
     #[OA\RequestBody(

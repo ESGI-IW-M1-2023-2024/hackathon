@@ -1,25 +1,18 @@
-import { Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import DashboardButton from '@/features/UI/admin/dashboard-button.component';
+import { Stack } from '@mui/material';
 
 const Dashboard = () => {
-  const navigate = useNavigate();
-
   return (
-    <>
+    <Stack margin={'2rem auto'} alignItems={'center'} paddingInline={'2rem'} width={'100%'}>
       <h1>Admin dashboard</h1>
-      <Button variant='contained' onClick={() => navigate('/themes')}>
-        Liste des thèmes
-      </Button>
-        <Button variant='contained' onClick={() => navigate('/admin/regions')}>
-            Liste des régions
-        </Button>
-        <Button variant='contained' onClick={() => navigate('/admin/organisations')}>
-            Liste des organisations
-        </Button>
-        <Button variant='contained' onClick={() => navigate('/admin/wines')}>
-            Liste des vins
-        </Button>
-    </>
+      <Stack direction={'row'}>
+        <DashboardButton redirectPath='/themes' text='Liste des Thèmes' />
+        <DashboardButton redirectPath='/admin/regions' text='Liste des Régions' />
+        <DashboardButton redirectPath='/admin/organisations' text='Liste des Organisations' />
+        <DashboardButton redirectPath='/admin/workshops' text='Liste des Ateliers' />
+        <DashboardButton redirectPath='/admin/workshops/calendar' text='Calendriers des Ateliers' />
+      </Stack>
+    </Stack>
   );
 };
 

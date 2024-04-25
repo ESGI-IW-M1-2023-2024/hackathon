@@ -1,23 +1,27 @@
-import { Box, Stack } from "@mui/material"
+import { Box, Stack, SxProps, Theme, Typography } from "@mui/material"
+import { ReactNode } from "react"
 
 interface TextImageProps {
     reverse?: boolean
     button?: JSX.Element
     title: string
-    text: string | JSX.Element
     src: string
     alt?: string
+    sx?: SxProps<Theme>
+    children?: ReactNode
 }
 
-const TextImage = ({ reverse, title, text, src, alt, button }: TextImageProps) => {
+const TextImage = ({ reverse, title, src, alt, button, sx, children }: TextImageProps) => {
     return (
         <>
             <Stack
                 component={"article"}
-                direction={reverse ? "row-reverse" : "row"}
+                direction={{ xs: 'column', sm: reverse ? "row-reverse" : "row" }}
                 justifyContent="space-between"
                 alignItems="center"
+                gap="20px"
                 sx={{
+                    ...sx,
                     marginTop: "2rem",
                     marginBottom: "2rem"
                 }}
@@ -28,28 +32,32 @@ const TextImage = ({ reverse, title, text, src, alt, button }: TextImageProps) =
                     alignItems={"flex-start"}
                     gap={2}
                     sx={{
-                        width: "50%",
+                        width: "auto",
+                        paddingRight: reverse ? "20px" : "0px",
                         "& > h3": {
                             fontSize: "2rem",
                             fontWeight: "bold"
                         }
                     }}
                 >
-                    <h3>{title}</h3>
-                    <p>
-                        {text}
-                    </p>
-                    {button}
+                    <Typography variant="h3">{title}</Typography>
+                    <Typography>
+                        {children}
+                    </Typography>
+                    <Box sx={{}}>
+                        {button}
+                    </Box>
                 </Stack>
                 <Box
                     component={"img"}
                     src={src}
                     alt={alt}
                     sx={{
-                        width: "400px",
-                        height: "400px",
+                        width: { xs: '100%', sm: '200px', md: '400px' },
+                        height: { xs: 'auto', sm: '200px', md: '400px' },
                         objectFit: "cover",
                         borderRadius: "4px",
+                        aspectRatio: "1/1",
                     }}
                     className="d-shadow"
                 />

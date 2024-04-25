@@ -4,6 +4,7 @@ namespace App\Controller\Api;
 
 use App\Entity\Booking;
 use App\Enum\BookingStatus;
+use App\Service\BookingService;
 use App\Service\MailerService;
 use App\Service\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,7 +23,6 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use OpenApi\Attributes as OA;
 
 #[Route('/bookings', name: 'bookings_')]
-#[IsGranted("ROLE_ADMIN")]
 class BookingController extends AbstractController
 {
 
@@ -32,6 +32,7 @@ class BookingController extends AbstractController
     }
 
     #[Route('', name: 'list', methods: ["GET"])]
+    #[IsGranted("ROLE_ADMIN")]
     public function index(
         Request $request,
         PaginationService $paginationService
@@ -49,6 +50,7 @@ class BookingController extends AbstractController
     }
 
     #[Route('/{id}', name: 'get', methods: ["GET"])]
+    #[IsGranted("ROLE_ADMIN")]
     public function get(Booking $booking): JsonResponse
     {
         return $this->json(
@@ -75,7 +77,7 @@ class BookingController extends AbstractController
         Request                     $request,
         SerializerInterface         $serializer,
         ValidatorInterface          $validator,
-        MailerService $mailerService
+        MailerService $mailerService,
     ): JsonResponse {
         $booking = $serializer->deserialize($request->getContent(), Booking::class, 'json');
 
@@ -85,15 +87,18 @@ class BookingController extends AbstractController
             return $this->json($violations, Response::HTTP_BAD_REQUEST);
         }
 
+        $this->em->persist($booking);
+        $this->em->flush();
+
+        $booking->setReference(rand(1000, 9999). $booking->getId());
+        $this->em->flush();
+
         $mailerService->sendMail(
             \MailerEnum::BOOKING,
             [
                 "booking" => $booking
             ]
         );
-
-        $this->em->persist($booking);
-        $this->em->flush();
 
         return $this->json($booking, context: ["groups" => ["booking:list"]]);
     }
@@ -112,6 +117,7 @@ class BookingController extends AbstractController
         )
     )]
     #[Route('/{id}', name: 'update', methods: ["PUT"])]
+    #[IsGranted("ROLE_ADMIN")]
     public function update(
         Booking                        $booking,
         Request                             $request,
@@ -147,6 +153,7 @@ class BookingController extends AbstractController
     }
 
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
+    #[IsGranted("ROLE_ADMIN")]
     public function delete(
         Booking $booking
     ): JsonResponse {
@@ -157,6 +164,7 @@ class BookingController extends AbstractController
     }
 
     #[Route('/{id}/validate', name: 'validate', methods: ["POST"])]
+    #[IsGranted("ROLE_ADMIN")]
     public function validate(
         Booking $booking,
         MailerService $mailerService
@@ -178,6 +186,7 @@ class BookingController extends AbstractController
     }
 
     #[Route('/{id}/cancel', name: 'cancel', methods: ["POST"])]
+    #[IsGranted("ROLE_ADMIN")]
     public function cancel(
         Booking $booking,
         MailerService $mailerService
