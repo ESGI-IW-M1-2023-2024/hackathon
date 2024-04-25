@@ -93,6 +93,9 @@ class Workshop
     #[ORM\Column]
     private ?bool $reminderSent = false;
 
+    #[ORM\Column]
+    private bool $archived = false;
+
     public function __construct()
     {
         $this->resources = new ArrayCollection();
@@ -346,6 +349,18 @@ class Workshop
     public function setReminderSent(bool $reminderSent): static
     {
         $this->reminderSent = $reminderSent;
+
+        return $this;
+    }
+
+    public function isArchived(): bool
+    {
+        return $this->archived;
+    }
+
+    public function setArchived(bool $archived): static
+    {
+        $this->archived = $archived;
 
         return $this;
     }
