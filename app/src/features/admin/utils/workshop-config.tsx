@@ -12,7 +12,7 @@ const renderStatus = (status: WorkshopStatus) => {
     case WorkshopStatus.CANCELED:
       return 'Annulé';
     case WorkshopStatus.CLOSED:
-      return 'Fermé';
+      return 'Fermé aux inscriptions';
     case WorkshopStatus.FINISHED:
       return 'Terminé';
     case WorkshopStatus.HIDDEN:
