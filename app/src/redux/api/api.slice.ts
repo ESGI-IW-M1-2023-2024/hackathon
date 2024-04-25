@@ -6,11 +6,13 @@ import { CustomPaginationParams, PaginatedResponse } from '@/types/pagination.ty
 import { EditRegion, NewRegion, Region } from '@/features/admin/types/region.types';
 import { Country } from '@/features/admin/types/country.types';
 import { Workshop } from '@/features/admin/types/workshop.types';
+import {CalendarParams} from "@/types/calendarParams.types";
 import { EditOrganisation, NewOrganisation, Organisation } from '@/features/admin/types/organisation.types';
+import { Booking, CreateBooking } from '@/features/admin/types/booking.types';
 
 export const apiSlice = createApi({
   reducerPath: 'api',
-  tagTypes: ['Themes', 'Regions', 'Countries', 'Organisations'],
+  tagTypes: ['Themes', 'Regions', 'Countries', 'Organisations', 'Workshop', 'Booking'],
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_API_BASE_URL,
     prepareHeaders: (headers, api) => {
@@ -47,6 +49,12 @@ export const apiSlice = createApi({
       }),
       providesTags: ['Themes'],
     }),
+    getOneTheme: builder.query<Theme, number>({
+      query: (id) => ({
+        url: `themes/${id}`,
+        method: 'GET',
+      }),
+    }),
     createTheme: builder.mutation<Theme, NewTheme>({
       query: (body) => ({
         url: 'themes',
@@ -80,18 +88,21 @@ export const apiSlice = createApi({
         url: 'workshops',
         method: 'GET',
       }),
+      providesTags: ['Workshop'],
     }),
     getThreeLastWorkshops: builder.query<PaginatedResponse<Workshop>, void>({
       query: () => ({
         url: 'workshops?limit=3&dateStart=2024-04-25&orderBy=dateStart&orderByDirection=ASC',
         method: 'GET',
       }),
+      providesTags: ['Workshop'],
     }),
-    getOneTheme: builder.query<Theme, number>({
+    getOneWorkshop: builder.query<Workshop, string>({
       query: (id) => ({
-        url: `themes/${id}`,
+        url: `workshops/${id}`,
         method: 'GET',
       }),
+      providesTags: ['Workshop'],
     }),
     getCountries: builder.query<Country[], void>({
       query: () => ({
@@ -182,6 +193,21 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['Organisations'],
     }),
+    createBooking: builder.mutation<Booking, CreateBooking>({
+      query: (body) => ({
+        url: 'bookings',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Booking'],
+    }),
+    getWorkshopsForCalendar: builder.query<Workshop[], CalendarParams>({
+      query: (params) => ({
+        url: `workshops/calendar`,
+        method: 'GET',
+        params,
+      }),
+    }),
   }),
 });
 
@@ -206,4 +232,7 @@ export const {
   useGetOrganisationsQuery,
   useEditOrganisationMutation,
   useGetThreeLastWorkshopsQuery,
+  useGetOneWorkshopQuery,
+  useCreateBookingMutation,
+  useGetWorkshopsForCalendarQuery,
 } = apiSlice;
