@@ -2,11 +2,10 @@
 
 enum WorkshopStatus: string
 {
-    case HIDDEN = 'hidden';
+    case HIDDEN = 'hidden'; // Réservation fermées
 
-    case BOOKING = 'booking';
-    case CLOSED = 'closed';
-    case FINISHED = 'finished';
-    case CANCELED = 'canceled';
+    case BOOKING = 'booking'; // Réservations ouvertes
+    case CLOSED = 'closed'; // Réservations terminées
+    case FINISHED = 'finished'; // Atelier terminé
+    case CANCELED = 'canceled'; // Atelier annulé
 }
-

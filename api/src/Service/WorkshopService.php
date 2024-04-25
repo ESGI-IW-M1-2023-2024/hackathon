@@ -2,11 +2,13 @@
 
 namespace App\Service;
 
+use App\Entity\Workshop;
 use App\Repository\WorkshopRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use MailerEnum;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use WorkshopStatus;
 
 class WorkshopService
 {
@@ -44,6 +46,36 @@ class WorkshopService
             }
             $workshop->setReminderSent(true);
         }
+
+        $this->entityManager->flush();
+    }
+
+    public function workshopFinishedHandler(Workshop $workshop)
+    {
+        if (WorkshopStatus::CLOSED != $workshop->getStatus()) {
+            return;
+        }
+
+        foreach ($workshop->getValidatedBookings() as $booking) {
+            $this->mailerService->sendMail(MailerEnum::WORKSHOP_FINISHED, ['booking' => $booking]);
+        }
+
+        $workshop->setStatus(WorkshopStatus::FINISHED);
+
+        $this->entityManager->flush();
+    }
+
+    public function workshopCancelHandler(Workshop $workshop)
+    {
+        if (WorkshopStatus::FINISHED != $workshop->getStatus()) {
+            return;
+        }
+
+        foreach ($workshop->getValidatedBookings() as $booking) {
+            $this->mailerService->sendMail(MailerEnum::WORKSHOP_CANCELED, ['booking' => $booking]);
+        }
+
+        $workshop->setStatus(WorkshopStatus::CANCELED);
 
         $this->entityManager->flush();
     }

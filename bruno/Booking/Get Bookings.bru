@@ -5,11 +5,15 @@ meta {
 }
 
 get {
-  url: {{baseUrl}}/api/bookings
+  url: {{baseUrl}}/api/bookings?workshop=1
   body: none
   auth: bearer
 }
 
+query {
+  workshop: 1
+}
+
 auth:bearer {
-  token: 248810341feb926751cbd881cd065d332f2e475263ca9de42b5389f8d0e71d7e
+  token: 0c82402c24a05fcd8b993d1388635b45174875c63093154393ef0adad83b9cea
 }

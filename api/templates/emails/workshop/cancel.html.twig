@@ -1,0 +1,14 @@
+{% extends "emails/layout.html.twig" %}
+
+{% block body %}
+<h2>Annulation d'atelier</h2>
+
+<p>
+    Le site boennologie a le regret que l'atelier sur le thème {{ workshop.theme.label }}
+    n'aura pas lieu le {{ workshop.dateStart|date('d-m-Y') }} suite à l'annulation de l'évènement.
+
+    Nous regrettons l'annulation et vous proposerons un remboursement dans les jorus à venir. 
+
+    Ne vous inquiétez pas, d'autres ateliers sont disponibles et nous espérons vous accueillir au plus tôt !
+</p>
+{% endblock %}
