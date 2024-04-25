@@ -19,7 +19,7 @@ const Footer = () => {
                 direction={{ xs: 'column', sm: 'row' }}
                 justifyContent={"space-between"}
                 alignItems={"center"}
-                gap={{ xs: 2, sm: 0 }}
+                gap={{ xs: 2, sm: 2 }}
             >
                 <p><a href="#">Conditions générales</a></p>
                 <p>Olivier Bonneton 2024-2025 ©</p>
