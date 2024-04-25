@@ -32,7 +32,6 @@ const AdminWorkshopList = () => {
 
   // Api Data
   const { data, isLoading } = useGetWorkshopsQuery({ page, limit, orderBy, orderByDirection, archived: showArchived });
-  console.log(data);
   const listProps: ListGridProps<Workshop> = {
     columns: [...useWorkshopColumns({ handleDeleteWorkshop })],
     rows: data ? data.items : [],

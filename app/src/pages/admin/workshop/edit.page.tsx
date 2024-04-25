@@ -59,11 +59,11 @@ const EditWorkshop = () => {
   });
 
   if (data) {
-    setValue('dateStart', data.dateStart.toString());
+    setValue('dateStart', data.dateStart.toString().split('T')[0]);
     setValue('length', data.length.toString());
     setValue('maxPerson', data.maxPerson.toString());
     setValue('location', data.location);
-    setValue('maxBookingDate', data.maxBookingDate.toString());
+    setValue('maxBookingDate', data.maxBookingDate.toString().split('T')[0]);
     setValue('price', data.price.toString());
     setValue('themeId', data.theme.id.toString());
     setValue('organisationId', data.organisation.id.toString());
