@@ -2,10 +2,10 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { LoggedUser, UserCredentials } from '../../features/auth/types/logged-user.type';
 import { EditTheme, NewTheme, Theme } from '@/features/admin/types/theme.types';
 import { RootState } from '../store';
-import { CustomPaginationParams, PaginatedResponse, RegionPaginationParams } from '@/types/pagination.types';
+import { CustomPaginationParams, PaginatedResponse, NotPaginationParams } from '@/types/pagination.types';
 import { EditRegion, NewRegion, Region } from '@/features/admin/types/region.types';
 import { Country } from '@/features/admin/types/country.types';
-import { Workshop } from '@/features/admin/types/workshop.types';
+import { CreateWorkshop, Workshop } from '@/features/admin/types/workshop.types';
 import { EditOrganisation, NewOrganisation, Organisation } from '@/features/admin/types/organisation.types';
 import { EditWine, NewWine, Wine } from '@/features/admin/types/wine.types';
 import { CalendarParams } from '@/types/calendarParams.types';
@@ -42,7 +42,7 @@ export const apiSlice = createApi({
         body,
       }),
     }),
-    getThemes: builder.query<PaginatedResponse<Theme>, CustomPaginationParams>({
+    getThemes: builder.query<PaginatedResponse<Theme>, NotPaginationParams>({
       query: (params) => ({
         url: 'themes',
         method: 'GET',
@@ -113,6 +113,13 @@ export const apiSlice = createApi({
       }),
       providesTags: ['Workshop'],
     }),
+    createWorkshop: builder.mutation<Workshop, CreateWorkshop>({
+      query: (body) => ({
+        url: 'workshops',
+        method: 'POST',
+        body,
+      }),
+    }),
     getCountries: builder.query<Country[], void>({
       query: () => ({
         url: 'countries',
@@ -120,7 +127,7 @@ export const apiSlice = createApi({
       }),
       providesTags: ['Countries'],
     }),
-    getRegions: builder.query<PaginatedResponse<Region>, RegionPaginationParams>({
+    getRegions: builder.query<PaginatedResponse<Region>, NotPaginationParams>({
       query: (params) => ({
         url: 'regions',
         method: 'GET',
@@ -160,7 +167,7 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['Regions'],
     }),
-    getWines: builder.query<PaginatedResponse<Wine>, CustomPaginationParams>({
+    getWines: builder.query<PaginatedResponse<Wine>, NotPaginationParams>({
       query: (params) => ({
         url: 'wines',
         method: 'GET',
@@ -199,7 +206,7 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['Regions'],
     }),
-    getOrganisations: builder.query<PaginatedResponse<Organisation>, CustomPaginationParams>({
+    getOrganisations: builder.query<PaginatedResponse<Organisation>, NotPaginationParams>({
       query: (params) => ({
         url: 'organisations',
         method: 'GET',
@@ -288,4 +295,5 @@ export const {
   useGetOneWorkshopQuery,
   useCreateBookingMutation,
   useGetWorkshopsForCalendarQuery,
+  useCreateWorkshopMutation,
 } = apiSlice;

@@ -57,11 +57,11 @@ const AdminWorkshopList = () => {
   return (
     <Stack width={'80%'} alignItems={'left'} margin={'1rem auto'} spacing={2} direction={'column'}>
       <Box textAlign={'center'}>
-        <h1>Liste des Thèmes</h1>
+        <h1>Liste des Ateliers</h1>
       </Box>
 
       <Stack width={'100%'} direction={'row'}>
-        <Button variant='contained' onClick={() => navigate('/workshops/create')} sx={{ width: 'fit-content' }}>
+        <Button variant='contained' onClick={() => navigate('/admin/workshops/create')} sx={{ width: 'fit-content' }}>
           Créer un atelier
         </Button>
         <FormControlLabel

@@ -23,18 +23,31 @@ class ResourceController extends AbstractController
     #[Route('', name: 'list', methods: ["GET"])]
     public function index(
         PaginationService $paginationService,
-        Request           $request
+        Request           $request,
+        EntityManagerInterface $em,
     ): JsonResponse {
-        $pagination = $paginationService->getPagination($request, Resource::class);
+        if ($request->query->getBoolean('pagination', true)) {
+            $pagination = $paginationService->getPagination($request, Resource::class);
 
-        return $this->json(
-            [
-                'items' => $pagination,
-                'pageCount' => $pagination->getPageCount(),
-                'totalItemCount' => $pagination->getTotalItemCount()
-            ],
-            context: ["groups" => ["resource:list"]]
-        );
+            return $this->json(
+                [
+                    'items' => $pagination,
+                    'pageCount' => $pagination->getPageCount(),
+                    'totalItemCount' => $pagination->getTotalItemCount()
+                ],
+                context: ["groups" => ["resource:list"]]
+            );
+        } else {
+            $resources = $em->getRepository(Resource::class)->findAll();
+
+            return $this->json(
+                [
+                    'items'=> $resources,
+                    "totalItemCount" => count($resources)
+                ],
+                context: ["groups" => ["resource:list"]]
+            );
+        }
     }
 
     #[Route('/{id}', name: 'get', methods: ["GET"])]

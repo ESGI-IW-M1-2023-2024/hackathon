@@ -6,8 +6,8 @@ export interface CustomPaginationParams {
   archived?: 0 | 1;
 }
 
-export interface RegionPaginationParams extends CustomPaginationParams {
-    pagination: boolean;
+export interface NotPaginationParams extends CustomPaginationParams {
+  pagination?: boolean;
 }
 
 export interface PaginatedResponse<ResultsType = any> {

@@ -49,3 +49,15 @@ export interface BookingGivenWorkshop {
 export enum WorkshopSortableField {
   'ID' = 'id',
 }
+
+export interface CreateWorkshop {
+  dateStart: string;
+  length: string;
+  maxPerson: string;
+  location: string;
+  maxBookingDate: string;
+  price: string;
+  themeId: string;
+  organisationId: string;
+  wines: string[];
+}
