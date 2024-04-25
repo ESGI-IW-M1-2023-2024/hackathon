@@ -1,10 +1,10 @@
 import CustomFormField from '@/features/UI/custom-mui-components/components/custom-form-field.component';
-import {useEditWineMutation, useGetOneWineQuery} from '@/redux/api/api.slice';
+import {useEditWineMutation, useGetOneWineQuery, useGetRegionsQuery} from '@/redux/api/api.slice';
 import {useAppDispatch} from '@/redux/hooks';
 import {openSnackBar} from '@/redux/slices/notification.slice';
 import {customErrorMap} from '@/utils/customZodErrorMap';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {Box, Button} from '@mui/material';
+import {Box, Button, LinearProgress} from '@mui/material';
 import {useForm} from 'react-hook-form';
 import {useNavigate, useParams} from 'react-router-dom';
 import {z} from 'zod';
@@ -122,6 +122,9 @@ const EditWine = () => {
         setValue('content', data.content);
     }
 
+    const {data: regionData, isLoading} = useGetRegionsQuery({pagination: false});
+
+
     const handleFormSubmit = async (formData: EditWineType): Promise<void> => {
         try {
             console.log(formData)
@@ -132,6 +135,10 @@ const EditWine = () => {
             dispatch(openSnackBar({message: 'Impossible de modifier le région', severity: 'error'}));
         }
     };
+
+    if (isLoading) {
+        return <LinearProgress/>;
+    }
 
     return (
         <Box component='form' onSubmit={handleSubmit((data) => handleFormSubmit(data))}>
@@ -181,10 +188,62 @@ const EditWine = () => {
                 props={{type: "number"}}
             />
             <CustomFormField
-                childrenComponentType='TEXT_FIELD'
+                childrenComponentType='SELECT'
                 control={control}
                 controlName='bottleSize'
-                options={{label: 'bottleSize'}}
+                options={{
+                    label: 'bottleSize',
+                    items: [
+                        {
+                            text: "Piccolo",
+                            value: "piccolo"
+                        },
+                        {
+                            text: "Demi",
+                            value: "half"
+                        },
+                        {
+                            text: "Standard",
+                            value: "standard"
+                        },
+                        {
+                            text: "Magnum",
+                            value: "magnum"
+                        },
+                        {
+                            text: "Double magnum",
+                            value: "double magnum",
+                        },
+                        {
+                            text: "Jeroboam",
+                            value: "jeroboam",
+                        },
+                        {
+                            text: "Mathusalem",
+                            value: "methuselah",
+                        },
+                        {
+                            text: "Salmanazar",
+                            value: "salmanazar",
+                        },
+                        {
+                            text: "Balthazar",
+                            value: "balthazar",
+                        },
+                        {
+                            text: "Nabuchodonosor",
+                            value: "nebuchadnezar",
+                        },
+                        {
+                            text: "Melchior",
+                            value: "melchior",
+                        },
+                        {
+                            text: "Melchisédek",
+                            value: "melchizedek",
+                        },
+                    ]
+                }}
             />
             <CustomFormField
                 childrenComponentType='TEXT_FIELD'
@@ -196,7 +255,17 @@ const EditWine = () => {
                 childrenComponentType='AUTOCOMPLETE'
                 control={control}
                 controlName='region'
-                options={{label: 'region'}}
+                options={{
+                    inputLabel: 'region',
+                    items: regionData ? [
+                        ...(regionData.items.map(
+                            (region) => ({
+                                label: region.label + '(' + region.countryName + ')',
+                                id: region.id,
+                            })
+                        ))] : [],
+                    noOptionsText: "Aucune région"
+                }}
             />
             <CustomFormField
                 childrenComponentType='TEXT_FIELD'
