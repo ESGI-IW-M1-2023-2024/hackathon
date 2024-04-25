@@ -35,6 +35,11 @@ export const CustomTextField = (
       {...props}
       error={fieldState.error?.message !== undefined}
       helperText={fieldState.error?.message}
+      InputLabelProps={{
+        style: {
+          color: 'black',
+        },
+      }}
     />
   );
 };
@@ -78,7 +83,7 @@ export const CustomSelect = (
 
   return (
     <FormControl fullWidth>
-      <InputLabel>{options.label}</InputLabel>
+      <InputLabel style={{ color: 'black' }}>{options.label}</InputLabel>
       <Select label={options.label} {...field} {...props}>
         {generateSelectOptions()}
       </Select>
@@ -189,6 +194,7 @@ export const CustomFileField = (
       helperText={fieldState.error?.message}
       inputProps={options.fileTypes ? { accept: options.fileTypes.join(', ') } : {}}
       clearIconButtonProps={options.iconButton}
+      InputLabelProps={{ style: { color: 'black' } }}
     />
   );
 };
