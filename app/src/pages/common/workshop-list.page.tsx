@@ -13,9 +13,11 @@ import {
 import ColorButton from "@/features/UI/custom-mui-components/components/custom-button.component";
 import herobanner from "@/assets/homepage/herobanner.jpg";
 import Chip from "@mui/material/Chip";
+import { useNavigate, useParams } from 'react-router-dom';
 
 const WorkshopList = () => {
     const { data, isLoading } = useGetWorkshopsOpenedQuery();
+    const navigate = useNavigate();
 
     const renderWorkshopCards = () => {
         // Assure-toi que data est non-null et a au moins un élément
@@ -75,7 +77,7 @@ const WorkshopList = () => {
                         </Typography>
                     </CardContent>
                     <CardActions sx={{ marginTop: 'auto' }}>
-                        <ColorButton>
+                        <ColorButton onClick={() => navigate('/workshops/' + workshop.id)}>
                             Voir plus
                         </ColorButton>
                     </CardActions>
