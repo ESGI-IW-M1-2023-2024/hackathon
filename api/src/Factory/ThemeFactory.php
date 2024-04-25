@@ -47,7 +47,11 @@ final class ThemeFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
-            'content' => self::faker()->text(),
+            'content' => '<img src="https://images.pexels.com/photos/13622705/pexels-photo-13622705.jpeg" alt="Vins de France" style="width: 300px; height: auto; float: right"/>
+            Embarquez pour un voyage sensoriel à travers les régions viticoles de France avec notre atelier spécialement pensé pour initier les novices à l\'art de la dégustation de vins. Découvrez la diversité et la richesse des domaines viticoles français, de la Bourgogne au Rhône, en passant par Bordeaux, l’Alsace ou encore la Loire<br />
+            Au cours de cet atelier, vous apprendrez à identifier les caractéristiques uniques des vins de chaque grande région viticole, en explorant leurs cépages emblématiques et leurs arômes associés.<br />
+            Cet atelier est une célébration de la tradition viticole française, une aventure gustative qui vous guide à travers les paysages de notre patrimoine œnologique.<br />
+            Ce premier tour de France des régions viticoles promet de belles découvertes et vous propose une expérience enrichissante. Faites le premier pas vers la maîtrise de l\'art de la dégustation du vin.',
             'label' => self::faker()->text(20),
             'subtitle' => self::faker()->text(20),
         ];
