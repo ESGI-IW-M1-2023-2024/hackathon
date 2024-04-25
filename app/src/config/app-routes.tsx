@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Home from '../pages/common/home.page';
 import Login from '../pages/auth/login.page';
 import NotFound from '../pages/common/not-found.page';
@@ -16,6 +16,7 @@ import CreateOrganisation from '@/pages/admin/organisation/create.page';
 import EditOrganisation from '@/pages/admin/organisation/edit.page';
 import WorkshopList from '@/pages/common/workshop-list.page';
 import WorkshopDetails from '@/pages/common/workshop-details.page';
+import WorkshopCalendar from "@/pages/admin/workshop/calendar.page";
 
 const AppRoutes = () => (
   <Routes>
@@ -35,6 +36,7 @@ const AppRoutes = () => (
       <Route path='/admin/organisations' element={<OrganisationList />} />
       <Route path='/admin/organisations/create' element={<CreateOrganisation />} />
       <Route path='/admin/organisations/:id' element={<EditOrganisation />} />
+      <Route path='/admin/workshops/calendar' element={<WorkshopCalendar />} />
     </Route>
     <Route path='*' element={<NotFound />} />
   </Routes>

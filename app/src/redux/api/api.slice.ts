@@ -6,6 +6,7 @@ import { CustomPaginationParams, PaginatedResponse } from '@/types/pagination.ty
 import { EditRegion, NewRegion, Region } from '@/features/admin/types/region.types';
 import { Country } from '@/features/admin/types/country.types';
 import { Workshop } from '@/features/admin/types/workshop.types';
+import {CalendarParams} from "@/types/calendarParams.types";
 import { EditOrganisation, NewOrganisation, Organisation } from '@/features/admin/types/organisation.types';
 import { Booking, CreateBooking } from '@/features/admin/types/booking.types';
 
@@ -200,6 +201,13 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['Booking'],
     }),
+    getWorkshopsForCalendar: builder.query<Workshop[], CalendarParams>({
+      query: (params) => ({
+        url: `workshops/calendar`,
+        method: 'GET',
+        params,
+      }),
+    }),
   }),
 });
 
@@ -226,4 +234,5 @@ export const {
   useGetThreeLastWorkshopsQuery,
   useGetOneWorkshopQuery,
   useCreateBookingMutation,
+  useGetWorkshopsForCalendarQuery,
 } = apiSlice;
