@@ -70,7 +70,7 @@ const useWorkshopColumns = ({
       renderCell: (params) => {
         return [
           <Tooltip key='editWorkshop' title='Editer'>
-            <IconButton onClick={() => navigate(`/workshops/${params.row.id}`)} color='primary'>
+            <IconButton onClick={() => navigate(`/admin/workshops/${params.row.id}`)} color='primary'>
               <EditIcon />
             </IconButton>
           </Tooltip>,

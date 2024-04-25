@@ -5,7 +5,7 @@ import { RootState } from '../store';
 import { CustomPaginationParams, PaginatedResponse, NotPaginationParams } from '@/types/pagination.types';
 import { EditRegion, NewRegion, Region } from '@/features/admin/types/region.types';
 import { Country } from '@/features/admin/types/country.types';
-import { CreateWorkshop, Workshop } from '@/features/admin/types/workshop.types';
+import { CreateWorkshop, EditWorkshop, GetOneWorkshop, Workshop } from '@/features/admin/types/workshop.types';
 import { EditOrganisation, NewOrganisation, Organisation } from '@/features/admin/types/organisation.types';
 import { EditWine, NewWine, Wine } from '@/features/admin/types/wine.types';
 import { CalendarParams } from '@/types/calendarParams.types';
@@ -106,7 +106,7 @@ export const apiSlice = createApi({
       }),
       providesTags: ['Workshop'],
     }),
-    getOneWorkshop: builder.query<Workshop, string>({
+    getOneWorkshop: builder.query<GetOneWorkshop, string>({
       query: (id) => ({
         url: `workshops/${id}`,
         method: 'GET',
@@ -119,6 +119,18 @@ export const apiSlice = createApi({
         method: 'POST',
         body,
       }),
+      invalidatesTags: ['Workshop'],
+    }),
+    editWorkshop: builder.mutation<Workshop, EditWorkshop>({
+      query: (body) => {
+        const { id, ...rest } = body;
+        return {
+          url: `workshops/${id}`,
+          method: 'PUT',
+          body: rest,
+        };
+      },
+      invalidatesTags: ['Workshop'],
     }),
     getCountries: builder.query<Country[], void>({
       query: () => ({
@@ -296,4 +308,5 @@ export const {
   useCreateBookingMutation,
   useGetWorkshopsForCalendarQuery,
   useCreateWorkshopMutation,
+  useEditWorkshopMutation,
 } = apiSlice;
