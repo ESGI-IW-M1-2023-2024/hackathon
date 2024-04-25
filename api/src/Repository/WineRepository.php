@@ -25,9 +25,30 @@ class WineRepository extends ServiceEntityRepository
     /**
      * Requête de base
      */
-    public function getBaseQueryBuilder(): QueryBuilder
+    public function getBaseQueryBuilder(array $filter): QueryBuilder
     {
         $queryBuilder = $this->createQueryBuilder('w');
+
+        if (!empty($filter['label'])) {
+            $queryBuilder->andWhere('w.label LIKE :label')
+                ->setParameter('label', '%' . $filter['label'] . '%');
+        }
+
+        if (!empty($filter['productYear'])) {
+            $queryBuilder->andWhere('w.productYear = :productYar')
+                ->setParameter('productYar', $filter['productYear']);
+        }
+
+        if (!empty($filter['producer'])) {
+            $queryBuilder->andWhere('w.producer LIKE :producer')
+                ->setParameter('producer', '%' . $filter['producer'] . '%');
+        }
+
+        if (!empty($filter['region'])) {
+            $queryBuilder->andWhere('w.region = :region')
+                ->setParameter('region', $filter['region']);
+        }
+
 
         return $queryBuilder;
     }
