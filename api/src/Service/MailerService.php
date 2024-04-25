@@ -35,7 +35,7 @@ class MailerService
             MailerEnum::BOOKING_VALIDATION => $this->sendMailBookingValidation($context),
             MailerEnum::BOOKING_CANCELED => $this->sendMailBookingCanceled($context),
             MailerEnum::WORKSHOP_REMINDER => $this->sendMailWorkshopReminder($context),
-            MailerEnum::WORKSHOP_CANCELED => null,
+            MailerEnum::WORKSHOP_CANCELED => $this->sendMailWorkshopFinished($context),
             MailerEnum::WORKSHOP_FINISHED => null
         };
 
@@ -98,6 +98,19 @@ class MailerService
             ->to($booking->getEmail())
             ->subject("Boennologie - Rappel d'atelier")
             ->htmlTemplate('emails/workshop/reminder.html.twig')
+            ->context(['workshop' => $booking->getWorkshop()]);
+    }
+
+    private function sendMailWorkshopFinished(array $context)
+    {
+        /** @var Booking $booking */
+        $booking = $context['booking'];
+
+        return (new TemplatedEmail())
+            ->from($this->sender)
+            ->to($booking->getEmail())
+            ->subject('Boennologie - Récapitulatif d\'atelier')
+            ->htmlTemplate('emails/workshop/finished.html.twig')
             ->context(['workshop' => $booking->getWorkshop()]);
     }
 }

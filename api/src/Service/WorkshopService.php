@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Workshop;
 use App\Repository\WorkshopRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use MailerEnum;
@@ -46,5 +47,12 @@ class WorkshopService
         }
 
         $this->entityManager->flush();
+    }
+
+    public function workshopFinishedHandler(Workshop $workshop)
+    {
+        foreach ($workshop->getValidatedBookings() as $booking) {
+            $this->mailerService->sendMail(MailerEnum::WORKSHOP_FINISHED, ['booking' => $booking]);
+        }
     }
 }
