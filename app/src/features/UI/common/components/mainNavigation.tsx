@@ -54,7 +54,7 @@ export default function MainNavigation() {
 
     return (
 
-        <AppBar position="static"
+        <AppBar position="static" id="main-navigation"
             sx={{
                 backgroundColor: palette.secondary.main,
                 color: palette.secondary.contrastText

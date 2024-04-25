@@ -1,7 +1,7 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
 import {EventClickArg} from "@fullcalendar/core"; // a plugin!
-import {Button, Modal, Typography} from "@mui/material";
+import {Button, Container, Modal, Typography} from "@mui/material";
 import {useEffect, useState} from 'react';
 import {Workshop} from "@/features/admin/types/workshop.types";
 import { useTheme } from '@mui/material';
@@ -57,41 +57,44 @@ const WorkshopCalendar = () => {
 
   return (
     <>
+      <Typography variant={'h1'} className={'title-calendar'}>Calendrier des ateliers</Typography>
       {modalContent}
-      <FullCalendar
-        plugins={[ dayGridPlugin ]}
-        initialView="dayGridMonth"
-        weekends={true}
-        eventSources={
-          [
-            {
-              url: `${import.meta.env.VITE_API_BASE_URL}/workshops/calendar`,
-              success: (data) => {
-                console.log(data);
-                workshops = data;
-              },
-              eventDataTransform: (data) => {
-                return {
-                  id: data?.id?.toString(),
-                  start: data.dateStart,
-                  title: data.theme.label
-                };
+      <Container style={{marginBottom: '2rem'}}>
+        <FullCalendar
+          plugins={[ dayGridPlugin ]}
+          initialView="dayGridMonth"
+          weekends={true}
+          eventSources={
+            [
+              {
+                url: `${import.meta.env.VITE_API_BASE_URL}/workshops/calendar`,
+                success: (data) => {
+                  console.log(data);
+                  workshops = data;
+                },
+                eventDataTransform: (data) => {
+                  return {
+                    id: data?.id?.toString(),
+                    start: data.dateStart,
+                    title: data.theme.label
+                  };
+                }
               }
-            }
-          ]
-        }
-        lazyFetching={true}
-        eventClick={handleEventClick}
-        locale={'fr'}
-        eventColor={palette.secondary.main}
-        buttonText={{
-          today:    'Aujourd\'hui',
-          month:    'Mois',
-          week:     'Semaine',
-          day:      'Jour',
-          list:     'Liste'
-        }}
-      />
+            ]
+          }
+          lazyFetching={true}
+          eventClick={handleEventClick}
+          locale={'fr'}
+          eventColor={palette.secondary.main}
+          buttonText={{
+            today:    'Aujourd\'hui',
+            month:    'Mois',
+            week:     'Semaine',
+            day:      'Jour',
+            list:     'Liste'
+          }}
+        />
+      </Container>
     </>
   )
 };

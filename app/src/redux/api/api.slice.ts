@@ -8,6 +8,7 @@ import { Country } from '@/features/admin/types/country.types';
 import { Workshop } from '@/features/admin/types/workshop.types';
 import {CalendarParams} from "@/types/calendarParams.types";
 import { EditOrganisation, NewOrganisation, Organisation } from '@/features/admin/types/organisation.types';
+import { Wine } from '@/features/admin/types/wine.types';
 import { Booking, CreateBooking } from '@/features/admin/types/booking.types';
 
 export const apiSlice = createApi({
@@ -83,10 +84,11 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['Themes'],
     }),
-    getWorkshops: builder.query<PaginatedResponse<Workshop>, void>({
-      query: () => ({
+    getWorkshops: builder.query<PaginatedResponse<Workshop>, CustomPaginationParams>({
+      query: (params) => ({
         url: 'workshops',
         method: 'GET',
+        params,
       }),
       providesTags: ['Workshop'],
     }),
@@ -193,6 +195,12 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['Organisations'],
     }),
+    getOneWine: builder.query<Wine, number>({
+      query: (id) => ({
+        url: `wines/${id}`,
+        method: 'GET',
+      }),
+    }),
     createBooking: builder.mutation<Booking, CreateBooking>({
       query: (body) => ({
         url: 'bookings',
@@ -209,7 +217,8 @@ export const apiSlice = createApi({
       }),
     }),
   }),
-});
+})
+
 
 // Export the auto-generated hook for the `getPosts` query endpoint
 export const {
@@ -232,6 +241,7 @@ export const {
   useGetOrganisationsQuery,
   useEditOrganisationMutation,
   useGetThreeLastWorkshopsQuery,
+  useGetOneWineQuery,
   useGetOneWorkshopQuery,
   useCreateBookingMutation,
   useGetWorkshopsForCalendarQuery,

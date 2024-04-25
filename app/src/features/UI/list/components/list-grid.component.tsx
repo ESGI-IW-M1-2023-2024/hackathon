@@ -77,6 +77,7 @@ const ListGridComponent = <Row,>({ columns, rows, loading, defaultSort, paginati
         }}
         onSortModelChange={handleSortModelChange}
         hideFooter
+        disableColumnMenu
       />
       <Container
         sx={{
