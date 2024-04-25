@@ -15,13 +15,13 @@ const RegionList = () => {
   const dispatch = useDispatch();
 
   // Pagination
-  const pagination = {
+  const paginationRegion = {
     page: Number(searchParams.get('page') || 1),
     limit: Number(searchParams.get('limit') || import.meta.env.VITE_DEFAULT_PAGE_SIZE || 15),
-    archived: Boolean(searchParams.get('archived')) || false,
-
+      archived: Boolean(searchParams.get('archived')) || false,
+      pagination: Boolean(searchParams.get('pagination')) || true,
   };
-  const { page, limit, archived } = pagination;
+    const {page, limit, archived, pagination} = paginationRegion
 
   const handlePageChange = (newPage: number) => {
     const newSearchParams = new URLSearchParams(searchParams);
@@ -39,7 +39,7 @@ const RegionList = () => {
   };
 
   // Api Data
-  const { data, isLoading } = useGetRegionsQuery({ page, limit, archived });
+  const {data, isLoading} = useGetRegionsQuery({page, limit, archived, pagination});
 
   const listProps: ListGridProps<Region> = {
     columns: [...useRegionColumns({ handleDeleteRegion })],
@@ -50,7 +50,7 @@ const RegionList = () => {
       order: 'asc',
     },
     pagination: {
-      ...pagination,
+      ...paginationRegion,
       totalResults: data ? data.totalItemCount : 0,
       handlePageChange,
       searchParams,

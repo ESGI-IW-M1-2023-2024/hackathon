@@ -2,13 +2,13 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { LoggedUser, UserCredentials } from '../../features/auth/types/logged-user.type';
 import { EditTheme, NewTheme, Theme } from '@/features/admin/types/theme.types';
 import { RootState } from '../store';
-import { CustomPaginationParams, PaginatedResponse } from '@/types/pagination.types';
+import { CustomPaginationParams, PaginatedResponse, RegionPaginationParams } from '@/types/pagination.types';
 import { EditRegion, NewRegion, Region } from '@/features/admin/types/region.types';
 import { Country } from '@/features/admin/types/country.types';
 import { Workshop } from '@/features/admin/types/workshop.types';
-import { CalendarParams } from "@/types/calendarParams.types";
 import { EditOrganisation, NewOrganisation, Organisation } from '@/features/admin/types/organisation.types';
-import { Wine } from '@/features/admin/types/wine.types';
+import { EditWine, NewWine, Wine } from '@/features/admin/types/wine.types';
+import { CalendarParams } from '@/types/calendarParams.types';
 import { Booking, CreateBooking } from '@/features/admin/types/booking.types';
 
 export const apiSlice = createApi({
@@ -120,7 +120,7 @@ export const apiSlice = createApi({
       }),
       providesTags: ['Countries'],
     }),
-    getRegions: builder.query<PaginatedResponse<Region>, CustomPaginationParams>({
+    getRegions: builder.query<PaginatedResponse<Region>, RegionPaginationParams>({
       query: (params) => ({
         url: 'regions',
         method: 'GET',
@@ -134,7 +134,6 @@ export const apiSlice = createApi({
         method: 'POST',
         body,
       }),
-      invalidatesTags: ['Regions'],
     }),
     editRegion: builder.mutation<Region, EditRegion>({
       query: (body) => ({
@@ -157,6 +156,45 @@ export const apiSlice = createApi({
     deleteRegion: builder.mutation<void, number>({
       query: (id) => ({
         url: `regions/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Regions'],
+    }),
+    getWines: builder.query<PaginatedResponse<Wine>, CustomPaginationParams>({
+      query: (params) => ({
+        url: 'wines',
+        method: 'GET',
+        params,
+      }),
+      providesTags: ['Regions'],
+    }),
+    createWine: builder.mutation<Wine, NewWine>({
+      query: (body) => ({
+        url: 'wines',
+        method: 'POST',
+        body,
+      }),
+    }),
+    editWine: builder.mutation<Wine, EditWine>({
+      query: (body) => ({
+        url: `wines/${body.id}`,
+        method: 'PUT',
+        body: {
+          label: body.label,
+        },
+      }),
+      invalidatesTags: ['Regions'],
+    }),
+    getOneWine: builder.query<Wine, number>({
+      query: (id) => ({
+        url: `wines/${id}`,
+        method: 'GET',
+      }),
+      providesTags: ['Regions'],
+    }),
+    deleteWine: builder.mutation<void, number>({
+      query: (id) => ({
+        url: `wines/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Regions'],
@@ -202,12 +240,6 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['Organisations'],
     }),
-    getOneWine: builder.query<Wine, number>({
-      query: (id) => ({
-        url: `wines/${id}`,
-        method: 'GET',
-      }),
-    }),
     createBooking: builder.mutation<Booking, CreateBooking>({
       query: (body) => ({
         url: 'bookings',
@@ -224,8 +256,7 @@ export const apiSlice = createApi({
       }),
     }),
   }),
-})
-
+});
 
 // Export the auto-generated hook for the `getPosts` query endpoint
 export const {
@@ -248,8 +279,12 @@ export const {
   useGetOrganisationsQuery,
   useEditOrganisationMutation,
   useGetThreeLastWorkshopsQuery,
-  useGetWorkshopsOpenedQuery,
+  useGetWinesQuery,
+  useCreateWineMutation,
+  useEditWineMutation,
   useGetOneWineQuery,
+  useDeleteWineMutation,
+  useGetWorkshopsOpenedQuery,
   useGetOneWorkshopQuery,
   useCreateBookingMutation,
   useGetWorkshopsForCalendarQuery,
