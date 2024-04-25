@@ -7,6 +7,7 @@ import { EditRegion, NewRegion, Region } from '@/features/admin/types/region.typ
 import { Country } from '@/features/admin/types/country.types';
 import { Workshop } from '@/features/admin/types/workshop.types';
 import { EditOrganisation, NewOrganisation, Organisation } from '@/features/admin/types/organisation.types';
+import { Wine } from '@/features/admin/types/wine.types';
 
 export const apiSlice = createApi({
   reducerPath: 'api',
@@ -182,6 +183,12 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['Organisations'],
     }),
+    getOneWine: builder.query<Wine, number>({
+      query: (id) => ({
+        url: `wines/${id}`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
@@ -206,4 +213,5 @@ export const {
   useGetOrganisationsQuery,
   useEditOrganisationMutation,
   useGetThreeLastWorkshopsQuery,
+  useGetOneWineQuery,
 } = apiSlice;
