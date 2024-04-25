@@ -7,7 +7,6 @@ use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\Validator\Constraints\Date;
 
 /**
  * @extends ServiceEntityRepository<Workshop>
@@ -30,7 +29,20 @@ class WorkshopRepository extends ServiceEntityRepository
     public function getBaseQueryBuilder(array $filter): QueryBuilder
     {
 
-        $queryBuilder = $this->createQueryBuilder('u');
+        $queryBuilder = $this->createQueryBuilder('u')
+            ->innerJoin('u.theme', "t");
+
+        if (!empty($filter['label'])) {
+            $queryBuilder
+                ->andWhere('t.label LIKE :label')
+                ->setParameter('label', '%' . $filter['label'] . '%');
+        }
+
+        if (!empty($filter['theme'])) {
+            $queryBuilder
+                ->andWhere('u.theme = :theme')
+                ->setParameter('theme', $filter['theme']);
+        }
 
         if (!empty($filter['dateStart'])) {
             $queryBuilder
