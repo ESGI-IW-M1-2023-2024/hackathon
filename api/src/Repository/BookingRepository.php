@@ -29,6 +29,21 @@ class BookingRepository extends ServiceEntityRepository
     {
         $queryBuilder = $this->createQueryBuilder('b');
 
+        if (!empty($filter["email"])) {
+            $queryBuilder->andWhere('b.email LIKE :email')
+                ->setParameter('email', "%" . $filter["email"] . "%");
+        }
+
+        if (!empty($filter["firstname"])) {
+            $queryBuilder->andWhere('b.firstname LIKE :firstname')
+                ->setParameter('email', "%" . $filter["firstname"] . "%");
+        }
+
+        if (!empty($filter["lastname"])) {
+            $queryBuilder->andWhere('b.lastname LIKE :lastname')
+                ->setParameter('email', "%" . $filter["lastname"] . "%");
+        }
+
         if (!empty($filter["status"])) {
             $queryBuilder->andWhere('b.status = :status')
             ->setParameter('status', $filter["status"]);
