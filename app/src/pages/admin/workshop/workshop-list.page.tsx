@@ -1,16 +1,22 @@
 import ListGridComponent from '@/features/UI/list/components/list-grid.component';
 import { Workshop, WorkshopSortableField } from '@/features/admin/types/workshop.types';
 import useWorkshopColumns from '@/features/admin/utils/workshop-config';
-import { useGetWorkshopsQuery } from '@/redux/api/api.slice';
+import { useCancelWorkshopMutation, useDeleteWorkshopMutation, useFinishWorkshopMutation, useGetWorkshopsQuery } from '@/redux/api/api.slice';
+import { openSnackBar } from '@/redux/slices/notification.slice';
 import { ListGridProps } from '@/types/data-grid.types';
 import { Box, Button, CircularProgress, FormControlLabel, Stack, Switch } from '@mui/material';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const AdminWorkshopList = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const [showArchived, setShowArchived] = useState<0 | 1>(Number(searchParams.get('archived')) === 1 ? 1 : 0 || 0);
+  const [deleteWorkshop] = useDeleteWorkshopMutation();
+  const [finishWorkshop] = useFinishWorkshopMutation();
+  const [cancelWorkshop] = useCancelWorkshopMutation();
+  const dispatch = useDispatch();
 
   // Pagination
   const pagination = {
@@ -28,13 +34,36 @@ const AdminWorkshopList = () => {
     setSearchParams(newSearchParams);
   };
 
-  const handleDeleteWorkshop = async (id: number) => console.log(`TODO delete workshop ${id}`);
+  const handleDeleteWorkshop = async (id: number) => {
+    try {
+      await deleteWorkshop(id).unwrap();
+      dispatch(openSnackBar({ message: 'Atelier supprimé avec succès', severity: 'success' }));
+    } catch (error) {
+      dispatch(openSnackBar({ message: 'Erreur lors de la suppression de l\'atelier', severity: 'error' }))
+    }
+  };
+  const handleFinishWorkshop = async (id: number) => {
+    try {
+      await finishWorkshop(id).unwrap();
+      dispatch(openSnackBar({ message: 'Atelier terminé avec succès', severity: 'success' }));
+    } catch (error) {
+      dispatch(openSnackBar({ message: 'Erreur lors de la clôture de l\'atelier', severity: 'error' }))
+    }
+  };
+  const handleCancelWorkshop = async (id: number) => {
+    try {
+      await cancelWorkshop(id).unwrap();
+      dispatch(openSnackBar({ message: 'Atelier annulé avec succès', severity: 'success' }));
+    } catch (error) {
+      dispatch(openSnackBar({ message: 'Erreur lors de l\'annulation de l\'atelier', severity: 'error' }))
+    }
+  };
 
   // Api Data
   const { data, isLoading } = useGetWorkshopsQuery({ page, limit, orderBy, orderByDirection, archived: showArchived });
   console.log(data);
   const listProps: ListGridProps<Workshop> = {
-    columns: [...useWorkshopColumns({ handleDeleteWorkshop })],
+    columns: [...useWorkshopColumns({ handleDeleteWorkshop, handleFinishWorkshop, handleCancelWorkshop })],
     rows: data ? data.items : [],
     loading: isLoading,
     defaultSort: {
@@ -57,7 +86,7 @@ const AdminWorkshopList = () => {
   return (
     <Stack width={'80%'} alignItems={'left'} margin={'1rem auto'} spacing={2} direction={'column'}>
       <Box textAlign={'center'}>
-        <h1>Liste des Thèmes</h1>
+        <h1>Liste des Atelier</h1>
       </Box>
 
       <Stack width={'100%'} direction={'row'}>
