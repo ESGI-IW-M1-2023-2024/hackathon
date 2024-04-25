@@ -10,6 +10,7 @@ const Dashboard = () => {
         <DashboardButton redirectPath='/admin/regions' text='Liste des Régions' />
         <DashboardButton redirectPath='/admin/organisations' text='Liste des Organisations' />
         <DashboardButton redirectPath='/admin/workshops' text='Liste des Ateliers' />
+        <DashboardButton redirectPath='/admin/workshops/calendar' text='Calendriers des Ateliers' />
       </Stack>
     </Stack>
   );

@@ -1,4 +1,4 @@
-import { PaletteOptions, ThemeOptions, createTheme } from "@mui/material";
+import { PaletteOptions, ThemeOptions, colors, createTheme } from "@mui/material";
 import { SnackbarOverride } from "./snackbar-override";
 
 const theme = createTheme();
@@ -14,6 +14,10 @@ export const customPalette: PaletteOptions = {
     main: "#660033",
     light: "#8F0047",
     dark: "#3D001F",
+  },
+  text: {
+    primary: "#333",
+    secondary: "#fff",
   },
 };
 

@@ -3,6 +3,7 @@
 namespace App\Controller\Api;
 
 use App\Entity\Workshop;
+use App\Service\CalendarServiceInterface;
 use App\Service\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,6 +40,21 @@ class WorkshopController extends AbstractController
                 'totalItemCount' => $pagination->getTotalItemCount()
             ],
             context: ["groups" => ["workshop:list"]]
+        );
+    }
+
+    #[Route('/calendar', name: 'list_calendar', methods: ["GET"])]
+    public function calendar(
+        Request $request,
+        CalendarServiceInterface $calendarService
+    ): JsonResponse {
+
+        $data = $calendarService->handleRequest($request);
+
+        return $this->json($data,
+            Response::HTTP_OK,
+            context: ["groups" => ["workshop:list"]]
+
         );
     }
 
