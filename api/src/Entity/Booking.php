@@ -7,6 +7,7 @@ use App\Repository\BookingRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Entity(repositoryClass: BookingRepository::class)]
 class Booking
@@ -56,6 +57,19 @@ class Booking
     #[ORM\Column]
     #[Groups(["booking:list", "booking:detail"])]
     private bool $archived = false;
+
+    #[Assert\Callback(groups: ["booking:new"])]
+    public function validate(ExecutionContextInterface $context)
+    {
+        if (($this->getWorkshop()->getNotCanceledBookings()->count() + 1) > $this->getWorkshop()->getMaxPerson()) {
+            $context->buildViolation("You can't booking because we reached the maximum bookings on this Workshop")
+                ->addViolation();
+        }
+    }
+
+    /********************************/
+    /* CONTENT AUTO GENERATED BELOW */
+    /********************************/
 
     public function getId(): ?int
     {
