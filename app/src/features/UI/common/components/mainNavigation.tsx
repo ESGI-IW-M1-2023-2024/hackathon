@@ -149,8 +149,8 @@ export default function MainNavigation() {
                             width: '100vw',
                         }}>
 
-                            <IconButton sx={{ mb: 2 }}>
-                                <CloseIcon onClick={toggleDrawer(false)} sx={{ color: palette.secondary.contrastText }} />
+                            <IconButton onClick={toggleDrawer(false)} sx={{ mb: 2 }}>
+                                <CloseIcon sx={{ color: palette.secondary.contrastText }} />
                             </IconButton>
 
                             <Divider sx={{ mb: 2 }} />
