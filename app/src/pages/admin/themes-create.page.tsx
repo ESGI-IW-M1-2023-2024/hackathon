@@ -68,12 +68,6 @@ const CreateTheme = () => {
         <CustomFormField
           childrenComponentType='TEXT_FIELD'
           control={control}
-          controlName='content'
-          options={{ label: 'Contenu' }}
-        />
-        <CustomFormField
-          childrenComponentType='TEXT_FIELD'
-          control={control}
           controlName='subtitle'
           options={{ label: 'Sous-titre' }}
         />
@@ -82,6 +76,14 @@ const CreateTheme = () => {
           control={control}
           controlName='file'
           options={{ label: 'Fichier', setValue: setValue }}
+        />
+      </Stack>
+      <Stack direction={'row'} spacing={2} minWidth={'100%'}>
+        <CustomFormField
+          childrenComponentType='TEXT_FIELD'
+          control={control}
+          controlName='content'
+          options={{ label: 'Contenu' }}
         />
       </Stack>
       <Stack direction={'row'} spacing={2}>
