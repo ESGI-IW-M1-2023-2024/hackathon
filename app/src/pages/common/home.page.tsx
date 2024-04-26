@@ -7,8 +7,10 @@ import ColorButton from "@/features/UI/custom-mui-components/components/custom-b
 import Button from '@mui/material/Button';
 import Olivier from '@/assets/about/olivier-cut.png';
 import Chip from "@mui/material/Chip";
+import {useNavigate} from "react-router-dom";
 
 const Home = () => {
+    const navigate = useNavigate();
     const { data, isLoading } = useGetThreeLastWorkshopsQuery();
     const renderWorkshopCards = () => {
         // Assure-toi que data est non-null et a au moins un élément
@@ -67,7 +69,7 @@ const Home = () => {
                         </Typography>
                     </CardContent>
                     <CardActions sx={{marginTop: 'auto'}}>
-                        <ColorButton>
+                        <ColorButton onClick={() => navigate('/workshops/' + workshop.id)}>
                             Voir plus
                         </ColorButton>
                     </CardActions>
