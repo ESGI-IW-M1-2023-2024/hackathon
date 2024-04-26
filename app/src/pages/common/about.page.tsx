@@ -1,5 +1,5 @@
 import Stack from '@mui/material/Stack';
-import { Container, Typography } from '@mui/material';
+import { Button, Container, Typography } from '@mui/material';
 import bottles from "@/assets/about/bottle.jpg";
 import Box from '@mui/material/Box';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
@@ -15,8 +15,6 @@ import CardContent from '@mui/material/CardContent';
 import WineBarIcon from '@mui/icons-material/WineBar';
 import WorkIcon from '@mui/icons-material/Work';
 import SchoolIcon from '@mui/icons-material/School';
-import Message from '@/assets/about/message.svg';
-import Contact from '@/assets/about/contact.png';
 
 const data = [
     {
@@ -73,12 +71,25 @@ const About = () => {
                     marginBottom: '2rem'
                 }}
             >
-                <Typography component='div' style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', width: '100%', padding: '4rem 0 0 15rem' }}>
-                    <Typography component='div' style={{ textAlign: 'left', width: '30%' }}>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'flex-start',
+                        alignItems: 'center',
+                        width: '100%',
+                        padding: { xs: '4rem 10px', sm: '4rem 0 0 15rem' }
+                    }}
+                >
+                    <Box
+                        sx={{
+                            textAlign: { xs: 'center', sm: 'left' },
+                            width: { xs: '100%', sm: '30%' }
+                        }}>
                         <Typography variant='h1' className="d-shadow" style={{ fontWeight: 400, fontSize: '80px', marginBottom: '2rem' }}>À propos</Typography>
                         <Typography className="d-shadow" style={{ marginBottom: '2rem' }}>Dans le monde du vin, chaque bouteille raconte une histoire. Découvrez la passion et l'expertise qui animent Olivier Bonneton, votre guide dans cette aventure gustative.</Typography>
-                    </Typography>
-                </Typography>
+                    </Box>
+                </Box>
             </Stack>
 
             <Container component='main'>
@@ -101,8 +112,8 @@ const About = () => {
                         Rejoignez-moi pour un voyage captivant à travers les vignobles du monde, où chaque verre raconte une histoire et chaque dégustation est une célébration de l'art de vivre. Venez découvrir l'essence même du vin avec moi, Olivier, et laissez-vous emporter par la magie des saveurs, des arômes et des rencontres inoubliables.
                         Au plaisir de partager ensemble une aventure vinicole enrichissante et passionnante.
                         <Typography component='div' style={{ display: 'flex', justifyContent: 'left', gap: '10px', marginTop: '20px' }}>
-                            <Typography component='a' href="#"><LinkedInIcon /></Typography>
-                            <Typography component='a' href="#"><EmailIcon /></Typography>
+                            <Typography component='a' href="https://www.linkedin.com/in/olivier-bonneton-5a320020"><LinkedInIcon /></Typography>
+                            <Typography component='a' href="mailto:atelier-vins@olivier-bonneton.com"><EmailIcon /></Typography>
                         </Typography>
                     </Typography>
                     <Avatar alt="Olivier Bonneton" sx={{ width: '300px', height: '300px' }} src={Olivier} />
@@ -121,6 +132,7 @@ const About = () => {
                         component={'section'}
                         margin={'auto'}
                         display={'flex'}
+                        flexDirection={{ xs: 'column', sm: 'row' }}
                         gap={'2rem'}
                         textAlign={'center'}
                     >
@@ -198,13 +210,31 @@ const About = () => {
                         <FormControl sx={{ gap: 2, width: 1 }}>
                             <Input placeholder='Email' aria-describedby="my-helper-text" />
                             <FormHelperText id="my-helper-text">Nous ne partagerons jamais votre adresse mail.</FormHelperText>
-                            <Input placeholder='Nom' />
-                            <Input placeholder='Prénom' />
+                            <Stack
+                                direction={{ xs: 'column', sm: 'row' }}
+                                justifyContent={'space-between'}
+                                gap={2}
+                                width={'100%'}
+                            >
+                                <Input placeholder='Nom' sx={
+                                    {
+                                        width: '100%'
+                                    }
+
+                                } />
+                                <Input placeholder='Prénom' sx={
+                                    {
+                                        width: '100%'
+                                    }
+
+                                } />
+                            </Stack>
                             <TextField sx={{
                                 '& .MuiInputBase-input': {
                                     height: '8rem',
                                 }
                             }} placeholder='Demande' helperText="Renseignez votre demande ou votre question." />
+                            <Button variant="contained">Envoyer</Button>
                         </FormControl>
                     </Stack>
                 </Box>
