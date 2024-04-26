@@ -21,9 +21,9 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
 
 import logoImg from '@/assets/common/navbar/logo.svg'
-import {LoggedUser} from "@/features/auth/types/logged-user.type";
-import {useAppSelector} from "@/redux/hooks";
-import {RootState} from "@/redux/store";
+import { LoggedUser } from "@/features/auth/types/logged-user.type";
+import { useAppSelector } from "@/redux/hooks";
+import { RootState } from "@/redux/store";
 import { Dropdown } from '@mui/base/Dropdown';
 import { Menu } from '@mui/base/Menu';
 import { MenuButton as BaseMenuButton } from '@mui/base/MenuButton';
@@ -124,40 +124,43 @@ export default function MainNavigation() {
                             }
                         }}
                     >
-                      {!user ?
-                        <>
-                          <Link href="/">Accueil</Link>
-                          <Link href="/concept">Concept</Link>
-                          <Link href="/workshops">Ateliers</Link>
-                          <Link href="/about">A propos</Link>
-                          <Link href="https://www.linkedin.com/in/olivier-bonneton-5a320020"><LinkedInIcon /></Link>
-                        </>
-                        :
-                        <>
-                            <Dropdown>
-                                <MenuButton<typeof Link> slots={{ root: Link}} style={{background: "none"}}>Admin</MenuButton>
-                                <Menu slots={{ listbox: Listbox }} style={{zIndex:1}}>
-                                    <MenuItem>
-                                        <Link href={"/themes"}>Liste des thèmes</Link>
-                                    </MenuItem>
-                                    <MenuItem>
-                                        <Link href={"/admin/regions"}>Liste des régions</Link>
-                                    </MenuItem>
-                                    <MenuItem>
-                                        <Link href={"/admin/organisations"}>Liste des organisation</Link>
-                                    </MenuItem>
-                                    <MenuItem>
-                                        <Link href={"/admin/workshops"}>Liste des ateliers</Link>
-                                    </MenuItem>
-                                    <MenuItem>
-                                        <Link href={"/admin/workshops/calendar"}>Calendrier des ateliers</Link>
-                                    </MenuItem>
-                                </Menu>
-                            </Dropdown>
-                            <Link href={"/admin"}>Dashboard</Link>
-                            <Link href={"/"}>Retour au site client</Link>
-                        </>
-                      }
+                        {!user ?
+                            <>
+                                <Link href="/">Accueil</Link>
+                                <Link href="/concept">Concept</Link>
+                                <Link href="/workshops">Ateliers</Link>
+                                <Link href="/about">A propos</Link>
+                                <Link href="https://www.linkedin.com/in/olivier-bonneton-5a320020"><LinkedInIcon /></Link>
+                            </>
+                            :
+                            <>
+                                <Dropdown>
+                                    <MenuButton<typeof Link> slots={{ root: Link }} style={{ background: "none" }}>Admin</MenuButton>
+                                    <Menu slots={{ listbox: Listbox }} style={{ zIndex: 1 }}>
+                                        <MenuItem>
+                                            <Link href={"/admin/workshops"}>Liste des Ateliers</Link>
+                                        </MenuItem>
+                                        <MenuItem>
+                                            <Link href={"/admin/workshops/calendar"}>Calendrier des Ateliers</Link>
+                                        </MenuItem>
+                                        <MenuItem>
+                                            <Link href={"/admin/organisations"}>Liste des organisation</Link>
+                                        </MenuItem>
+                                        <MenuItem>
+                                            <Link href={"/admin/regions"}>Liste des régions</Link>
+                                        </MenuItem>
+                                        <MenuItem>
+                                            <Link href={"/admin/themes"}>Liste des thèmes</Link>
+                                        </MenuItem>
+                                        <MenuItem>
+                                            <Link href={"/admin/wines"}>Liste des thèmes</Link>
+                                        </MenuItem>
+                                    </Menu>
+                                </Dropdown>
+                                <Link href={"/admin"}>Dashboard</Link>
+                                <Link href={"/"}>Retour au site client</Link>
+                            </>
+                        }
                     </Stack>
 
                     <IconButton
@@ -213,47 +216,47 @@ export default function MainNavigation() {
                                 }}>
                                 {!user ?
                                     <>
-                                      <Link href="/" onClick={toggleDrawer(false)}>
-                                        <ListItemButton>
-                                          <ListItemIcon>
-                                            <WineBarIcon sx={{ color: palette.secondary.contrastText }} />
-                                          </ListItemIcon>
-                                          <ListItemText primary="Accueil" />
-                                        </ListItemButton>
-                                      </Link>
-                                      <Link href="/concept" onClick={toggleDrawer(false)}>
-                                        <ListItemButton>
-                                          <ListItemIcon>
-                                            <TipsAndUpdatesIcon sx={{ color: palette.secondary.contrastText }} />
-                                          </ListItemIcon >
-                                          <ListItemText primary="Concept" />
-                                        </ListItemButton>
-                                      </Link>
-                                      <Link href="/workshops" onClick={toggleDrawer(false)}>
-                                        <ListItemButton>
-                                          <ListItemIcon>
-                                            <GroupsIcon sx={{ color: palette.secondary.contrastText }} />
-                                          </ListItemIcon>
-                                          <ListItemText primary="Ateliers" />
-                                        </ListItemButton>
-                                      </Link>
-                                      <Link href="/about" onClick={toggleDrawer(false)}>
-                                        <ListItemButton>
-                                          <ListItemIcon>
-                                            <InfoIcon sx={{ color: palette.secondary.contrastText }} />
-                                          </ListItemIcon>
-                                          <ListItemText primary="A propos" />
-                                        </ListItemButton>
-                                      </Link>
+                                        <Link href="/" onClick={toggleDrawer(false)}>
+                                            <ListItemButton>
+                                                <ListItemIcon>
+                                                    <WineBarIcon sx={{ color: palette.secondary.contrastText }} />
+                                                </ListItemIcon>
+                                                <ListItemText primary="Accueil" />
+                                            </ListItemButton>
+                                        </Link>
+                                        <Link href="/concept" onClick={toggleDrawer(false)}>
+                                            <ListItemButton>
+                                                <ListItemIcon>
+                                                    <TipsAndUpdatesIcon sx={{ color: palette.secondary.contrastText }} />
+                                                </ListItemIcon >
+                                                <ListItemText primary="Concept" />
+                                            </ListItemButton>
+                                        </Link>
+                                        <Link href="/workshops" onClick={toggleDrawer(false)}>
+                                            <ListItemButton>
+                                                <ListItemIcon>
+                                                    <GroupsIcon sx={{ color: palette.secondary.contrastText }} />
+                                                </ListItemIcon>
+                                                <ListItemText primary="Ateliers" />
+                                            </ListItemButton>
+                                        </Link>
+                                        <Link href="/about" onClick={toggleDrawer(false)}>
+                                            <ListItemButton>
+                                                <ListItemIcon>
+                                                    <InfoIcon sx={{ color: palette.secondary.contrastText }} />
+                                                </ListItemIcon>
+                                                <ListItemText primary="A propos" />
+                                            </ListItemButton>
+                                        </Link>
                                     </>
                                     :
                                     <>
                                         <Accordion
-                                          expandicon={<ArrowDropDownIcon  />}
-                                          aria-controls="panel1-content"
-                                          id="panel1-header"
-                                          style={{background: palette.secondary.light, color: palette.secondary.contrastText}}
-                                          className={"navbar-accordion"}
+                                            expandicon={<ArrowDropDownIcon />}
+                                            aria-controls="panel1-content"
+                                            id="panel1-header"
+                                            style={{ background: palette.secondary.light, color: palette.secondary.contrastText }}
+                                            className={"navbar-accordion"}
                                         >
                                             <AccordionSummary>
                                                 <ListItemButton>
@@ -331,7 +334,7 @@ const grey = {
 };
 
 const Listbox = styled('ul')(
-  ({ theme }) => `
+    ({ theme }) => `
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 0.875rem;
   box-sizing: border-box;
@@ -345,14 +348,13 @@ const Listbox = styled('ul')(
   background: #fff;
   border: 1px solid ${theme.palette.mode === 'dark' ? grey[700] : grey[200]};
   color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
-  box-shadow: 0px 4px 6px ${
-    theme.palette.mode === 'dark' ? 'rgba(0,0,0, 0.50)' : 'rgba(0,0,0, 0.05)'
-  };
+  box-shadow: 0px 4px 6px ${theme.palette.mode === 'dark' ? 'rgba(0,0,0, 0.50)' : 'rgba(0,0,0, 0.05)'
+        };
   `,
 );
 
 const MenuItem = styled(BaseMenuItem)(
-  ({ theme }) => `
+    ({ theme }) => `
   list-style: none;
   padding: 8px;
   border-radius: 8px;
@@ -379,7 +381,7 @@ const MenuItem = styled(BaseMenuItem)(
 );
 
 const MenuButton = styled(BaseMenuButton)(
-  ({ theme }) => `
+    ({ theme }) => `
   font-family: 'IBM Plex Sans', sans-serif;
   font-weight: 600;
   font-size: 0.875rem;
