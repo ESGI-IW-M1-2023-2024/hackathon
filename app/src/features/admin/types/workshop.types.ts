@@ -1,5 +1,6 @@
 import { Organisation } from './organisation.types';
 import { Theme } from './theme.types';
+import { WorkshopWine } from './wine.types';
 
 export interface WorkshopBooking {
   id: number;
@@ -34,6 +35,12 @@ export interface Workshop {
   price: number;
 }
 
+export interface GetOneWorkshop extends Workshop {
+  resources: [];
+  booking: WorkshopBooking;
+  wines: WorkshopWine[];
+}
+
 export interface BookingGivenWorkshop {
   id: number;
   dateStart: Date;
@@ -48,4 +55,20 @@ export interface BookingGivenWorkshop {
 
 export enum WorkshopSortableField {
   'ID' = 'id',
+}
+
+export interface CreateWorkshop {
+  dateStart: string;
+  length: string;
+  maxPerson: string;
+  location: string;
+  maxBookingDate: string;
+  price: string;
+  themeId: string;
+  organisationId: string;
+  wines: string[];
+}
+
+export interface EditWorkshop extends CreateWorkshop {
+  id: number;
 }

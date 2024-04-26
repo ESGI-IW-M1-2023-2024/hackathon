@@ -29,19 +29,19 @@ const EditTheme = () => {
   const { data } = useGetOneThemeQuery(Number(id));
   const defaultValues = data
     ? {
-      id: data.id,
-      label: data.label,
-      content: data.content,
-      subtitle: data.subtitle,
-      file: '',
-    }
+        id: data.id,
+        label: data.label,
+        content: data.content,
+        subtitle: data.subtitle,
+        file: '',
+      }
     : {
-      id: Number(id),
-      label: '',
-      content: '',
-      subtitle: '',
-      file: '',
-    };
+        id: Number(id),
+        label: '',
+        content: '',
+        subtitle: '',
+        file: '',
+      };
 
   const { control, handleSubmit, setValue } = useForm({
     resolver: zodResolver(zodSchema(), { errorMap: customErrorMap }),
@@ -68,13 +68,14 @@ const EditTheme = () => {
   };
 
   return (
-    <Stack component='form' onSubmit={handleSubmit((data) => handleFormSubmit(data))}
+    <Stack
+      component='form'
+      onSubmit={handleSubmit((data) => handleFormSubmit(data))}
       width={'80%'}
       alignItems={'center'}
       spacing={2}
       margin={'2rem auto'}
     >
-
       <h1>Édition d'un Thème</h1>
 
       <Stack direction={'row'} spacing={2} minWidth={'100%'}>
@@ -103,7 +104,7 @@ const EditTheme = () => {
           options={{ label: 'Fichier', setValue: setValue }}
         />
       </Stack>
-      <Stack direction={"row"} spacing={2}>
+      <Stack direction={'row'} spacing={2}>
         <Button variant='contained' type='submit'>
           Modifier le thème
         </Button>

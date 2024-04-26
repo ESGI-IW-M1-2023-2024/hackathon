@@ -12,7 +12,7 @@ const DashboardButton = ({ text, redirectPath, icon }: DashboardButtonProps) => 
 
   return (
     <Card
-      onClick={() => navigate(redirectPath)}
+      onClick={() => navigate(`/admin/${redirectPath}`)}
       sx={{
         backgroundColor: '#c7ac92',
         fontSize: '24px',

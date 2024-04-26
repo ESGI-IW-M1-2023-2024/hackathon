@@ -24,18 +24,31 @@ class ThemeController extends AbstractController
     #[IsGranted("ROLE_ADMIN")]
     public function index(
         Request           $request,
-        PaginationService $paginationService
+        PaginationService $paginationService,
+        EntityManagerInterface $em,
     ): JsonResponse {
-        $pagination = $paginationService->getPagination($request, Theme::class);
+        if ($request->query->getBoolean('pagination', true)) {
+            $pagination = $paginationService->getPagination($request, Theme::class);
 
-        return $this->json(
-            [
-                'items' => $pagination,
-                'pageCount' => $pagination->getPageCount(),
-                'totalItemCount' => $pagination->getTotalItemCount()
-            ],
-            context: ["groups" => ["theme:list"]]
-        );
+            return $this->json(
+                [
+                    'items' => $pagination,
+                    'pageCount' => $pagination->getPageCount(),
+                    'totalItemCount' => $pagination->getTotalItemCount()
+                ],
+                context: ["groups" => ["theme:list"]]
+            );
+        } else {
+            $themes = $em->getRepository(Theme::class)->findAll();
+
+            return $this->json(
+                [
+                    'items' => $themes,
+                    'totalItemCount' => count($themes)
+                ],
+                context: ["groups" => ["theme:list"]]
+            );
+        }
     }
 
     #[Route('/{id}', name: 'get', methods: ["GET"])]

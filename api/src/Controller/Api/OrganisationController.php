@@ -30,16 +30,28 @@ class OrganisationController extends AbstractController
         Request $request,
         PaginationService $paginationService
     ): JsonResponse {
-        $pagination = $paginationService->getPagination($request, Organisation::class);
+        if ($request->query->getBoolean('pagination', true)) {
+            $pagination = $paginationService->getPagination($request, Organisation::class);
 
-        return $this->json(
-            [
-                'items' => $pagination,
-                'pageCount' => $pagination->getPageCount(),
-                'totalItemCount' => $pagination->getTotalItemCount()
-            ],
-            context: ["groups" => ["organisation:list"]]
-        );
+            return $this->json(
+                [
+                    'items' => $pagination,
+                    'pageCount' => $pagination->getPageCount(),
+                    'totalItemCount' => $pagination->getTotalItemCount()
+                ],
+                context: ["groups" => ["organisation:list"]]
+            );
+        } else {
+            $organisation = $this->em->getRepository(Organisation::class)->findAll();
+
+            return $this->json(
+                [
+                    'items' => $organisation,
+                    'totalItemCount' => count($organisation),
+                ],
+                context: ["groups" => ["organisation:list"]]
+            );
+        }
     }
 
     #[Route('/{id}', name: 'get', methods: ["GET"])]

@@ -5,9 +5,6 @@ export interface Wine {
   label: string | null;
   productYear: number | null;
   producer: string | null;
-  grapeVariety: string | null;
-  alcoholLevel: number | null;
-  color: string | null;
   quantity: number | null;
   bottleSize: string | null;
   comments: string | null;
@@ -24,6 +21,9 @@ export interface Wine {
   content: string | null;
   imageFilename: string | null;
   archived: 0 | 1;
+  grapeVariety: string | null;
+  alcoholLevel: number | null;
+  color: string | null;
 }
 
 export interface NewWine extends Omit<Wine, 'id' | 'imageFilename' | 'archived' | 'region'> {
@@ -36,4 +36,8 @@ export interface EditWine extends Wine {}
 export enum WinesSortableField {
   'ID' = 'id',
   'LABEL' = 'label',
+}
+
+export interface WorkshopWine extends Omit<Wine, 'grapeVariety' | 'alcoholLevel' | 'color'> {
+  taste: null;
 }
