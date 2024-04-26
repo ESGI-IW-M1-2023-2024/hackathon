@@ -1,12 +1,40 @@
-<h1>Bonjour {{ email.to[0].address }}</h1>
+{% extends 'emails/layout.html.twig' %}
+{% block body %}
 
-<p>Rappel de paiement sur l'atelier : {{ booking.workshop.theme.label }} commence le {{ booking.workshop.startDate|date("d/m/y H:i") }}</p>
+<row>
+    <columns>
+        <h1>Rappel paiement atelier</h1>
+        <div class='reminder'>
+            <img src="{{ email.image('@images/hour.png') }}" alt="logo heure">
+        </div>
+        <p>Bonjour <strong>{{ email.to[0].address }}</strong> !</p>
+        <p>Rappel de paiement sur l'atelier </p>
+        <div class='booking'>{{ booking.workshop.theme.label }}</div>
+        <p>commence le {{ booking.workshop.startDate|date("d/m/y H:i") }}</p>
 
-<p>Vous trouverez ci-dessous tous les moyens de paiement : </p>
+        <p>Vous trouverez ci-dessous tous les moyens de paiement : </p>
+        <ul>
+            <li>
+            <div class='paypal'>
+                <img src="{{ email.image('@images/paypal.png') }}" alt="logo paypal">
+            </div>
+            <strong>ou à l'adresse : <a href="mailto:bonnetonolivier@gmail.com">bonnetonolivier@gmail.com</a>
+            </li>
+            <li>
+            <div class='lydia-paylib'>
+                <div class='lydia'>
+                    <img src="{{ email.image('@images/lydia.png') }}" alt="logo lydia">
+                </div>
+                <div class='paylib'>
+                    <img src="{{ email.image('@images/paylib.png') }}" alt="logo paylib">
+                </div>
+            </div>
+            <strong>Lydia / Paylib :</strong> <a href="tel:+33683059070"> 06 83 05 90 70</a>
+            </li>
+        </ul>
 
-<ul>
-    <li><strong>Paypal :</strong> <a href="mailto:bonnetonolivier@gmail.com">bonnetonolivier@gmail.com</a></li>
-    <li><strong>Lydia / Paylib :</strong> <a href="tel:+33683059070">06 83 05 90 70</a></li>
-</ul>
+        <p>Vous pouvez annuler a tout moment en appelant le <a href="tel:+33683059070"> 06 83 05 90 70</a></p>
+    </columns>
+  </row>
 
-<p>Vous pouvez annuler a tout moment en appelant le <a href="tel:+33683059070">06 83 05 90 70</a></p>
+{% endblock %}

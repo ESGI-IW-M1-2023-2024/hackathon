@@ -1,12 +1,33 @@
-<h1>Bonjour {{ email.to[0].address }}</h1>
+{% extends 'emails/layout.html.twig' %}
+{% block body %}
+<row>
+    <columns>
+        <h1>Réservation effectuée !</h1>
+        <p>Bonjour <strong>{{ email.to[0].address }}</strong> !</p>
+        <p>Vous avez réservé votre place pour l'atelier : </p>
+        <div class='booking'>{{ booking.workshop.theme.label }}</div>
+        <p>Vous trouverez ci-dessous tous les moyens de paiement : </p>
+        <ul>
+            <li>
+            <div class='paypal'>
+                <img src="{{ email.image('@images/paypal.png') }}" alt="logo paypal">
+            </div>
+            <strong>ou à l'adresse : <a href="mailto:bonnetonolivier@gmail.com">bonnetonolivier@gmail.com</a>
+            </li>
+            <li>
+            <div class='lydia-paylib'>
+                <div class='lydia'>
+                    <img src="{{ email.image('@images/lydia.png') }}" alt="logo lydia">
+                </div>
+                <div class='paylib'>
+                    <img src="{{ email.image('@images/paylib.png') }}" alt="logo paylib">
+                </div>
+            </div>
+            <strong>Lydia / Paylib :</strong> <a href="tel:+33683059070"> 06 83 05 90 70</a>
+            </li>
+        </ul>
 
-<p>Vous avez réservé votre place pour l'atelier : {{ booking.workshop.theme.label }}</p>
-
-<p>Vous trouverez ci-dessous tous les moyens de paiement : </p>
-
-<ul>
-    <li><strong>Paypal :</strong> <a href="mailto:bonnetonolivier@gmail.com">bonnetonolivier@gmail.com</a></li>
-    <li><strong>Lydia / Paylib :</strong> <a href="tel:+33683059070">06 83 05 90 70</a></li>
-</ul>
-
-<p>Vous pouvez annuler a tout moment en appelant le <a href="tel:+33683059070">06 83 05 90 70</a></p>
+        <p>Vous pouvez annuler a tout moment en appelant le <a href="tel:+33683059070"> 06 83 05 90 70</a></p>
+    </columns>
+  </row>
+{% endblock %}

@@ -1,0 +1,215 @@
+@import url('https://fonts.googleapis.com/css2?family=MonteCarlo&display=swap');
+
+body,
+html,
+.body {
+    background: #ffffff !important;
+}
+
+.container.header {
+    background: #ffffff;
+}
+
+.body-drip {
+    border-top: 8px solid #663399;
+}
+
+.logo-bg {
+    background-color: #660033;
+    border-radius: 4px;
+    padding: 1rem;
+}
+
+.logo-bg img {
+    width: 50px;
+    height: 50px;
+}
+
+h1, h2 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+p, div {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 400;
+}
+
+.booking {
+    width: 400px;
+    height: 100px;
+    color: #ffffff;
+    background-color: #660033;
+    border-radius: 10px;
+    font-size: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+th {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+ul {
+    list-style: none;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 0;
+}
+
+.paypal {
+    width: 400px;
+    height: 50px;
+    color: #ffffff;
+    background-color: #ffe100;
+    border-radius: 25px;
+    font-size: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+}
+
+.paypal img {
+    width: 100px;
+}
+
+.lydia {
+    width: 200px;
+    height: 50px;
+    border-radius: 25px 0px 0px 25px;
+    font-size: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid gray;
+}
+
+.paylib {
+    width: 200px;
+    height: 50px;
+    border-radius: 0px 25px 25px 0px;
+    font-size: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lydia-paylib {
+    display: flex;
+    margin-top: 14px;
+    margin-bottom: 14px;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 25px;
+    background-color: #f8f8f8;
+}
+
+.lydia-paylib img {
+    width: 80px;
+}
+
+a {
+    color: #660033;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.mail {
+    width: 40px;
+    height: 40px;
+}
+
+.linkedin {
+    width: 30px;
+    height: 30px;
+}
+
+a:hover {
+    color: #e387b5;
+    
+}
+
+a:active {
+    color: #3D001F;
+}
+
+th.menu-item {
+    display: inline;
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+}
+
+.validate {
+    width: 80px;
+    height: 80px;
+    border-radius: 50px;
+    background-color: #29c311;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.canceled, .cancel.workshop {
+    width: 80px;
+    height: 80px;
+    border-radius: 50px;
+    background-color: #c31111;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.canceled img, .cancel.workshop img, .reminder img, .recap img, .validate img {
+    object-fit: contain;
+}
+
+.reminder {
+    width: 80px;
+    height: 80px;
+    border-radius: 50px;
+    background-color: #115bc3;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+#reminder {
+    padding: 12px;
+}
+
+#reminder ul {
+    gap: 10px;
+}
+
+#reminder li.subtitles {
+    font-size: 20px;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.recap {
+    width: 80px;
+    height: 80px;
+    border-radius: 50px;
+    background-color: #f7a313;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}

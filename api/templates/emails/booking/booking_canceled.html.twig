@@ -1,5 +1,18 @@
-<h1>Bonjour {{ email.to[0].address }}</h1>
+{% extends 'emails/layout.html.twig' %}
+{% block body %}
 
-<p>Nous confirmons votre annumation d'inscription pour l'atelier : {{ booking.workshop.theme.label }}</p>
+<row>
+    <columns>
+        <h1>Réservation annulée !</h1>
+        <div class='canceled'>
+            <img src="{{ email.image('@images/cancel.png') }}" alt="logo annulation">
+        </div>
+        <p>Bonjour <strong>{{ email.to[0].address }}</strong> !</p>
+        <p>Nous confirmons votre annulation pour l'atelier </p>
+        <div class='booking'>{{ booking.workshop.theme.label }}</div>
+        <p>Nous sommes navrés de vous voir partir !</p>
 
-<p>Nous sommes navré de vous voir patir !</p>
+    </columns>
+  </row>
+
+{% endblock %}
