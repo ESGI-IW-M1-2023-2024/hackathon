@@ -79,7 +79,7 @@ class Workshop
     /**
      * @var Collection<int, Wine>
      */
-    #[ORM\ManyToMany(targetEntity: Wine::class, mappedBy: 'workshops')]
+    #[ORM\ManyToMany(targetEntity: Wine::class, mappedBy: 'workshops', cascade: ['persist'])]
     #[Groups(["workshop:list:status:finished", "workshop:detail"])]
     #[Assert\Count(min: 1, groups: ["workshop:new"])]
     private Collection $wines;
