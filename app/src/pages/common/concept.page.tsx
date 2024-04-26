@@ -140,7 +140,7 @@ export default function OutlinedCard() {
                             subheader={<li />}
                         >
                                 <ul>
-                                    {themes.items.map((theme) => (
+                                    {themes? themes.items.map((theme) => (
                                         <ListItem key={`item-${theme.id}`} sx={{padding: 0, paddingRight: 2}}>
                                             <Card sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', backgroundColor: '#D5C1AE80', gap: 4, width: 1, padding: 2, marginBottom: 2, position: 'relative' }}>
                                                 <div className={'curve'} />
@@ -155,7 +155,7 @@ export default function OutlinedCard() {
                                                 </Stack>
                                             </Card>
                                         </ListItem>
-                                    ))}
+                                    )) : [] } 
                                 </ul>
                         </List>
                         <p style={{ marginTop: '2rem' }}><strong>Dégustez, apprenez, voyagez !</strong></p>
