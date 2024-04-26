@@ -11,7 +11,7 @@ class BookingFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
-        BookingFactory::createMany(30);
+        BookingFactory::createMany(100);
         $manager->flush();
     }
 
