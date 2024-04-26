@@ -16,6 +16,7 @@ Boennologie est une application web permettant aux visiteurs de participation à
   - [Documentation de l'API](#documentation-de-lapi)
   - [Maquettage](#maquettage)
   - [Arborescence du site](#arborescence-du-site)
+  - [Analyse SonarQube](#analyse-sonarqube)
 
 ## Initialiser le projet
 
@@ -129,3 +130,8 @@ L'arborescence du site est designé sur [Lucid](https://lucid.co/fr)
 
 ![Arborescence](docs/mindmap.png)
 </details>
+
+## Analyse SonarQube
+
+Une analyse SonarQube automatique est configurée sur la branche main ainsi que sur chaque Pull Request.  
+L'analyse est disponible sur le site [SonarCloud](https://sonarcloud.io/project/overview?id=ESGI-IW-M1-2023-2024_hackathon). 
