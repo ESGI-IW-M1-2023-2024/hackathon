@@ -1,7 +1,19 @@
-<h1>Bonjour {{ email.to[0].address }}</h1>
+{% extends 'emails/layout.html.twig' %}
+{% block body %}
 
-<p>Nous confirmons votre inscription pour l'atelier : {{ booking.workshop.theme.label }}</p>
+<row>
+    <columns>
+        <h1>Réservation validée !</h1>
+        <div class='validate'>
+            <img src="{{ email.image('@images/check.png') }}" alt="logo validé">
+        </div>
+        <p>Bonjour <strong>{{ email.to[0].address }}</strong> !</p>
+        <p>Nous confirmons votre inscription pour l'atelier </p>
+        <div class='booking'>{{ booking.workshop.theme.label }}</div>
+        <p>Nous vous remercions pour votre participation !</p>
 
-<p>Nous vous remercions pour votre participation !</p>
+        <p>Vous pouvez annuler a tout moment en appelant le <a href="tel:+33683059070"> 06 83 05 90 70</a></p>
+    </columns>
+  </row>
 
-Vous pouvez annuler a tout moment en appelant le <a href="tel:+33683059070">06 83 05 90 70</a>
+{% endblock %}

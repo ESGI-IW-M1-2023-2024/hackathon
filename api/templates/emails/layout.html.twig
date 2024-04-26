@@ -1,16 +1,31 @@
-{# Layout pour les email à envoyer #}
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-    </head>
-    <body>
-        <h1>Boennologie</h1>
-        {% block body %}{% endblock %}
+{% apply inky_to_html|inline_css(source('styles/booking.css')) %}
 
-        <p>Contact: boennologie@gmail.com</p>
+<container>
 
-        <h2>Cordialement</h2>
-    </body>
-</html>
+  <spacer size="16"></spacer>
+
+  <center>
+    <container class="logo-bg">
+        <img src="{{ email.image('@images/logo.svg') }}" alt="logo">
+    </container>
+  </center>
+
+  <spacer size="16"></spacer>
+
+  <hr>
+
+{% block body %}
+  
+  {% endblock %}
+
+  <hr/>
+
+  <spacer size="16"></spacer>
+  <menu class='footer'>
+    <item><a href="https://www.linkedin.com/in/olivier-bonneton-5a320020"><img class='linkedin' src="{{ email.image('@images/linkedin.png') }}" alt="logo linkedin"></a></item>
+    <item><a href="mailto:bonnetonolivier@gmail.com"><img class='mail' src="{{ email.image('@images/mail.png') }}" alt="logo mail"></a></item>
+  </menu>
+
+</container>
+
+{% endapply %}
