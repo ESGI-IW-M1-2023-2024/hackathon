@@ -43,8 +43,13 @@ const useWorkshopColumns = ({
   const actionsIcon = (params: any) => {
     const icons = [
       <Tooltip key='editWorkshop' title='Editer'>
-        <IconButton onClick={() => navigate(`/admin/workshops/${params.row.id}`)} color='primary'>
+        <IconButton onClick={() => navigate(`/admin/workshops/${params.row.id}`)} color='warning'>
           <EditIcon />
+        </IconButton>
+      </Tooltip>,
+      <Tooltip key='seeWorkshopBookings' title='Voir les réservations'>
+        <IconButton onClick={() => navigate(`/admin/workshops/${params.row.id}/bookings`)} color='info'>
+          <ManageAccountsIcon />
         </IconButton>
       </Tooltip>,
       <Tooltip key='deleteWorkshop' title='Archiver'>
@@ -76,7 +81,7 @@ const useWorkshopColumns = ({
     if (WorkshopStatus.CLOSED == params.row.status) {
       icons.push(
         <Tooltip key='finishWorkshop' title='Atelier terminer'>
-          <IconButton onClick={() => handleFinishWorkshop(params.row.id)} color='primary'>
+          <IconButton onClick={() => handleFinishWorkshop(params.row.id)} color='success'>
             <DoneIcon />
           </IconButton>
         </Tooltip>,
@@ -94,7 +99,7 @@ const useWorkshopColumns = ({
     if ([WorkshopStatus.BOOKING, WorkshopStatus.CLOSED, WorkshopStatus.HIDDEN].includes(params.row.status)) {
       icons.push(
         <Tooltip key='cancelWorkshop' title='Annuler Atelier'>
-          <IconButton onClick={() => handleCancelWorkshop(params.row.id)} color='secondary'>
+          <IconButton onClick={() => handleCancelWorkshop(params.row.id)} color='error'>
             <DoDisturbIcon />
           </IconButton>
         </Tooltip>,
@@ -104,17 +109,6 @@ const useWorkshopColumns = ({
         <Tooltip key='cancelWorkshop' title='Annuler Atelier'>
           <IconButton>
             <DoDisturbIcon />
-          </IconButton>
-        </Tooltip>,
-      );
-    }
-
-    // Booking gestion
-    if (params.row.status === WorkshopStatus.BOOKING || params.row.status === WorkshopStatus.CLOSED) {
-      icons.push(
-        <Tooltip key='manageBooking' title='Gérer les réservations'>
-          <IconButton onClick={() => navigate(`/admin/workshops/${params.row.id}/bookings`)}>
-            <ManageAccountsIcon />
           </IconButton>
         </Tooltip>,
       );
