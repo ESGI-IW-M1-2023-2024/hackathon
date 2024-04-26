@@ -103,7 +103,7 @@ const AdminWorkshopList = () => {
   }
 
   return (
-    <Stack width={'100%'} alignItems={'left'} margin={'1rem auto'} spacing={2} direction={'column'}>
+    <Stack width={'80%'} alignItems={'left'} margin={'1rem auto'} spacing={2} direction={'column'}>
       <Box textAlign={'center'}>
         <h1>Liste des Ateliers</h1>
       </Box>
