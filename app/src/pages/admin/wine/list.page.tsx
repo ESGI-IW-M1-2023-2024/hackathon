@@ -1,5 +1,5 @@
 import ListGridComponent from '@/features/UI/list/components/list-grid.component';
-import { useDeleteWineMutation, useGetWinesQuery } from '@/redux/api/api.slice';
+import { useDeleteWineMutation, useEditWineQuantityMutation, useGetWinesQuery } from '@/redux/api/api.slice';
 import { ListGridProps } from '@/types/data-grid.types';
 import { Box, Button, FormControlLabel, LinearProgress, Stack, Switch } from '@mui/material';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -13,6 +13,7 @@ const WineList = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const [deleteWine] = useDeleteWineMutation();
+  const [updateWineQuantity] = useEditWineQuantityMutation();
   const dispatch = useDispatch();
 
   const [showArchived, setShowArchived] = useState<0 | 1>(Number(searchParams.get('archived')) === 1 ? 1 : 0 || 0);
@@ -43,11 +44,21 @@ const WineList = () => {
     }
   };
 
+  const handleUpdateQuantity = async ({ id, quantity }: { id: number; quantity: number }) => {
+    try {
+      await updateWineQuantity({ id, quantity }).unwrap();
+      dispatch(openSnackBar({ message: 'Modification de la quantité effectuée', severity: 'success' }));
+    } catch (error: unknown) {
+      console.error(error);
+      dispatch(openSnackBar({ message: 'Echec de la modification de la quantité du vin', severity: 'error' }));
+    }
+  };
+
   // Api Data
   const { data, isLoading } = useGetWinesQuery({ page, limit, archived, orderBy, orderByDirection });
 
   const listProps: ListGridProps<Wine> = {
-    columns: [...useWineColumns({ handleDeleteWine })],
+    columns: [...useWineColumns({ handleDeleteWine, handleUpdateQuantity })],
     rows: data ? data.items : [],
     loading: isLoading,
     defaultSort: {

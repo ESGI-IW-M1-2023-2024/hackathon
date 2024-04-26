@@ -19,7 +19,7 @@ import { Booking, CreateBooking } from '@/features/admin/types/booking.types';
 
 export const apiSlice = createApi({
   reducerPath: 'api',
-  tagTypes: ['Themes', 'Regions', 'Countries', 'Organisations', 'Workshop', 'Booking'],
+  tagTypes: ['Themes', 'Regions', 'Countries', 'Organisations', 'Workshop', 'Booking', 'Wine'],
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_API_BASE_URL,
     prepareHeaders: (headers, api) => {
@@ -219,7 +219,7 @@ export const apiSlice = createApi({
         method: 'GET',
         params,
       }),
-      providesTags: ['Regions'],
+      providesTags: ['Regions', 'Wine'],
     }),
     createWine: builder.mutation<Wine, NewWine>({
       query: (body) => ({
@@ -227,6 +227,7 @@ export const apiSlice = createApi({
         method: 'POST',
         body,
       }),
+      invalidatesTags: ['Wine'],
     }),
     editWine: builder.mutation<Wine, EditWine>({
       query: (data) => {
@@ -237,7 +238,18 @@ export const apiSlice = createApi({
           body,
         };
       },
-      invalidatesTags: ['Regions'],
+      invalidatesTags: ['Regions', 'Wine'],
+    }),
+    editWineQuantity: builder.mutation<Wine, { id: number; quantity: number }>({
+      query: (data) => {
+        const { id, quantity } = data;
+        return {
+          url: `wines/${id}`,
+          method: 'PUT',
+          body: { quantity },
+        };
+      },
+      invalidatesTags: ['Wine'],
     }),
     getOneWine: builder.query<Wine, number>({
       query: (id) => ({
@@ -364,4 +376,5 @@ export const {
   useValidateBookingMutation,
   useCancelBookingMutation,
   useOpenWorkshopMutation,
+  useEditWineQuantityMutation,
 } = apiSlice;

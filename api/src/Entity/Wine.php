@@ -56,7 +56,7 @@ class Wine
 
     #[ORM\Column(length: 255, enumType: WineBottleSize::class)]
     #[Groups(["wine:list", "wine:detail", "workshop:detail"])]
-    #[Assert\NotNull(groups: ["wine:new", "wine:edit"])]
+    #[Assert\NotNull(groups: ["wine:new"])]
     private ?WineBottleSize $bottleSize = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
