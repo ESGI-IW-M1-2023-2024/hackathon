@@ -10,7 +10,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <MainNavigation />
-      <Container component={'main'} style={{paddingLeft:'0', paddingRight:'0'}}>
+      <Container component={'main'} style={{paddingLeft:'0', paddingRight:'0', maxWidth:'unset'}}>
         <AppRoutes />
       </Container>
       <Footer />
