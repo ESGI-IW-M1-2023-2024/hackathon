@@ -21,3 +21,9 @@ export interface CreateBooking {
 }
 
 export interface WorkshopBooking extends Omit<Booking, 'workshop' | 'archived'> {}
+
+export enum BookingStatus {
+  'PENDING' = 'pending',
+  'PAID' = 'paid',
+  'CANCELED' = 'canceled',
+}

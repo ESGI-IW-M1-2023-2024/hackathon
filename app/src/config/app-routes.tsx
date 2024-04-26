@@ -25,6 +25,7 @@ import AdminWorkshopList from '@/pages/admin/workshop/workshop-list.page';
 import WorkshopCalendar from '@/pages/admin/workshop/calendar.page';
 import CreateWorkshop from '@/pages/admin/workshop/create.page';
 import EditWorkshop from '@/pages/admin/workshop/edit.page';
+import WorkshopBookingList from '@/pages/admin/workshop/workshop-booking-list.page';
 
 const AppRoutes = () => (
   <Routes>
@@ -52,6 +53,7 @@ const AppRoutes = () => (
       <Route path='/admin/workshops' element={<AdminWorkshopList />} />
       <Route path='/admin/workshops/create' element={<CreateWorkshop />} />
       <Route path='/admin/workshops/:id' element={<EditWorkshop />} />
+      <Route path='/admin/workshops/:id/bookings' element={<WorkshopBookingList />} />
       <Route path='/admin/workshops/calendar' element={<WorkshopCalendar />} />
     </Route>
     <Route path='*' element={<NotFound />} />

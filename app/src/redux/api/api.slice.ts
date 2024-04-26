@@ -5,7 +5,7 @@ import { RootState } from '../store';
 import { CustomPaginationParams, PaginatedResponse, NotPaginationParams } from '@/types/pagination.types';
 import { EditRegion, NewRegion, Region } from '@/features/admin/types/region.types';
 import { Country } from '@/features/admin/types/country.types';
-import { CreateWorkshop, EditWorkshop, GetOneWorkshop, Workshop } from '@/features/admin/types/workshop.types';
+import { CreateWorkshop, EditWorkshop, Workshop, WorkshopWithBooking } from '@/features/admin/types/workshop.types';
 import { EditOrganisation, NewOrganisation, Organisation } from '@/features/admin/types/organisation.types';
 import { EditWine, NewWine, Wine } from '@/features/admin/types/wine.types';
 import { CalendarParams } from '@/types/calendarParams.types';
@@ -106,12 +106,12 @@ export const apiSlice = createApi({
       }),
       providesTags: ['Workshop'],
     }),
-    getOneWorkshop: builder.query<GetOneWorkshop, string>({
+    getOneWorkshop: builder.query<WorkshopWithBooking, string>({
       query: (id) => ({
         url: `workshops/${id}`,
         method: 'GET',
       }),
-      providesTags: ['Workshop'],
+      providesTags: ['Workshop', 'Booking'],
     }),
     createWorkshop: builder.mutation<Workshop, CreateWorkshop>({
       query: (body) => ({
@@ -288,6 +288,20 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['Booking'],
     }),
+    validateBooking: builder.mutation<void, number>({
+      query: (id) => ({
+        url: `bookings/${id}/validate`,
+        method: 'POST',
+      }),
+      invalidatesTags: ['Booking'],
+    }),
+    cancelBooking: builder.mutation<void, number>({
+      query: (id) => ({
+        url: `bookings/${id}/cancel`,
+        method: 'POST',
+      }),
+      invalidatesTags: ['Booking'],
+    }),
     getWorkshopsForCalendar: builder.query<Workshop[], CalendarParams>({
       query: (params) => ({
         url: `workshops/calendar`,
@@ -333,4 +347,6 @@ export const {
   useGetWorkshopsForCalendarQuery,
   useCreateWorkshopMutation,
   useEditWorkshopMutation,
+  useValidateBookingMutation,
+  useCancelBookingMutation,
 } = apiSlice;

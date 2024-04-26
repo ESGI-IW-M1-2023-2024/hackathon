@@ -35,9 +35,13 @@ export interface Workshop {
   price: number;
 }
 
+export interface WorkshopWithBooking extends Workshop {
+  bookings: WorkshopBooking[];
+}
+
 export interface GetOneWorkshop extends Workshop {
   resources: [];
-  booking: WorkshopBooking;
+  bookings: WorkshopBooking[];
   wines: WorkshopWine[];
 }
 
