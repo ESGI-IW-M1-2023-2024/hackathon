@@ -70,7 +70,7 @@ const Home = () => {
                     </CardContent>
                     <CardActions sx={{ marginTop: 'auto' }}>
                         <ColorButton onClick={() => navigate('/workshops/' + workshop.id)}>
-                            Voir plus
+                            Voir la fiche
                         </ColorButton>
                     </CardActions>
                 </Card>
