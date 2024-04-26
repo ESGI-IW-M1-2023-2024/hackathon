@@ -151,7 +151,7 @@ const RegistrationWorkshop = ({ workshop }: RegistrationWorkshopProps) => {
           checked: watch('legalMentions')
         }}
       />
-      <Typography variant='body2'>Un email récapitulatif vous sera adressé avec les modalités de payement. Votre inscription ne sera confirmée qu’après payement.</Typography>
+      <Typography variant='body2'>Un email récapitulatif vous sera adressé avec les modalités de paiement. Votre inscription ne sera confirmée qu’après paiement.</Typography>
       <Button variant='contained' type='submit'>
         S'inscrire
       </Button>
