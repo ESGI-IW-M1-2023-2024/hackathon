@@ -74,7 +74,7 @@ const ThemesList = () => {
       </Box>
 
       <Stack width={'100%'} direction={'row'}>
-        <Button variant='contained' onClick={() => navigate('/themes/create')} sx={{ width: 'fit-content' }}>
+        <Button variant='contained' onClick={() => navigate('/admin/themes/create')} sx={{ width: 'fit-content' }}>
           Créer un thème
         </Button>
         <FormControlLabel

@@ -107,7 +107,7 @@ const EditTheme = () => {
         <Button variant='contained' type='submit'>
           Modifier le thème
         </Button>
-        <ColorButton variant='contained' onClick={() => navigate('/themes')} sx={{ textTransform: 'uppercase' }}>
+        <ColorButton variant='contained' onClick={() => navigate('/admin/themes')} sx={{ textTransform: 'uppercase' }}>
           Retour à la liste
         </ColorButton>
       </Stack>
