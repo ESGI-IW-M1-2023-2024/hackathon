@@ -1,13 +1,14 @@
-import { IconButton, Tooltip } from '@mui/material';
-import { GridColDef } from '@mui/x-data-grid';
-import { useNavigate } from 'react-router-dom';
+import {IconButton, Tooltip} from '@mui/material';
+import {GridColDef} from '@mui/x-data-grid';
+import {useNavigate} from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DoneIcon from '@mui/icons-material/Done';
 import DoDisturbIcon from '@mui/icons-material/DoDisturb';
-import { WorkshopStatus } from '../types/workshop.types';
+import {WorkshopStatus} from '../types/workshop.types';
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import {MeetingRoom} from "@mui/icons-material";
 
 const renderStatus = (status: WorkshopStatus) => {
   switch (status) {
@@ -28,10 +29,12 @@ const useWorkshopColumns = ({
   handleDeleteWorkshop,
   handleFinishWorkshop,
   handleCancelWorkshop,
+                                handleOpenWorkshop,
 }: {
   handleDeleteWorkshop: (id: number) => Promise<void>;
   handleFinishWorkshop: (id: number) => Promise<void>;
   handleCancelWorkshop: (id: number) => Promise<void>;
+    handleOpenWorkshop: (id: number) => Promise<void>;
 }): GridColDef[] => {
   const navigate = useNavigate();
 
@@ -48,6 +51,24 @@ const useWorkshopColumns = ({
         </IconButton>
       </Tooltip>,
     ];
+
+      if (WorkshopStatus.HIDDEN === params.row.status) {
+          icons.push(
+              <Tooltip key='openWorkshop' title='Ouvrir Atelier'>
+                  <IconButton onClick={() => handleOpenWorkshop(params.row.id)} color='secondary'>
+                      <MeetingRoom/>
+                  </IconButton>
+              </Tooltip>,
+          );
+      } else {
+          icons.push(
+              <Tooltip key='openWorkshop' title='Ouvrir Atelier'>
+                  <IconButton>
+                      <MeetingRoom/>
+                  </IconButton>
+              </Tooltip>,
+          );
+      }
 
     // Bouton terminer l'atelier
     if (WorkshopStatus.CLOSED == params.row.status) {
@@ -126,8 +147,9 @@ const useWorkshopColumns = ({
       headerName: 'Archivé',
       headerAlign: 'center',
       align: 'center',
+        display: 'flex',
       width: 75,
-      renderCell: (params) => (params.value ? <CancelIcon color='error' /> : <CheckCircleIcon color='success' />),
+        renderCell: (params) => (params.value ? <CheckCircleIcon color='success'/> : <CancelIcon color='error'/>),
     },
     {
       field: 'actions',
