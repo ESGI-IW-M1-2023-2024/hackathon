@@ -7,6 +7,7 @@ import {
   CustomSelect,
   CustomTextField,
 } from '../utils/formFieldsDeclaration';
+import React from 'react';
 
 export interface CustomFormFieldProps {
   control: any;
@@ -14,7 +15,7 @@ export interface CustomFormFieldProps {
   options: SimpleField | CheckboxField | ChoiceField | AutoCompleteFieldOpts | FileField;
   props?: { [key: string]: any };
   childrenComponentType: 'TEXT_FIELD' | 'CHECKBOX' | 'SELECT' | 'AUTOCOMPLETE' | 'FILE_FIELD';
-  label?: string;
+  label?: string | React.ReactNode;
 }
 
 const CustomFormField = ({ control, controlName, options, childrenComponentType, props }: CustomFormFieldProps) => {
