@@ -139,6 +139,20 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['Workshop'],
     }),
+    finishWorkshop: builder.mutation<void, number>({
+      query: (id) => ({
+        url: `workshops/${id}/finished`,
+        method: 'GET',
+      }),
+      invalidatesTags: ['Workshop'],
+    }),
+    cancelWorkshop: builder.mutation<void, number>({
+      query: (id) => ({
+        url: `workshops/${id}/cancel`,
+        method: 'GET',
+      }),
+      invalidatesTags: ['Workshop']
+    }),
     getCountries: builder.query<Country[], void>({
       query: () => ({
         url: 'countries',
@@ -293,6 +307,9 @@ export const {
   useDeleteThemeMutation,
   useGetWorkshopsQuery,
   useGetOneThemeQuery,
+  useDeleteWorkshopMutation,
+  useFinishWorkshopMutation,
+  useCancelWorkshopMutation,
   useGetRegionsQuery,
   useGetOneRegionQuery,
   useCreateRegionMutation,

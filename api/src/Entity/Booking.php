@@ -5,11 +5,13 @@ namespace App\Entity;
 use App\Enum\BookingStatus;
 use App\Repository\BookingRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Entity(repositoryClass: BookingRepository::class)]
+#[UniqueEntity(["workshop", "email"], "Your are already booking with this email", groups: ["booking:new"])]
 class Booking
 {
     #[ORM\Id]

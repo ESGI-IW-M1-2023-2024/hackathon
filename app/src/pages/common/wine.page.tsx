@@ -25,6 +25,10 @@ const Wine = () => {
         )
     }
 
+    if (!data) {
+        return <Typography variant='h1'>Aucune donnée</Typography>;
+    }
+
     const DescriptionElement = (props: { title: string, value?: string | null, isHeading?: boolean }) => {
         return (
             <>

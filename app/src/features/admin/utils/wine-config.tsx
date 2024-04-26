@@ -22,7 +22,7 @@ const useWineColumns = ({handleDeleteWine}: { handleDeleteWine: (id: number) => 
         {
             field: 'productYear',
             headerName: 'Année de production',
-            flex: 1,
+            flex: 0.5,
         },
         {
             field: 'producer',
@@ -32,7 +32,7 @@ const useWineColumns = ({handleDeleteWine}: { handleDeleteWine: (id: number) => 
         {
             field: 'quantity',
             headerName: 'Quantité',
-            flex: 1,
+            flex: 0.5,
         },
         {
             field: 'bottleSize',
@@ -42,7 +42,8 @@ const useWineColumns = ({handleDeleteWine}: { handleDeleteWine: (id: number) => 
         {
             field: 'region',
             headerName: 'Région',
-            flex: 1,
+            flex: 0.5,
+            renderCell: params => params.row.region.label
         },
         {
             field: 'actions',
@@ -54,12 +55,12 @@ const useWineColumns = ({handleDeleteWine}: { handleDeleteWine: (id: number) => 
             renderCell: (params) => {
                 return [
                     <Tooltip key='editWine' title='Editer'>
-                        <IconButton onClick={() => navigate(`/admin/wines/${params.row.id}`)}>
+                        <IconButton onClick={() => navigate(`/admin/wines/${params.row.id}`)} color='primary'>
                             <EditIcon/>
                         </IconButton>
                     </Tooltip>,
                     <Tooltip key='deleteWine' title='Supprimer'>
-                        <IconButton onClick={() => handleDeleteWine(params.row.id)}>
+                        <IconButton onClick={() => handleDeleteWine(params.row.id)} color='secondary'>
                             <DeleteIcon/>
                         </IconButton>
                     </Tooltip>,

@@ -114,7 +114,7 @@ class Workshop
     {
         return $this->getBookings()->count();
     }
-  
+
     public function getNotCanceledBookings(): Collection
     {
         return $this->getBookings()->map(function (Booking $booking) {
@@ -334,6 +334,19 @@ class Workshop
 
         foreach ($this->getBookings() as $booking) {
             if ($booking->getStatus() == BookingStatus::PAID) {
+                $bookings[] = $booking;
+            }
+        }
+
+        return $bookings;
+    }
+
+    public function getBookingsByStatus(array $status)
+    {
+        $bookings = [];
+
+        foreach ($this->getBookings() as $booking) {
+            if (in_array($booking->getStatus(), $status)) {
                 $bookings[] = $booking;
             }
         }

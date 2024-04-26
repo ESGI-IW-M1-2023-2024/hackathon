@@ -1,12 +1,13 @@
-import { Card } from '@mui/material';
+import { Card, Stack } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 interface DashboardButtonProps {
   text: string;
   redirectPath: string;
+  icon: JSX.Element;
 }
 
-const DashboardButton = ({ text, redirectPath }: DashboardButtonProps) => {
+const DashboardButton = ({ text, redirectPath, icon }: DashboardButtonProps) => {
   const navigate = useNavigate();
 
   return (
@@ -14,21 +15,24 @@ const DashboardButton = ({ text, redirectPath }: DashboardButtonProps) => {
       onClick={() => navigate(`/admin/${redirectPath}`)}
       sx={{
         backgroundColor: '#c7ac92',
-        fontSize: '36px',
+        fontSize: '24px',
         textAlign: 'center',
         alignContent: 'center',
         alignItems: 'center',
         justifyContent: 'center',
-        maxWidth: 300,
-        minWidth: 300,
-        height: 150,
+        width: 220,
+        height: 90,
         margin: 2,
         display: 'flex',
         flexDirection: 'column',
         cursor: 'pointer',
       }}
     >
-      {text}
+      <Stack direction={'row'} alignItems={'center'} justifyContent={'center'} width={'100%'} spacing={2}>
+        {icon}
+        {text}
+      </Stack>
+
     </Card>
   );
 };

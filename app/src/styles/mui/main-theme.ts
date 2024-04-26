@@ -17,7 +17,6 @@ export const customPalette: PaletteOptions = {
   },
   text: {
     primary: "#333",
-    secondary: "#fff",
   },
 };
 

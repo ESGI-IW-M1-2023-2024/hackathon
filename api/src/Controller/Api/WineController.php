@@ -94,7 +94,7 @@ class WineController extends AbstractController
         }
 
         $data = json_decode($request->getContent());
-        $file = $data->imageFile;
+        $file = $data->file;
 
         $filename = $apiUploadFileService->uploadFile($file, "wines_directory", $wine?->getImageFilename());
         $wine->setImageFilename($filename);
