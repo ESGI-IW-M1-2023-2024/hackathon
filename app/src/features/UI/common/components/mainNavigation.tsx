@@ -117,9 +117,13 @@ export default function MainNavigation() {
                 <Button onClick={() => navigate('/concept')}>Concept</Button>
                 <Button onClick={() => navigate('/workshops')}>Ateliers</Button>
                 <Button onClick={() => navigate('/about')}>A propos</Button>
-                <Link href='https://www.linkedin.com/in/olivier-bonneton-5a320020' target='_blank'>
+                <Button
+                  sx={{ color: 'white' }}
+                  href='https://www.linkedin.com/in/olivier-bonneton-5a320020'
+                  target='_blank'
+                >
                   <LinkedInIcon />
-                </Link>
+                </Button>
               </>
             ) : (
               <>
