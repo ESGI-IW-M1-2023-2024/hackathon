@@ -39,7 +39,7 @@ const useThemeColumns = ({ handleDeleteTheme }: { handleDeleteTheme: (id: number
       renderCell: (params) => {
         return [
           <Tooltip key='editTheme' title='Editer'>
-            <IconButton onClick={() => navigate(`/themes/${params.row.id}`)} color='primary'>
+            <IconButton onClick={() => navigate(`/admin/themes/${params.row.id}`)} color='primary'>
               <EditIcon />
             </IconButton>
           </Tooltip>,
