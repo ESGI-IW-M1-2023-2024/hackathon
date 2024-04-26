@@ -100,14 +100,14 @@ export const apiSlice = createApi({
     }),
     getThreeLastWorkshops: builder.query<PaginatedResponse<Workshop>, void>({
       query: () => ({
-        url: 'workshops?limit=3&dateStart=2024-04-25&orderBy=dateStart&orderByDirection=ASC',
+        url: `workshops?limit=3&dateStart=${new Date}&orderBy=dateStart&orderByDirection=ASC&status=booking`,
         method: 'GET',
       }),
       providesTags: ['Workshop'],
     }),
     getWorkshopsOpened: builder.query<PaginatedResponse<Workshop>, void>({
       query: () => ({
-        url: 'workshops?orderBy=dateStart&orderByDirection=ASC&status=booking',
+        url: `workshops?dateStart=${new Date}&orderBy=dateStart&orderByDirection=ASC&status=booking`,
         method: 'GET',
       }),
       providesTags: ['Workshop'],
