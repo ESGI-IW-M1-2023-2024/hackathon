@@ -63,7 +63,7 @@ const Home = () => {
 
                         <Divider sx={{ mb: 2, mt: 2 }} />
                         <Box sx={{ display: 'flex', gap: "8px" }}>
-                            <Chip sx={{ backgroundColor: "primary.light" }} label={(Math.round(workshop.length / 60)) + "min"} icon={<AccessTimeIcon />} />
+                            <Chip sx={{ backgroundColor: "primary.light" }} label={(Math.round(workshop.length / 60)) + " heures"} icon={<AccessTimeIcon />} />
                             <Chip sx={{ backgroundColor: "primary.light" }} label={workshop.maxPerson + " personnes max"} icon={<GroupIcon />} />
                         </Box>
                         <Typography sx={{ mt: 2 }}>
