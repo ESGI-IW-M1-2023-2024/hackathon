@@ -106,7 +106,7 @@ const CGUPage = () => {
             </Typography>
 
               <Box sx={{ mt: 2 }}>
-                  <Button variant="contained" color={"error"} onClick={() => navigate(-1)} sx={{ mr: 2 }}>
+                  <Button variant="contained" color={"secondary"} onClick={() => navigate(-1)} sx={{ mr: 2 }}>
                       Retour
                   </Button>
                   <Button variant="contained" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
