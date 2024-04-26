@@ -111,13 +111,17 @@ export default function MainNavigation() {
               },
             }}
           >
-            {!user ? (
+            {!user || window.location.pathname.split('/')[1] !== 'admin' ? (
               <>
                 <Button onClick={() => navigate('/')}>Accueil</Button>
                 <Button onClick={() => navigate('/concept')}>Concept</Button>
                 <Button onClick={() => navigate('/workshops')}>Ateliers</Button>
                 <Button onClick={() => navigate('/about')}>A propos</Button>
-                <Link href='https://www.linkedin.com/in/olivier-bonneton-5a320020' target='_blank' sx={{ color: 'white' }}>
+                <Link
+                  href='https://www.linkedin.com/in/olivier-bonneton-5a320020'
+                  target='_blank'
+                  sx={{ color: 'white' }}
+                >
                   <LinkedInIcon />
                 </Link>
               </>
@@ -191,7 +195,7 @@ export default function MainNavigation() {
               width: '100vw',
               color: palette.secondary.contrastText,
             }}
-          //onOpen={toggleDrawer(true)}
+            //onOpen={toggleDrawer(true)}
           >
             {/* The inside of the drawer */}
             <Box
