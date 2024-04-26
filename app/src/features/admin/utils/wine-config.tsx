@@ -41,6 +41,7 @@ const useWineColumns = ({
       field: 'quantity',
       headerName: 'Quantité',
       flex: 0.5,
+        minWidth: 150,
       renderCell: (params) => (
         <>
           <IconButton
