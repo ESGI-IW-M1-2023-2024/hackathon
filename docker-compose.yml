@@ -1,6 +1,7 @@
 services:
   mariadb:
     image: mariadb:11.1.2
+    container_name: hackathon_mariadb
     restart: unless-stopped
     volumes:
       - ./infra/volumes/dev/database:/var/lib/mysql
