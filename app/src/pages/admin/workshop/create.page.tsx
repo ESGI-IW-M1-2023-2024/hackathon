@@ -157,7 +157,7 @@ const CreateWorkshop = () => {
           childrenComponentType='SELECT'
           control={control}
           controlName='wines'
-          props={{ multiple: true }}
+          props={{ multiple: true, sx: { width: '80vw' } }}
           options={{
             label: 'Vins',
             items:

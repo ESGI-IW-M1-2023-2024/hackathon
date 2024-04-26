@@ -87,7 +87,23 @@ export const CustomSelect = (
       <InputLabel style={{ color: 'black' }} shrink>
         {options.label}
       </InputLabel>
-      <Select label={options.label} {...field} {...props}>
+      <Select
+        label={options.label}
+        {...field}
+        {...props}
+        MenuProps={{
+          PaperProps: {
+            sx: {
+              maxWidth: '400px',
+              maxHeight: '400px',
+              '& li.Mui-selected': {
+                backgroundColor: `${palette.secondary.main} !important`,
+                color: 'white !important',
+              },
+            },
+          },
+        }}
+      >
         {generateSelectOptions()}
       </Select>
       <FormHelperText sx={{ color: palette.error.main }}>{fieldState.error?.message}</FormHelperText>
