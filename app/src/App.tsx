@@ -1,4 +1,4 @@
-import { CssBaseline, ThemeProvider } from '@mui/material';
+import {Container, CssBaseline, ThemeProvider} from '@mui/material';
 import theme from './styles/mui/main-theme';
 import Notification from './features/UI/common/components/notification.component';
 import AppRoutes from './config/app-routes';
@@ -10,7 +10,9 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <MainNavigation />
-      <AppRoutes />
+      <Container component={'main'} style={{paddingLeft:'0', paddingRight:'0'}}>
+        <AppRoutes />
+      </Container>
       <Footer />
       <Notification />
     </ThemeProvider>

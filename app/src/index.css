@@ -31,6 +31,22 @@ h1.title-calendar {
   margin-top: 2rem;
 }
 
+footer {
+  position: relative;
+  bottom: 0;
+  align-content: end;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
 /*
   ombre portée avec filtre drop-shadow avec hover et transition
 */

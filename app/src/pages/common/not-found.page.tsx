@@ -1,3 +1,9 @@
-const NotFound = () => <h1>Not found page</h1>;
+import {Container} from "@mui/material";
+
+const NotFound = () => (
+
+    <h1>Oups, la page n'existe pas</h1>
+
+);
 
 export default NotFound;
