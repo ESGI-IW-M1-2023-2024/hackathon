@@ -1,15 +1,16 @@
-import {IconButton, Tooltip} from '@mui/material';
-import {GridColDef} from '@mui/x-data-grid';
-import {useNavigate} from 'react-router-dom';
+import { Button, IconButton, Tooltip } from '@mui/material';
+import { GridColDef } from '@mui/x-data-grid';
+import { useNavigate } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DoneIcon from '@mui/icons-material/Done';
 import DoDisturbIcon from '@mui/icons-material/DoDisturb';
-import {WorkshopStatus} from '../types/workshop.types';
+import { WorkshopStatus } from '../types/workshop.types';
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
-import {MeetingRoom} from "@mui/icons-material";
+import LockOpenIcon from '@mui/icons-material/LockOpen';
+import LockIcon from '@mui/icons-material/Lock';
 
 
 const renderStatus = (status: WorkshopStatus) => {
@@ -31,12 +32,12 @@ const useWorkshopColumns = ({
   handleDeleteWorkshop,
   handleFinishWorkshop,
   handleCancelWorkshop,
-                                handleOpenWorkshop,
+  handleOpenWorkshop,
 }: {
   handleDeleteWorkshop: (id: number) => Promise<void>;
   handleFinishWorkshop: (id: number) => Promise<void>;
   handleCancelWorkshop: (id: number) => Promise<void>;
-    handleOpenWorkshop: (id: number) => Promise<void>;
+  handleOpenWorkshop: (id: number) => Promise<void>;
 }): GridColDef[] => {
   const navigate = useNavigate();
 
@@ -59,28 +60,28 @@ const useWorkshopColumns = ({
       </Tooltip>,
     ];
 
-      if (WorkshopStatus.HIDDEN === params.row.status) {
-          icons.push(
-              <Tooltip key='openWorkshop' title='Ouvrir Atelier'>
-                  <IconButton onClick={() => handleOpenWorkshop(params.row.id)} color='secondary'>
-                      <MeetingRoom/>
-                  </IconButton>
-              </Tooltip>,
-          );
-      } else {
-          icons.push(
-              <Tooltip key='openWorkshop' title='Ouvrir Atelier'>
-                  <IconButton>
-                      <MeetingRoom/>
-                  </IconButton>
-              </Tooltip>,
-          );
-      }
+    if (WorkshopStatus.HIDDEN === params.row.status) {
+      icons.push(
+        <Tooltip key='openWorkshop' title='Rendre visible Atelier'>
+          <IconButton onClick={() => handleOpenWorkshop(params.row.id)} color='success'>
+            <LockIcon />
+          </IconButton>
+        </Tooltip>,
+      );
+    } else {
+      icons.push(
+        <Tooltip key='openWorkshop' title='Atelier visible'>
+          <IconButton>
+            <LockOpenIcon />
+          </IconButton>
+        </Tooltip>,
+      );
+    }
 
     // Bouton terminer l'atelier
     if (WorkshopStatus.CLOSED == params.row.status) {
       icons.push(
-        <Tooltip key='finishWorkshop' title='Atelier terminer'>
+        <Tooltip key='finishWorkshop' title="Terminer l'atelier">
           <IconButton onClick={() => handleFinishWorkshop(params.row.id)} color='success'>
             <DoneIcon />
           </IconButton>
@@ -88,7 +89,7 @@ const useWorkshopColumns = ({
       );
     } else {
       icons.push(
-        <Tooltip key='finishWorkshop' title='Atelier terminer'>
+        <Tooltip key='finishWorkshop' title="Terminer l'atelier">
           <IconButton>
             <DoneIcon />
           </IconButton>
@@ -122,11 +123,13 @@ const useWorkshopColumns = ({
       field: 'id',
       headerName: 'ID',
       width: 65,
+      renderCell: (params) => `# ${params.value}`,
     },
     {
       field: 'dateStart',
       headerName: 'Date de début',
       flex: 1,
+      renderCell: (params) => <Button onClick={() => navigate(`/workshops/${params.row.id}`)}>{new Date(params.row.dateStart).toLocaleDateString()} {new Date(params.row.dateStart).toLocaleTimeString()}</Button>,
     },
     {
       field: 'label',
@@ -154,16 +157,16 @@ const useWorkshopColumns = ({
       headerName: 'Archivé',
       headerAlign: 'center',
       align: 'center',
-        display: 'flex',
+      display: 'flex',
       width: 75,
-        renderCell: (params) => (params.value ? <CheckCircleIcon color='success'/> : <CancelIcon color='error'/>),
+      renderCell: (params) => (params.value ? <CheckCircleIcon color='success' /> : <CancelIcon color='error' />),
     },
     {
       field: 'actions',
       headerName: 'Actions',
       sortable: false,
       headerAlign: 'center',
-      width: 220,
+      width: 280,
       renderCell: (params) => {
         return actionsIcon(params);
       },

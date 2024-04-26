@@ -1,5 +1,5 @@
 import { ListGridProps } from '@/types/data-grid.types';
-import { Box, Container, Pagination, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Container, Pagination, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { DataGrid, DataGridProps, GridSortDirection, GridSortModel } from '@mui/x-data-grid';
 
 const ListGridComponent = <Row,>({ columns, rows, loading, defaultSort, pagination }: ListGridProps<Row>) => {
