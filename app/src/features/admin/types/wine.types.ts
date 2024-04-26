@@ -12,6 +12,7 @@ export interface Wine {
   servingTemperature: number | null;
   storage: string | null;
   upTo: string | null;
+  taste: string | null;
   byTaste: string | null;
   byEye: string | null;
   onTheNose: string | null;

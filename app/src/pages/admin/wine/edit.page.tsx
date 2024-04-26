@@ -26,6 +26,7 @@ const zodSchema = () =>
     servingTemperature: z.number(),
     storage: z.string(),
     upTo: z.string(),
+    taste: z.string(),
     byTaste: z.string(),
     byEye: z.string(),
     onTheNose: z.string(),
@@ -33,7 +34,7 @@ const zodSchema = () =>
     winePairing: z.string(),
     recommandedPairing: z.string(),
     content: z.string(),
-    file: z.string().base64().min(1, { message: 'Champ obligatoire' }),
+    file: z.string().base64(),
   });
 
 const EditWine = () => {
@@ -63,6 +64,7 @@ const EditWine = () => {
       servingTemperature: 0,
       storage: '',
       upTo: '',
+      taste: '',
       byTaste: '',
       byEye: '',
       onTheNose: '',
@@ -75,6 +77,7 @@ const EditWine = () => {
   });
 
   if (data) {
+    console.log(data);
     setValue('label', data.label ?? '');
     setValue('productYear', data.productYear?.toString() ?? '');
     setValue('producer', data.producer ?? '');
@@ -88,6 +91,7 @@ const EditWine = () => {
     setValue('servingTemperature', data.servingTemperature ?? 0);
     setValue('storage', data.storage ?? '');
     setValue('upTo', data.upTo ?? '');
+    setValue('taste', data.taste ?? '');
     setValue('byTaste', data.byTaste ?? '');
     setValue('byEye', data.byEye ?? '');
     setValue('onTheNose', data.onTheNose ?? '');
