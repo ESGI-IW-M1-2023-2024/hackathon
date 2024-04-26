@@ -11,6 +11,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LockIcon from '@mui/icons-material/Lock';
+import LaunchIcon from '@mui/icons-material/Launch';
 
 
 const renderStatus = (status: WorkshopStatus) => {
@@ -129,7 +130,7 @@ const useWorkshopColumns = ({
       field: 'dateStart',
       headerName: 'Date de début',
       flex: 1,
-      renderCell: (params) => <Button onClick={() => navigate(`/workshops/${params.row.id}`)}>{new Date(params.row.dateStart).toLocaleDateString()} {new Date(params.row.dateStart).toLocaleTimeString()}</Button>,
+      renderCell: (params) => <Button href={`/workshops/${params.row.id}`} target='_blank' endIcon={<LaunchIcon />} sx={{ color: 'secondary.main', fontWeight: 'bold', "& svg": { width: '12px' } }}>{new Date(params.row.dateStart).toLocaleDateString()} {new Date(params.row.dateStart).toLocaleTimeString()}</Button>,
     },
     {
       field: 'label',
