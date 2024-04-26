@@ -12,9 +12,7 @@
         <div class='booking' id='reminder'>
             <ul>
                 <li>{{ workshop.theme.label }}</li>
-                <ul>
-            <li>{{ workshop.theme.label }}</li>
-            <li class='subtitles'><img src="{{ email.image('@images/calendar.png') }}" alt="logo calendrier">le {{ workshop.dateStart|date('d-m-Y') }}</li>
+                <li class='subtitles'><img src="{{ email.image('@images/calendar.png') }}" alt="logo calendrier">le {{ workshop.dateStart|date('d-m-Y') }}</li>
             </ul>
         </div>
 
