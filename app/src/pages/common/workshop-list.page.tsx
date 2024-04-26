@@ -14,6 +14,8 @@ import ColorButton from "@/features/UI/custom-mui-components/components/custom-b
 import WineActivities from "@/assets/workshop/wine-activities.jpg";
 import Chip from "@mui/material/Chip";
 import { useNavigate, useParams } from 'react-router-dom';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import GroupIcon from '@mui/icons-material/Group';
 
 const WorkshopList = () => {
     const { data, isLoading } = useGetWorkshopsOpenedQuery();
@@ -69,8 +71,8 @@ const WorkshopList = () => {
 
                         <Divider sx={{ mb: 2, mt: 2 }} />
                         <Box sx={{ display: 'flex', gap: "8px" }}>
-                            <Chip sx={{ backgroundColor: "primary.light" }} label={(Math.round(workshop.length / 60)) + "min"} />
-                            <Chip sx={{ backgroundColor: "primary.light" }} label={workshop.maxPerson + " personnes"} />
+                            <Chip sx={{ backgroundColor: "primary.light" }} label={(Math.round(workshop.length / 60)) + " heures"} icon={<AccessTimeIcon />} />
+                            <Chip sx={{ backgroundColor: "primary.light" }} label={workshop.maxPerson + " personnes"} icon={<GroupIcon />} />
                         </Box>
                         <Typography sx={{ mt: 2 }}>
                             {workshop.theme.content.substring(0, 100) + "..."}
@@ -78,7 +80,7 @@ const WorkshopList = () => {
                     </CardContent>
                     <CardActions sx={{ marginTop: 'auto' }}>
                         <ColorButton onClick={() => navigate('/workshops/' + workshop.id)}>
-                            Voir plus
+                            Voir la fiche
                         </ColorButton>
                     </CardActions>
                 </Card>
