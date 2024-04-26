@@ -7,14 +7,21 @@ import CardContent from '@mui/material/CardContent';
 import LiquorIcon from '@mui/icons-material/Liquor';
 import Diversity3Icon from '@mui/icons-material/Diversity3';
 import Stack from '@mui/material/Stack';
-import { Container, Typography } from '@mui/material';
+import {CircularProgress, Container, LinearProgress, Typography} from '@mui/material';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListSubheader from '@mui/material/ListSubheader';
 import WatchLaterIcon from '@mui/icons-material/WatchLater';
 import ColorButton from "@/features/UI/custom-mui-components/components/custom-button.component";
+import {useNavigate} from "react-router-dom";
+import {useGetThemesQuery} from "@/redux/api/api.slice";
 
 export default function OutlinedCard() {
+
+    const {data: themes, isLoading} = useGetThemesQuery({pagination: false, archived: false});
+
+    if (isLoading) {
+        return <LinearProgress/>;
+    }
 
     return (
         <>
@@ -132,26 +139,24 @@ export default function OutlinedCard() {
                             }}
                             subheader={<li />}
                         >
-                            {[0, 1, 2, 3, 4].map((sectionId) => (
                                 <ul>
-                                    {[0, 1, 2].map((item) => (
-                                        <ListItem key={`item-${sectionId}-${item}`} sx={{ padding: 0, paddingRight: 2 }}>
+                                    {themes.items.map((theme) => (
+                                        <ListItem key={`item-${theme.id}`} sx={{padding: 0, paddingRight: 2}}>
                                             <Card sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', backgroundColor: '#D5C1AE80', gap: 4, width: 1, padding: 2, marginBottom: 2, position: 'relative' }}>
                                                 <div className={'curve'} />
                                                 <LiquorIcon />
                                                 <Stack>
                                                     <p style={{ fontWeight: 600, fontSize: '20px' }}>
-                                                        Ma première dégustation : Tour de France
+                                                        {theme.label}
                                                     </p>
                                                     <p color='text.secondary'>
-                                                        Ceci est une description de l'atelier !
+                                                        {theme.subtitle}
                                                     </p>
                                                 </Stack>
                                             </Card>
                                         </ListItem>
                                     ))}
                                 </ul>
-                            ))}
                         </List>
                         <p style={{ marginTop: '2rem' }}><strong>Dégustez, apprenez, voyagez !</strong></p>
                     </Box>

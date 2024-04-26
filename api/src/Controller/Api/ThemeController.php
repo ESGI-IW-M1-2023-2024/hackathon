@@ -21,7 +21,6 @@ use OpenApi\Attributes as OA;
 class ThemeController extends AbstractController
 {
     #[Route('', name: 'list', methods: ["GET"])]
-    #[IsGranted("ROLE_ADMIN")]
     public function index(
         Request           $request,
         PaginationService $paginationService,
