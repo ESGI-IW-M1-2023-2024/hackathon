@@ -2,10 +2,10 @@ import ListGridComponent from '@/features/UI/list/components/list-grid.component
 import { Workshop, WorkshopSortableField } from '@/features/admin/types/workshop.types';
 import useWorkshopColumns from '@/features/admin/utils/workshop-config';
 import {
-  useCancelWorkshopMutation,
-  useDeleteWorkshopMutation,
-  useFinishWorkshopMutation,
-  useGetWorkshopsQuery,
+    useCancelWorkshopMutation,
+    useDeleteWorkshopMutation,
+    useFinishWorkshopMutation,
+    useGetWorkshopsQuery, useOpenWorkshopMutation,
 } from '@/redux/api/api.slice';
 import { openSnackBar } from '@/redux/slices/notification.slice';
 import { ListGridProps } from '@/types/data-grid.types';
@@ -23,6 +23,7 @@ const AdminWorkshopList = () => {
   const [deleteWorkshop] = useDeleteWorkshopMutation();
   const [finishWorkshop] = useFinishWorkshopMutation();
   const [cancelWorkshop] = useCancelWorkshopMutation();
+  const [openWorkshop] = useOpenWorkshopMutation();
 
   // Pagination
   const pagination = {
@@ -39,6 +40,15 @@ const AdminWorkshopList = () => {
     newSearchParams.set('page', newPage.toString());
     setSearchParams(newSearchParams);
   };
+
+    const handleOpenWorkshop = async (id: number) => {
+        try {
+            await openWorkshop(id).unwrap();
+            dispatch(openSnackBar({ message: 'Atelier ouvert avec succès', severity: 'success' }));
+        } catch (error) {
+            dispatch(openSnackBar({ message: "Erreur lors de l'ouverture de l'atelier", severity: 'error' }));
+        }
+    };
 
   const handleDeleteWorkshop = async (id: number) => {
     try {
@@ -69,7 +79,7 @@ const AdminWorkshopList = () => {
   // Api Data
   const { data, isLoading } = useGetWorkshopsQuery({ page, limit, orderBy, orderByDirection, archived: showArchived });
   const listProps: ListGridProps<Workshop> = {
-    columns: [...useWorkshopColumns({ handleDeleteWorkshop, handleFinishWorkshop, handleCancelWorkshop })],
+    columns: [...useWorkshopColumns({ handleDeleteWorkshop, handleFinishWorkshop, handleCancelWorkshop, handleOpenWorkshop })],
     rows: data ? data.items : [],
     loading: isLoading,
     defaultSort: {
