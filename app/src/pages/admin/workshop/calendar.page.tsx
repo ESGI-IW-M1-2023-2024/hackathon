@@ -5,9 +5,10 @@ import {Button, Container, Modal, Typography} from "@mui/material";
 import {useEffect, useState} from 'react';
 import {Workshop} from "@/features/admin/types/workshop.types";
 import { useTheme } from '@mui/material';
+import {useNavigate} from "react-router-dom";
 
 const WorkshopCalendar = () => {
-
+    const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false); // State to handle modal visibility
   const [selectedWorkshop, setSelectedWorkshop] = useState<Workshop|undefined>(undefined); // State to hold the clicked workshop's data
   const {palette} = useTheme();
@@ -45,12 +46,12 @@ const WorkshopCalendar = () => {
 
   const modalContent = modalOpen && (
     <Modal open={modalOpen} onClose={handleClose}>
-      <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: 'white', padding: 20 }}>
+      <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: 'white', padding: 20, borderRadius: '8px', display: 'flex', flexDirection: "column", gap: '8px' }}>
         <Typography variant={'h2'}>{selectedWorkshop ? selectedWorkshop.theme.label : undefined}</Typography>
-        <p>{selectedWorkshop ? 'Date : ' + transformDate(selectedWorkshop.dateStart.toString()) : undefined}</p>
-        <p>{selectedWorkshop ? `Durée : ${Math.trunc(selectedWorkshop.length/60)}h et ${selectedWorkshop.length%60}min` : undefined}</p>
-        <p>{selectedWorkshop ? 'Lieu : ' + selectedWorkshop.location : undefined}</p>
-        <Button variant={"contained"}>Accéder à l'atelier // TODO : Add a button to redirect to the workshop's page</Button>
+        <p><strong>Date : </strong>{selectedWorkshop ? 'Date : ' + transformDate(selectedWorkshop.dateStart.toString()) : undefined}</p>
+        <p><strong>Durée : </strong>{selectedWorkshop ?  Math.trunc(selectedWorkshop.length/60) + 'h et ' + selectedWorkshop.length%60 + 'min' : undefined}</p>
+        <p><strong>Lieu : </strong>{selectedWorkshop ? selectedWorkshop.location : undefined}</p>
+        <Button variant={"contained"} onClick={() => navigate('/admin/workshops/' + selectedWorkshop.id + '/bookings')}>Accéder à l'atelier </Button>
       </div>
     </Modal>
   );
