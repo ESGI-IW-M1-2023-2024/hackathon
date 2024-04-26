@@ -27,14 +27,14 @@ class WorkshopFixtures extends Fixture implements DependentFixtureInterface
         $themeBooking = (new Theme())
             ->setLabel("Rouge passion")
             ->setSubtitle("Éclats et arômes des vins rouges")
-        ->setContent("Embarquez pour un voyage sensoriel à travers les régions viticoles de France avec notre atelier spécialement pensé pour initier les novices à l\'art de la dégustation de vins. Découvrez la diversité et la richesse des domaines viticoles français, de la Bourgogne au Rhône, en passant par Bordeaux, l’Alsace ou encore la Loire<br />
+            ->setContent("Embarquez pour un voyage sensoriel à travers les régions viticoles de France avec notre atelier spécialement pensé pour initier les novices à l\'art de la dégustation de vins. Découvrez la diversité et la richesse des domaines viticoles français, de la Bourgogne au Rhône, en passant par Bordeaux, l’Alsace ou encore la Loire<br />
             Au cours de cet atelier, vous apprendrez à identifier les caractéristiques uniques des vins de chaque grande région viticole, en explorant leurs cépages emblématiques et leurs arômes associés.<br />
             Cet atelier est une célébration de la tradition viticole française, une aventure gustative qui vous guide à travers les paysages de notre patrimoine œnologique.<br />
             Ce premier tour de France des régions viticoles promet de belles découvertes et vous propose une expérience enrichissante. Faites le premier pas vers la maîtrise de l\'art de la dégustation du vin.");
         $themeClosed = (new Theme())
             ->setLabel("Les trésors du Rhône")
             ->setSubtitle("Un parcours épicurien")
-        ->setContent("Embarquez pour un voyage sensoriel à travers les régions viticoles de France avec notre atelier spécialement pensé pour initier les novices à l\'art de la dégustation de vins. Découvrez la diversité et la richesse des domaines viticoles français, de la Bourgogne au Rhône, en passant par Bordeaux, l’Alsace ou encore la Loire<br />
+            ->setContent("Embarquez pour un voyage sensoriel à travers les régions viticoles de France avec notre atelier spécialement pensé pour initier les novices à l\'art de la dégustation de vins. Découvrez la diversité et la richesse des domaines viticoles français, de la Bourgogne au Rhône, en passant par Bordeaux, l’Alsace ou encore la Loire<br />
             Au cours de cet atelier, vous apprendrez à identifier les caractéristiques uniques des vins de chaque grande région viticole, en explorant leurs cépages emblématiques et leurs arômes associés.<br />
             Cet atelier est une célébration de la tradition viticole française, une aventure gustative qui vous guide à travers les paysages de notre patrimoine œnologique.<br />
             Ce premier tour de France des régions viticoles promet de belles découvertes et vous propose une expérience enrichissante. Faites le premier pas vers la maîtrise de l\'art de la dégustation du vin.");
@@ -65,8 +65,8 @@ class WorkshopFixtures extends Fixture implements DependentFixtureInterface
         $workshop->setTheme($themeBooking);
         $workshop->setLength(120);
         $workshop->setLocation("Lyon");
-        $workshop->setDateStart(new \DateTimeImmutable("+5 days"));
-        $workshop->setMaxBookingDate(new \DateTimeImmutable("+2 days"));
+        $workshop->setDateStart(new \DateTimeImmutable("+20 days"));
+        $workshop->setMaxBookingDate(new \DateTimeImmutable("+10 days"));
         $workshop->setMaxPerson(14);
         $workshop->setPrice(35);
         $workshop->setReminderSent(false);
@@ -78,11 +78,11 @@ class WorkshopFixtures extends Fixture implements DependentFixtureInterface
 
         $workshop = new Workshop();
         $workshop->setStatus(WorkshopStatus::BOOKING);
-        $workshop->setTheme($themeBooking);
+        $workshop->setTheme($themeClosed);
         $workshop->setLength(120);
         $workshop->setLocation("Lyon");
-        $workshop->setDateStart(new \DateTimeImmutable("+5 days"));
-        $workshop->setMaxBookingDate(new \DateTimeImmutable("+2 days"));
+        $workshop->setDateStart(new \DateTimeImmutable("+25 days"));
+        $workshop->setMaxBookingDate(new \DateTimeImmutable("+15 days"));
         $workshop->setMaxPerson(14);
         $workshop->setPrice(35);
         $workshop->setReminderSent(false);
@@ -94,7 +94,7 @@ class WorkshopFixtures extends Fixture implements DependentFixtureInterface
 
         $workshop = new Workshop();
         $workshop->setStatus(WorkshopStatus::BOOKING);
-        $workshop->setTheme($themeBooking);
+        $workshop->setTheme($themeHidden);
         $workshop->setLength(60);
         $workshop->setLocation("Lyon");
         $workshop->setDateStart(new \DateTimeImmutable("+5 days"));
