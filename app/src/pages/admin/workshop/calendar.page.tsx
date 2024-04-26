@@ -77,7 +77,7 @@ const WorkshopCalendar = () => {
                   return {
                     id: data?.id?.toString(),
                     start: data.dateStart,
-                    title: data.theme.label
+                    title: data.theme?.label
                   };
                 }
               }
