@@ -23,7 +23,7 @@ const Footer = () => {
             >
                 <p><Link href={"cgu"} color={"#000"} style={{textDecoration: "none", fontWeight:"600"}}>Conditions générales</Link></p>
                 <p>Olivier Bonneton 2024-2025 ©</p>
-                <p><a href="https://www.linkedin.com/in/olivier-bonneton-5a320020"><LinkedInIcon /></a></p>
+                <p><a href="https://www.linkedin.com/in/olivier-bonneton-5a320020" target='_blank'><LinkedInIcon /></a></p>
             </Stack>
         </Stack>
     )
