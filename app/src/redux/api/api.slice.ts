@@ -5,7 +5,13 @@ import { RootState } from '../store';
 import { CustomPaginationParams, PaginatedResponse, NotPaginationParams } from '@/types/pagination.types';
 import { EditRegion, NewRegion, Region } from '@/features/admin/types/region.types';
 import { Country } from '@/features/admin/types/country.types';
-import { CreateWorkshop, EditWorkshop, Workshop, GetOneWorkshop, WorkshopWithBooking } from '@/features/admin/types/workshop.types';
+import {
+  CreateWorkshop,
+  EditWorkshop,
+  Workshop,
+  GetOneWorkshop,
+  WorkshopWithBooking,
+} from '@/features/admin/types/workshop.types';
 import { EditOrganisation, NewOrganisation, Organisation } from '@/features/admin/types/organisation.types';
 import { EditWine, NewWine, Wine } from '@/features/admin/types/wine.types';
 import { CalendarParams } from '@/types/calendarParams.types';
@@ -13,7 +19,7 @@ import { Booking, CreateBooking } from '@/features/admin/types/booking.types';
 
 export const apiSlice = createApi({
   reducerPath: 'api',
-  tagTypes: ['Themes', 'Regions', 'Countries', 'Organisations', 'Workshop', 'Booking'],
+  tagTypes: ['Themes', 'Regions', 'Countries', 'Organisations', 'Workshop', 'Booking', 'Wine'],
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_API_BASE_URL,
     prepareHeaders: (headers, api) => {
@@ -142,24 +148,24 @@ export const apiSlice = createApi({
     finishWorkshop: builder.mutation<void, number>({
       query: (id) => ({
         url: `workshops/${id}/finished`,
-          method: 'POST',
+        method: 'POST',
       }),
       invalidatesTags: ['Workshop'],
     }),
     cancelWorkshop: builder.mutation<void, number>({
       query: (id) => ({
         url: `workshops/${id}/cancel`,
-          method: 'POST',
+        method: 'POST',
       }),
       invalidatesTags: ['Workshop'],
     }),
-      openWorkshop: builder.mutation<void, number>({
-          query: (id) => ({
-              url: `workshops/${id}/open`,
-              method: 'POST',
-          }),
-          invalidatesTags: ['Workshop'],
+    openWorkshop: builder.mutation<void, number>({
+      query: (id) => ({
+        url: `workshops/${id}/open`,
+        method: 'POST',
       }),
+      invalidatesTags: ['Workshop'],
+    }),
     getCountries: builder.query<Country[], void>({
       query: () => ({
         url: 'countries',
@@ -213,7 +219,7 @@ export const apiSlice = createApi({
         method: 'GET',
         params,
       }),
-      providesTags: ['Regions'],
+      providesTags: ['Regions', 'Wine'],
     }),
     createWine: builder.mutation<Wine, NewWine>({
       query: (body) => ({
@@ -221,16 +227,29 @@ export const apiSlice = createApi({
         method: 'POST',
         body,
       }),
+      invalidatesTags: ['Wine'],
     }),
     editWine: builder.mutation<Wine, EditWine>({
-      query: (body) => ({
-        url: `wines/${body.id}`,
-        method: 'PUT',
-        body: {
-          label: body.label,
-        },
-      }),
-      invalidatesTags: ['Regions'],
+      query: (data) => {
+        const { id, ...body } = data;
+        return {
+          url: `wines/${id}`,
+          method: 'PUT',
+          body,
+        };
+      },
+      invalidatesTags: ['Regions', 'Wine'],
+    }),
+    editWineQuantity: builder.mutation<Wine, { id: number; quantity: number }>({
+      query: (data) => {
+        const { id, quantity } = data;
+        return {
+          url: `wines/${id}`,
+          method: 'PUT',
+          body: { quantity },
+        };
+      },
+      invalidatesTags: ['Wine'],
     }),
     getOneWine: builder.query<Wine, number>({
       query: (id) => ({
@@ -356,5 +375,6 @@ export const {
   useEditWorkshopMutation,
   useValidateBookingMutation,
   useCancelBookingMutation,
-  useOpenWorkshopMutation
+  useOpenWorkshopMutation,
+  useEditWineQuantityMutation,
 } = apiSlice;

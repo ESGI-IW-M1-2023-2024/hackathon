@@ -5,7 +5,8 @@ import {
   useCancelWorkshopMutation,
   useDeleteWorkshopMutation,
   useFinishWorkshopMutation,
-  useGetWorkshopsQuery, useOpenWorkshopMutation,
+  useGetWorkshopsQuery,
+  useOpenWorkshopMutation,
 } from '@/redux/api/api.slice';
 import { openSnackBar } from '@/redux/slices/notification.slice';
 import { ListGridProps } from '@/types/data-grid.types';
@@ -79,7 +80,9 @@ const AdminWorkshopList = () => {
   // Api Data
   const { data, isLoading } = useGetWorkshopsQuery({ page, limit, orderBy, orderByDirection, archived: showArchived });
   const listProps: ListGridProps<Workshop> = {
-    columns: [...useWorkshopColumns({ handleDeleteWorkshop, handleFinishWorkshop, handleCancelWorkshop, handleOpenWorkshop })],
+    columns: [
+      ...useWorkshopColumns({ handleDeleteWorkshop, handleFinishWorkshop, handleCancelWorkshop, handleOpenWorkshop }),
+    ],
     rows: data ? data.items : [],
     loading: isLoading,
     defaultSort: {

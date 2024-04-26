@@ -37,6 +37,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import PersonIcon from '@mui/icons-material/Person';
 import { useNavigate } from 'react-router-dom';
+import { RootState } from '@/redux/store';
 
 export default function MainNavigation() {
   /*
@@ -145,6 +146,11 @@ export default function MainNavigation() {
                     <MenuItem>
                       <Button onClick={() => navigate('/admin/workshops')} color='secondary'>
                         Liste des ateliers
+                      </Button>
+                    </MenuItem>
+                    <MenuItem>
+                      <Button onClick={() => navigate('/admin/wines')} color='secondary'>
+                        Liste des vins
                       </Button>
                     </MenuItem>
                     <MenuItem>
