@@ -1,0 +1,17 @@
+meta {
+  name: Update Users
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{baseUrl}}/api/users/3
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "mrome@icloud.com"
+  }
+}

@@ -1,0 +1,25 @@
+meta {
+  name: Cancel Booking
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{baseUrl}}/api/bookings/318/cancel
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: 83dccf0bb920b305529d18e8fb3df5c8752ef769093afc1c5d1111c225cd3a4a
+}
+
+body:json {
+  {
+    "firstname": "John",
+    "lastname": "Doe",
+    "email": "john.doe@gamil.com",
+    "schoolClass": "M1 IW",
+    "workshopId": 11
+  }
+}

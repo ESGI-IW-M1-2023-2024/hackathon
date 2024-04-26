@@ -1,0 +1,17 @@
+meta {
+  name: Delete Workshops
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{baseUrl}}/api/workshops/201
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "label": "Ynov campus"
+  }
+}

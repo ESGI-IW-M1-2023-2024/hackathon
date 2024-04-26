@@ -1,0 +1,10 @@
+twig:
+    file_name_pattern: '*.twig'
+    
+    paths:
+        '%kernel.project_dir%/templates/styles': styles
+        '%kernel.project_dir%/public/images': images
+
+when@test:
+    twig:
+        strict_variables: true

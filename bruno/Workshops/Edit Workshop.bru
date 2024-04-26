@@ -1,0 +1,21 @@
+meta {
+  name: Edit Workshops
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/api/workshops/24
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: f85cf321014e00555022d49ec5beec544e264e6b15aecec476d038888f54b49f
+}
+
+body:json {
+  {
+    "dateStart": "2024-04-28T06:54:30+02:00"
+  }
+}

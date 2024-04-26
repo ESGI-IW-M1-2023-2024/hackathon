@@ -1,0 +1,34 @@
+meta {
+  name: New Workshop
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/workshops
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: 687f280b99dc2080fae67377e5281494f459119d457fb687feac882920357d43
+}
+
+body:json {
+  {
+    "dateStart": "2024-01-01",
+    "length": 120,
+    "location": "Lyon",
+    "maxPerson": 30,
+    "status": "hidden",
+    "maxBookingDate": "2024-01-01",
+    "price": 10000,
+    "wines": [
+      "122",
+      "130"
+    ],
+    "resources": [],
+    "organisationId": 47,
+    "themeId": 21
+  }
+}

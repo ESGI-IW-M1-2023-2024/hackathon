@@ -1,0 +1,31 @@
+{% apply inky_to_html|inline_css(source('styles/booking.css')) %}
+
+<container>
+
+  <spacer size="16"></spacer>
+
+  <center>
+    <container class="logo-bg">
+        <img src="{{ email.image('@images/logo.svg') }}" alt="logo">
+    </container>
+  </center>
+
+  <spacer size="16"></spacer>
+
+  <hr>
+
+{% block body %}
+  
+  {% endblock %}
+
+  <hr/>
+
+  <spacer size="16"></spacer>
+  <menu class='footer'>
+    <item><a href="https://www.linkedin.com/in/olivier-bonneton-5a320020"><img class='linkedin' src="{{ email.image('@images/linkedin.png') }}" alt="logo linkedin"></a></item>
+    <item><a href="mailto:bonnetonolivier@gmail.com"><img class='mail' src="{{ email.image('@images/mail.png') }}" alt="logo mail"></a></item>
+  </menu>
+
+</container>
+
+{% endapply %}

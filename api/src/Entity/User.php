@@ -6,30 +6,45 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[UniqueEntity("email", groups: ["user:new", "user:edit"])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["user:list", "user:detail"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
+    #[Assert\NotBlank(groups: ["user:new"])]
+    #[Assert\Email()]
+    #[Groups(["user:list", "user:detail"])]
     private ?string $email = null;
 
     /**
      * @var list<string> The user roles
      */
     #[ORM\Column]
+    #[Groups(["user:list", "user:detail"])]
     private array $roles = [];
 
     /**
-     * @var string The hashed password
+     * The plain password
+     */
+    #[Assert\NotBlank(groups: ["user:new"])]
+    public ?string $plainPassword = null;
+
+    /**
+     * The hashed password
      */
     #[ORM\Column]
     private ?string $password = null;
@@ -39,6 +54,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\OneToMany(targetEntity: ApiToken::class, mappedBy: 'user', cascade: ["persist"])]
     private Collection $apiTokens;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(groups: ["user:new"])]
+    #[Groups(["user:list", "user:detail"])]
+    private ?string $firstname = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(groups: ["user:new"])]
+    #[Groups(["user:list", "user:detail"])]
+    private ?string $lastname = null;
 
     public function __construct()
     {
@@ -117,7 +142,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        $this->plainPassword = null;
     }
 
     /**
@@ -146,6 +171,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $apiToken->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFirstname(): ?string
+    {
+        return $this->firstname;
+    }
+
+    public function setFirstname(string $firstname): static
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+
+    public function setLastname(string $lastname): static
+    {
+        $this->lastname = $lastname;
 
         return $this;
     }

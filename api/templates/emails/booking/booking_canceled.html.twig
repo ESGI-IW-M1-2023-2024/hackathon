@@ -1,0 +1,18 @@
+{% extends 'emails/layout.html.twig' %}
+{% block body %}
+
+<row>
+    <columns>
+        <h1>Réservation annulée !</h1>
+        <div class='canceled'>
+            <img src="{{ email.image('@images/cancel.png') }}" alt="logo annulation">
+        </div>
+        <p>Bonjour <strong>{{ email.to[0].address }}</strong> !</p>
+        <p>Nous confirmons votre annulation pour l'atelier </p>
+        <div class='booking'>{{ booking.workshop.theme.label }}</div>
+        <p>Nous sommes navrés de vous voir partir !</p>
+
+    </columns>
+  </row>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'emails/layout.html.twig' %}
+{% block body %}
+
+<row>
+    <columns>
+        <h1>Rappel d'atelier</h1>
+        <div class='reminder'>
+            <img src="{{ email.image('@images/hour.png') }}" alt="logo heure">
+        </div>
+        <p>Bonjour <strong>{{ email.to[0].address }}</strong> !</p>
+        <p>Le site Boennologie vous rappel qu'aura lieu l'atelier sur le thème </p>
+        <div class='booking' id='reminder'>
+        <ul>
+            <li>{{ workshop.theme.label }}</li>
+            <li class='subtitles'><img src="{{ email.image('@images/calendar.png') }}" alt="logo calendrier">le {{ workshop.dateStart|date('d-m-Y') }}</li>
+            <li class='subtitles'><img src="{{ email.image('@images/place.png') }}" alt="logo lieu">à {{ workshop.location }}</li>
+        </div>
+
+        <p>Si vous avez un imprévu de dernière minute, veuillez nous prévenir pour que nous puissions réallouer votre place à un autre réservant en nous répondant à ce mail. </p>
+        <ul>
+            <li>
+            <strong>À l'adresse : <a href="mailto:bonnetonolivier@gmail.com">bonnetonolivier@gmail.com</a>
+            </li>
+            <li>
+            <strong>Au numéro :</strong> <a href="tel:+33683059070"> 06 83 05 90 70</a>
+            </li>
+        </ul>
+
+    </columns>
+  </row>
+
+{% endblock %}
