@@ -72,7 +72,7 @@ class Wine
     /**
      * @var Collection<int, Workshop>
      */
-    #[ORM\ManyToMany(targetEntity: Workshop::class, inversedBy: 'wines')]
+    #[ORM\ManyToMany(targetEntity: Workshop::class, inversedBy: 'wines', cascade: ['persist'])]
     private Collection $workshops;
 
     #[ORM\Column(nullable: true)]
