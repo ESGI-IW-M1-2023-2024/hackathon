@@ -1,4 +1,4 @@
-import {Link, Stack} from "@mui/material"
+import { Link, Stack } from "@mui/material"
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
 const Footer = () => {
@@ -21,7 +21,7 @@ const Footer = () => {
                 alignItems={"center"}
                 gap={{ xs: 2, sm: 2 }}
             >
-                <p><Link href={"cgu"} color={"#000"} style={{textDecoration: "none", fontWeight:"600"}}>Conditions générales</Link></p>
+                <p><Link href={"cgu"} color={"#000"} style={{ textDecoration: "none", fontWeight: "400" }}>Conditions générales</Link></p>
                 <p>Olivier Bonneton 2024-2025 ©</p>
                 <p><a href="https://www.linkedin.com/in/olivier-bonneton-5a320020" target='_blank'><LinkedInIcon /></a></p>
             </Stack>

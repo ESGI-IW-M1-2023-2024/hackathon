@@ -185,7 +185,7 @@ export default function MainNavigation() {
               width: '100vw',
               color: palette.secondary.contrastText,
             }}
-            //onOpen={toggleDrawer(true)}
+          //onOpen={toggleDrawer(true)}
           >
             {/* The inside of the drawer */}
             <Box
@@ -334,7 +334,7 @@ const grey = {
 };
 
 const Listbox = styled('ul')(
-    ({ theme }) => `
+  ({ theme }) => `
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 0.875rem;
   box-sizing: border-box;
@@ -353,7 +353,7 @@ const Listbox = styled('ul')(
 );
 
 const MenuItem = styled(BaseMenuItem)(
-    ({ theme }) => `
+  ({ theme }) => `
   list-style: none;
   padding: 8px;
   border-radius: 8px;
@@ -380,7 +380,7 @@ const MenuItem = styled(BaseMenuItem)(
 );
 
 const MenuButton = styled(BaseMenuButton)(
-    ({ theme }) => `
+  ({ theme }) => `
   font-family: 'IBM Plex Sans', sans-serif;
   font-weight: 600;
   font-size: 0.875rem;
