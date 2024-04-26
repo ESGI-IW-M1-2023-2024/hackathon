@@ -180,7 +180,7 @@ class WorkshopController extends AbstractController
     public function delete(
         Workshop $workshop
     ): JsonResponse {
-        //        $workshop->setArchived(true);
+        $workshop->setArchived(true);
         $this->em->flush();
 
         return $this->json([], Response::HTTP_NO_CONTENT);

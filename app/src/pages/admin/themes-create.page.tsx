@@ -40,7 +40,7 @@ const CreateTheme = () => {
     try {
       await createTheme(formData).unwrap();
       dispatch(openSnackBar({ message: 'Thème créé avec succès', severity: 'success' }));
-      navigate('/themes');
+      navigate('/admin/themes');
     } catch (error: unknown) {
       console.log(error);
       dispatch(openSnackBar({ message: 'Impossible de créer le thème', severity: 'error' }));
@@ -48,7 +48,9 @@ const CreateTheme = () => {
   };
 
   return (
-    <Stack component='form' onSubmit={handleSubmit((data) => handleFormSubmit(data))}
+    <Stack
+      component='form'
+      onSubmit={handleSubmit((data) => handleFormSubmit(data))}
       width={'80%'}
       alignItems={'center'}
       spacing={2}
@@ -82,11 +84,11 @@ const CreateTheme = () => {
           options={{ label: 'Fichier', setValue: setValue }}
         />
       </Stack>
-      <Stack direction={"row"} spacing={2}>
+      <Stack direction={'row'} spacing={2}>
         <Button variant='contained' type='submit'>
           Créer le thème
         </Button>
-        <ColorButton variant='contained' onClick={() => navigate('/themes')} sx={{ textTransform: 'uppercase' }}>
+        <ColorButton variant='contained' onClick={() => navigate('/admin/themes')} sx={{ textTransform: 'uppercase' }}>
           Retour à la liste
         </ColorButton>
       </Stack>

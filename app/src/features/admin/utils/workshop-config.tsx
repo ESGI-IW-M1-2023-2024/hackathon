@@ -6,6 +6,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DoneIcon from '@mui/icons-material/Done';
 import DoDisturbIcon from '@mui/icons-material/DoDisturb';
 import { WorkshopStatus } from '../types/workshop.types';
+import CancelIcon from '@mui/icons-material/Cancel';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 const renderStatus = (status: WorkshopStatus) => {
   switch (status) {
@@ -45,54 +47,53 @@ const useWorkshopColumns = ({
           <DeleteIcon />
         </IconButton>
       </Tooltip>,
-    ]
+    ];
 
     // Bouton terminer l'atelier
     if (WorkshopStatus.CLOSED == params.row.status) {
       icons.push(
-        <Tooltip key='finishWorkshop' title="Atelier terminer">
+        <Tooltip key='finishWorkshop' title='Atelier terminer'>
           <IconButton onClick={() => handleFinishWorkshop(params.row.id)} color='primary'>
             <DoneIcon />
           </IconButton>
-        </Tooltip>
-      )
+        </Tooltip>,
+      );
     } else {
       icons.push(
-        <Tooltip key='finishWorkshop' title="Atelier terminer">
+        <Tooltip key='finishWorkshop' title='Atelier terminer'>
           <IconButton>
             <DoneIcon />
           </IconButton>
-        </Tooltip>
-      )
+        </Tooltip>,
+      );
     }
 
     if ([WorkshopStatus.BOOKING, WorkshopStatus.CLOSED, WorkshopStatus.HIDDEN].includes(params.row.status)) {
       icons.push(
-        <Tooltip key='cancelWorkshop' title="Annuler Atelier">
+        <Tooltip key='cancelWorkshop' title='Annuler Atelier'>
           <IconButton onClick={() => handleCancelWorkshop(params.row.id)} color='secondary'>
             <DoDisturbIcon />
           </IconButton>
-        </Tooltip>
-      )
+        </Tooltip>,
+      );
     } else {
       icons.push(
-        <Tooltip key='cancelWorkshop' title="Annuler Atelier">
+        <Tooltip key='cancelWorkshop' title='Annuler Atelier'>
           <IconButton>
             <DoDisturbIcon />
           </IconButton>
-        </Tooltip>
-      )
+        </Tooltip>,
+      );
     }
 
-    return icons
-  }
+    return icons;
+  };
 
   return [
     {
       field: 'id',
       headerName: 'ID',
-      minWidth: 50,
-      flex: 0.5,
+      width: 65,
     },
     {
       field: 'dateStart',
@@ -121,10 +122,18 @@ const useWorkshopColumns = ({
       renderCell: (params) => renderStatus(params.value),
     },
     {
+      field: 'archived',
+      headerName: 'Archivé',
+      headerAlign: 'center',
+      align: 'center',
+      width: 75,
+      renderCell: (params) => (params.value ? <CancelIcon color='error' /> : <CheckCircleIcon color='success' />),
+    },
+    {
       field: 'actions',
       headerName: 'Actions',
       sortable: false,
-      flex: 0.5,
+      flex: 1,
       headerAlign: 'center',
       align: 'center',
       renderCell: (params) => {

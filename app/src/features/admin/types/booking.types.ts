@@ -19,3 +19,5 @@ export interface CreateBooking {
   schoolClass: string | null;
   workshopId: number;
 }
+
+export interface WorkshopBooking extends Omit<Booking, 'workshop' | 'archived'> {}

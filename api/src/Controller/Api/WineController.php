@@ -23,18 +23,31 @@ class WineController extends AbstractController
     #[Route('', name: 'list', methods: ["GET"])]
     public function index(
         Request           $request,
-        PaginationService $paginationService
+        PaginationService $paginationService,
+        EntityManagerInterface $em,
     ): JsonResponse {
-        $pagination = $paginationService->getPagination($request, Wine::class);
+        if ($request->query->getBoolean('pagination', true)) {
+            $pagination = $paginationService->getPagination($request, Wine::class);
+    
+            return $this->json(
+                [
+                    "items" => $pagination->getItems(),
+                    "pageCount" => $pagination->getPageCount(),
+                    'totalItemCount' => $pagination->getTotalItemCount()
+                ],
+                context: ["groups" => ["wine:list"]]
+            );
+        } else {
+            $wines = $em->getRepository(Wine::class)->findAll();
 
-        return $this->json(
-            [
-                "items" => $pagination->getItems(),
-                "pageCount" => $pagination->getPageCount(),
-                'totalItemCount' => $pagination->getTotalItemCount()
-            ],
-            context: ["groups" => ["wine:list"]]
-        );
+            return $this->json(
+                [
+                    'items' => $wines,
+                    'totalItemCount' => count($wines)
+                ],
+                context: ["groups" => ["wine:list"]]
+            );
+        }
     }
 
     #[Route('/{id}', name: 'get', methods: ["GET"])]
@@ -81,7 +94,7 @@ class WineController extends AbstractController
         }
 
         $data = json_decode($request->getContent());
-        $file = $data->imageFile;
+        $file = $data->file;
 
         $filename = $apiUploadFileService->uploadFile($file, "wines_directory", $wine?->getImageFilename());
         $wine->setImageFilename($filename);
