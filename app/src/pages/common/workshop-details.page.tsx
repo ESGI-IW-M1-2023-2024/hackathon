@@ -10,7 +10,6 @@ import CheckIcon from '@mui/icons-material/Check';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import GroupsIcon from '@mui/icons-material/Groups';
 import WineBarIcon from '@mui/icons-material/WineBar';
-import { Padding } from '@mui/icons-material';
 
 interface WorkshopDetailError {
   status: string;
@@ -204,7 +203,7 @@ const WorkshopDetails = () => {
                   element?.scrollIntoView({ behavior: 'smooth' });
                 }}
               >
-                Je m'inscrit
+                Je m'inscris
               </ColorButton>
             </Stack>
             <Box
