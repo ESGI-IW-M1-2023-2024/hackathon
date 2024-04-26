@@ -68,7 +68,21 @@ class WorkshopController extends AbstractController
         );
     }
 
-    #[Route('/{id}/finished', name: 'finish', methods: ["GET"])]
+    #[Route('/{id}/open', name: 'open', methods: ["POST"])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function open(Workshop $workshop, EntityManagerInterface $em): JsonResponse
+    {
+        $workshop->setStatus(\WorkshopStatus::BOOKING);
+
+        $em->flush();
+
+        return $this->json(
+            $workshop,
+            context: ["groups" => ["workshop:detail"]]
+        );
+    }
+
+    #[Route('/{id}/finished', name: 'finish', methods: ["POST"])]
     #[IsGranted('ROLE_ADMIN')]
     public function finish(Workshop $workshop, WorkshopService $workshopService): JsonResponse
     {
@@ -80,7 +94,7 @@ class WorkshopController extends AbstractController
         );
     }
 
-    #[Route('/{id}/cancel', name: 'cancel', methods: ["GET"])]
+    #[Route('/{id}/cancel', name: 'cancel', methods: ["POST"])]
     #[IsGranted('ROLE_ADMIN')]
     public function cancel(Workshop $workshop, WorkshopService $workshopService): JsonResponse
     {

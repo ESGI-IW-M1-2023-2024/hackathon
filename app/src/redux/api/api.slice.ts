@@ -1,15 +1,15 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { LoggedUser, UserCredentials } from '../../features/auth/types/logged-user.type';
-import { EditTheme, NewTheme, Theme } from '@/features/admin/types/theme.types';
-import { RootState } from '../store';
-import { CustomPaginationParams, PaginatedResponse, NotPaginationParams } from '@/types/pagination.types';
-import { EditRegion, NewRegion, Region } from '@/features/admin/types/region.types';
-import { Country } from '@/features/admin/types/country.types';
-import { CreateWorkshop, EditWorkshop, GetOneWorkshop, Workshop } from '@/features/admin/types/workshop.types';
-import { EditOrganisation, NewOrganisation, Organisation } from '@/features/admin/types/organisation.types';
-import { EditWine, NewWine, Wine } from '@/features/admin/types/wine.types';
-import { CalendarParams } from '@/types/calendarParams.types';
-import { Booking, CreateBooking } from '@/features/admin/types/booking.types';
+import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
+import {LoggedUser, UserCredentials} from '../../features/auth/types/logged-user.type';
+import {EditTheme, NewTheme, Theme} from '@/features/admin/types/theme.types';
+import {RootState} from '../store';
+import {CustomPaginationParams, NotPaginationParams, PaginatedResponse} from '@/types/pagination.types';
+import {EditRegion, NewRegion, Region} from '@/features/admin/types/region.types';
+import {Country} from '@/features/admin/types/country.types';
+import {CreateWorkshop, EditWorkshop, GetOneWorkshop, Workshop} from '@/features/admin/types/workshop.types';
+import {EditOrganisation, NewOrganisation, Organisation} from '@/features/admin/types/organisation.types';
+import {EditWine, NewWine, Wine} from '@/features/admin/types/wine.types';
+import {CalendarParams} from '@/types/calendarParams.types';
+import {Booking, CreateBooking} from '@/features/admin/types/booking.types';
 
 export const apiSlice = createApi({
   reducerPath: 'api',
@@ -142,17 +142,24 @@ export const apiSlice = createApi({
     finishWorkshop: builder.mutation<void, number>({
       query: (id) => ({
         url: `workshops/${id}/finished`,
-        method: 'GET',
+          method: 'POST',
       }),
       invalidatesTags: ['Workshop'],
     }),
     cancelWorkshop: builder.mutation<void, number>({
       query: (id) => ({
         url: `workshops/${id}/cancel`,
-        method: 'GET',
+          method: 'POST',
       }),
       invalidatesTags: ['Workshop'],
     }),
+      openWorkshop: builder.mutation<void, number>({
+          query: (id) => ({
+              url: `workshops/${id}/open`,
+              method: 'POST',
+          }),
+          invalidatesTags: ['Workshop'],
+      }),
     getCountries: builder.query<Country[], void>({
       query: () => ({
         url: 'countries',
@@ -333,4 +340,5 @@ export const {
   useGetWorkshopsForCalendarQuery,
   useCreateWorkshopMutation,
   useEditWorkshopMutation,
+    useOpenWorkshopMutation
 } = apiSlice;
