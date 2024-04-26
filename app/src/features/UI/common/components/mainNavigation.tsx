@@ -138,22 +138,22 @@ export default function MainNavigation() {
                                     <MenuButton<typeof Link> slots={{ root: Link }} style={{ background: "none" }}>Admin</MenuButton>
                                     <Menu slots={{ listbox: Listbox }} style={{ zIndex: 1 }}>
                                         <MenuItem>
-                                            <Link href={"/admin/workshops"}>Liste des Ateliers</Link>
+                                            <Link href={"/admin/workshops"}>Ateliers</Link>
                                         </MenuItem>
                                         <MenuItem>
-                                            <Link href={"/admin/workshops/calendar"}>Calendrier des Ateliers</Link>
+                                            <Link href={"/admin/workshops/calendar"}>Calendrier</Link>
                                         </MenuItem>
                                         <MenuItem>
-                                            <Link href={"/admin/organisations"}>Liste des organisation</Link>
+                                            <Link href={"/admin/organisations"}>Organisation</Link>
                                         </MenuItem>
                                         <MenuItem>
-                                            <Link href={"/admin/regions"}>Liste des régions</Link>
+                                            <Link href={"/admin/regions"}>Régions</Link>
                                         </MenuItem>
                                         <MenuItem>
-                                            <Link href={"/admin/themes"}>Liste des thèmes</Link>
+                                            <Link href={"/admin/themes"}>Thèmes</Link>
                                         </MenuItem>
                                         <MenuItem>
-                                            <Link href={"/admin/wines"}>Liste des thèmes</Link>
+                                            <Link href={"/admin/wines"}>Vins</Link>
                                         </MenuItem>
                                     </Menu>
                                 </Dropdown>
