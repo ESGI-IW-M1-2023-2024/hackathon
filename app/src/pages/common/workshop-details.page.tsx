@@ -196,7 +196,14 @@ const WorkshopDetails = () => {
                 </CardContent>
               </Card>
               {/* bouton */}
-              <ColorButton variant='contained' startIcon={<CheckIcon />}>
+              <ColorButton
+                variant='contained'
+                startIcon={<CheckIcon />}
+                onClick={() => {
+                  const element = document.getElementById('subscriptionForm');
+                  element?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
                 Je m'inscrit
               </ColorButton>
             </Stack>
@@ -223,9 +230,19 @@ const WorkshopDetails = () => {
         <div dangerouslySetInnerHTML={{ __html: data?.theme.content || "" }} />
       </Container>
 
-      <Container>
-        <Typography variant='h1'>S'inscrire à cet atelier</Typography>
-        {data?.theme.label}
+      <Container
+        component="main"
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '1rem',
+          padding: '1rem',
+          mb: '2rem'
+        }}
+      >
+        <Typography variant='h1' id='subscriptionForm'>S'inscrire à cet atelier</Typography>
+        {data?.theme.label} du {formattedDate} à {formatedHour}
         <RegistrationWorkshop workshop={data} />
 
       </Container>
