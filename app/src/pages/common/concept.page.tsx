@@ -17,8 +17,7 @@ import {useGetThemesQuery} from "@/redux/api/api.slice";
 
 export default function OutlinedCard() {
 
-    const {data: themes, isLoading} = useGetThemesQuery({pagination: false});
-    const navigate = useNavigate();
+    const {data: themes, isLoading} = useGetThemesQuery({pagination: false, archived: false});
 
     if (isLoading) {
         return <LinearProgress/>;
