@@ -8,6 +8,8 @@ import Button from '@mui/material/Button';
 import Olivier from '@/assets/about/olivier-cut.png';
 import Chip from "@mui/material/Chip";
 import { useNavigate } from "react-router-dom";
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import GroupIcon from '@mui/icons-material/Group';
 
 const Home = () => {
     const navigate = useNavigate();
@@ -61,8 +63,8 @@ const Home = () => {
 
                         <Divider sx={{ mb: 2, mt: 2 }} />
                         <Box sx={{ display: 'flex', gap: "8px" }}>
-                            <Chip sx={{ backgroundColor: "primary.light" }} label={(Math.round(workshop.length / 60)) + "min"} />
-                            <Chip sx={{ backgroundColor: "primary.light" }} label={workshop.maxPerson + " personnes"} />
+                            <Chip sx={{ backgroundColor: "primary.light" }} label={(Math.round(workshop.length / 60)) + "min"} icon={<AccessTimeIcon />} />
+                            <Chip sx={{ backgroundColor: "primary.light" }} label={workshop.maxPerson + " personnes max"} icon={<GroupIcon />} />
                         </Box>
                         <Typography sx={{ mt: 2 }}>
                             {workshop.theme.content.substring(0, 100) + "..."}
