@@ -94,6 +94,7 @@ class Workshop
     private ?bool $reminderSent = false;
 
     #[ORM\Column]
+    #[Groups(["workshop:list", "workshop:detail", "booking:list"])]
     private bool $archived = false;
 
     public function __construct()
