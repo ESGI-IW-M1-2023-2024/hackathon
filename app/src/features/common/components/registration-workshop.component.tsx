@@ -22,6 +22,7 @@ import { TransitionProps } from '@mui/material/transitions';
 import { forwardRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 
 const zodSchema = () =>
@@ -54,6 +55,7 @@ interface RegistrationWorkshopProps {
 
 const RegistrationWorkshop = ({ workshop }: RegistrationWorkshopProps) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
   const [createBooking] = useCreateBookingMutation();
@@ -142,7 +144,7 @@ const RegistrationWorkshop = ({ workshop }: RegistrationWorkshopProps) => {
           label: (
             <>
               J'ai lu et j'accepte les {' '}
-              <Link href="/cgu">conditions générales</Link>
+              <Link onClick={() => navigate('/cgu')}>conditions générales</Link>
               {' '} du site.
             </>
           ),
