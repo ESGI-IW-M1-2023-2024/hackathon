@@ -16,6 +16,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 
+
 const zodSchema = () =>
   z.object({
     dateStart: z.string().min(1, { message: 'Champ obligatoire' }),
@@ -34,17 +35,20 @@ const CreateWorkshop = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const date = new Date();
+  const currentDate = date.toLocaleString('fr-CA', { year: 'numeric', month: '2-digit', day: '2-digit',  });
+
   const [createWorkshop] = useCreateWorkshopMutation();
   const { control, handleSubmit } = useForm({
     resolver: zodResolver(zodSchema(), { errorMap: customErrorMap }),
     mode: 'onSubmit',
     reValidateMode: 'onSubmit',
     defaultValues: {
-      dateStart: '',
+      dateStart: currentDate,
       length: '',
       maxPerson: '',
       location: '',
-      maxBookingDate: '',
+      maxBookingDate: currentDate,
       price: '',
       themeId: '',
       organisationId: '',

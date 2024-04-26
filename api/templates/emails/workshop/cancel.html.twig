@@ -1,14 +1,26 @@
 {% extends "emails/layout.html.twig" %}
 
 {% block body %}
-<h2>Annulation d'atelier</h2>
+<row>
+    <columns>
+        <h1>Annulation d'atelier</h1>
+        <div class='cancel workshop'>
+            <img src="{{ email.image('@images/cancel-calendar.png') }}" alt="logo calendrier annulé">
+        </div>
+        <p>Bonjour <strong>{{ email.to[0].address }}</strong> !</p>
+        <p>Le site boennologie a le regret de vous annoncer que l'atelier suivant est annulé : </p>
+        <div class='booking' id='reminder'>
+            <ul>
+                <li>{{ workshop.theme.label }}</li>
+                <li class='subtitles'><img src="{{ email.image('@images/calendar.png') }}" alt="logo calendrier">le {{ workshop.dateStart|date('d-m-Y') }}</li>
+            </ul>
+        </div>
 
-<p>
-    Le site boennologie a le regret que l'atelier sur le thème {{ workshop.theme.label }}
-    n'aura pas lieu le {{ workshop.dateStart|date('d-m-Y') }} suite à l'annulation de l'évènement.
+        <p>Nous regrettons l'annulation et vous proposerons un remboursement dans les jours à venir. </p>
 
-    Nous regrettons l'annulation et vous proposerons un remboursement dans les jorus à venir. 
+        <p>Ne vous inquiétez pas, d'autres ateliers sont disponibles et nous espérons vous accueillir au plus tôt !</p>
 
-    Ne vous inquiétez pas, d'autres ateliers sont disponibles et nous espérons vous accueillir au plus tôt !
-</p>
+    </columns>
+  </row>
+
 {% endblock %}
