@@ -7,7 +7,7 @@ import ColorButton from "@/features/UI/custom-mui-components/components/custom-b
 import Button from '@mui/material/Button';
 import Olivier from '@/assets/about/olivier-cut.png';
 import Chip from "@mui/material/Chip";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
     const navigate = useNavigate();
@@ -32,12 +32,12 @@ const Home = () => {
 
             return (
                 <Card key={index}
-                      sx={{
-                          width: {md: 'calc(97% / 3)', sm: 'calc(97% / 2)', xs: '100%'},
-                          display: 'flex',
-                          flexWrap: "wrap",
-                          flexDirection: 'column'
-                      }}
+                    sx={{
+                        width: { md: 'calc(97% / 3)', sm: 'calc(97% / 2)', xs: '100%' },
+                        display: 'flex',
+                        flexWrap: "wrap",
+                        flexDirection: 'column'
+                    }}
 
                 >
                     <CardContent>
@@ -55,20 +55,20 @@ const Home = () => {
                             <Box sx={{
                                 marginLeft: "auto"
                             }}>
-                                <Chip label={formattedDate}/>
+                                <Chip label={formattedDate} />
                             </Box>
                         </Box>
 
-                        <Divider sx={{mb: 2, mt: 2}}/>
-                        <Box sx={{display: 'flex', gap: "8px"}}>
-                            <Chip sx={{backgroundColor:"primary.light"}} label={(Math.round(workshop.length / 60)) + "min"}/>
-                            <Chip sx={{backgroundColor:"primary.light"}} label={workshop.maxPerson + " personnes"}/>
+                        <Divider sx={{ mb: 2, mt: 2 }} />
+                        <Box sx={{ display: 'flex', gap: "8px" }}>
+                            <Chip sx={{ backgroundColor: "primary.light" }} label={(Math.round(workshop.length / 60)) + "min"} />
+                            <Chip sx={{ backgroundColor: "primary.light" }} label={workshop.maxPerson + " personnes"} />
                         </Box>
-                        <Typography sx={{mt: 2}}>
+                        <Typography sx={{ mt: 2 }}>
                             {workshop.theme.content.substring(0, 100) + "..."}
                         </Typography>
                     </CardContent>
-                    <CardActions sx={{marginTop: 'auto'}}>
+                    <CardActions sx={{ marginTop: 'auto' }}>
                         <ColorButton onClick={() => navigate('/workshops/' + workshop.id)}>
                             Voir plus
                         </ColorButton>
@@ -110,7 +110,9 @@ const Home = () => {
                     }}>Participez à des ateliers de dégustation de vin</Typography>
                     <Typography className="d-shadow">Envolez-vous dans un monde de saveurs et de découvertes</Typography>
                     <br />
-                    <ColorButton variant='contained' startIcon={<Diversity3Icon />}>
+                    <ColorButton variant='contained' startIcon={<Diversity3Icon />}
+                        onClick={() => navigate('/workshops')}
+                    >
                         Participer aux ateliers
                     </ColorButton>
                 </Stack>
@@ -156,7 +158,9 @@ const Home = () => {
                         src="https://images.pexels.com/photos/2440524/pexels-photo-2440524.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                         reverse
                         button={
-                            <ColorButton href="/workshops" variant='contained' startIcon={<Diversity3Icon />}>
+                            <ColorButton variant='contained' startIcon={<Diversity3Icon />}
+                                onClick={() => navigate('/workshops')}
+                            >
                                 Participer aux ateliers
                             </ColorButton>
                         }
@@ -186,14 +190,14 @@ const Home = () => {
                         </Box>
                     ) : (
                         <Box mt={'40px'}
-                             mb={'40px'}
-                             component={'section'}
-                             display={'flex'}
-                             flexDirection={'row'}
-                             justifyContent={'flex-start'}
-                             flexWrap={'wrap'}
-                             rowGap={'20px'}
-                             columnGap={'1%'}
+                            mb={'40px'}
+                            component={'section'}
+                            display={'flex'}
+                            flexDirection={'row'}
+                            justifyContent={'flex-start'}
+                            flexWrap={'wrap'}
+                            rowGap={'20px'}
+                            columnGap={'1%'}
                         >
                             {data && (renderWorkshopCards())}
                         </Box>
@@ -251,7 +255,9 @@ const Home = () => {
                                     Découvrez qui je suis et ce que je fais. En tant que passionné de vin, je vous invite à explorer mon univers et à en apprendre davantage sur ma passion pour les cépages, les terroirs et les techniques de dégustation. Plongez dans mon expertise dans le domaine viticole et laissez-vous guider à travers un voyage gustatif unique et enrichissant.
                                 </Typography>
                                 <CardActions sx={{ justifyContent: 'center' }}>
-                                    <Button href="/about" variant="contained" color="secondary" sx={{ color: 'white' }}>
+                                    <Button variant="contained" color="secondary" sx={{ color: 'white' }}
+                                        onClick={() => navigate('/about')}
+                                    >
                                         Voir plus
                                     </Button>
                                 </CardActions>
