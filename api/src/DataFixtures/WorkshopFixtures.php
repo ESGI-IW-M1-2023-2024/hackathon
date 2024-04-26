@@ -3,10 +3,8 @@
 namespace App\DataFixtures;
 
 use App\Entity\Workshop;
-use App\Factory\BookingFactory;
 use App\Factory\OrganisationFactory;
 use App\Factory\ThemeFactory;
-use App\Factory\WorkshopFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -30,6 +28,34 @@ class WorkshopFixtures extends Fixture implements DependentFixtureInterface
         $workshop->setMaxBookingDate(new \DateTimeImmutable("+10 days"));
         $workshop->setMaxPerson(20);
         $workshop->setPrice(200);
+        $workshop->setReminderSent(false);
+        $workshop->setOrganisation(OrganisationFactory::random()->object());
+
+        $manager->persist($workshop);
+
+        $workshop = new Workshop();
+        $workshop->setStatus(WorkshopStatus::BOOKING);
+        $workshop->setTheme($themeBooking);
+        $workshop->setLength(60);
+        $workshop->setLocation("Lyon");
+        $workshop->setDateStart(new \DateTimeImmutable("+5 days"));
+        $workshop->setMaxBookingDate(new \DateTimeImmutable("+7 days"));
+        $workshop->setMaxPerson(40);
+        $workshop->setPrice(400);
+        $workshop->setReminderSent(false);
+        $workshop->setOrganisation(OrganisationFactory::random()->object());
+
+        $manager->persist($workshop);
+
+        $workshop = new Workshop();
+        $workshop->setStatus(WorkshopStatus::BOOKING);
+        $workshop->setTheme($themeBooking);
+        $workshop->setLength(60);
+        $workshop->setLocation("Lyon");
+        $workshop->setDateStart(new \DateTimeImmutable("+5 days"));
+        $workshop->setMaxBookingDate(new \DateTimeImmutable("+7 days"));
+        $workshop->setMaxPerson(40);
+        $workshop->setPrice(400);
         $workshop->setReminderSent(false);
         $workshop->setOrganisation(OrganisationFactory::random()->object());
 
