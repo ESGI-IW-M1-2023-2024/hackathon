@@ -115,7 +115,7 @@ const WorkshopList = () => {
                     <Typography variant="h1" className="d-shadow" sx={{
                         fontSize: { xs: '2rem', sm: '4.5rem' }
                     }}>
-                        Liste des ateliers
+                        Nos fabuleux ateliers
                     </Typography>
                     <Typography className="d-shadow">Une sélection rien que pour vous</Typography>
                 </Stack>
