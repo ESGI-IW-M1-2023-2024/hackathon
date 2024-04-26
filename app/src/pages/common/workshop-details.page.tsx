@@ -144,7 +144,7 @@ const WorkshopDetails = () => {
                   <Box sx={{ display: 'flex', gap: "8px", justifyContent: 'center' }}>
                     <Chip
                       sx={{ backgroundColor: "#B9515B", color: "white", borderRadius: "6px" }}
-                      label={(Math.round(data.length / 60 / 60)) + " heures"}
+                      label={(Math.round(data.length / 60)) + " heures"}
                       icon={<AccessTimeIcon color='inherit' />}
                     />
                     <Chip
