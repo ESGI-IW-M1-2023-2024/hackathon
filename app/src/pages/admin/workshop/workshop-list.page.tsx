@@ -2,10 +2,10 @@ import ListGridComponent from '@/features/UI/list/components/list-grid.component
 import { Workshop, WorkshopSortableField } from '@/features/admin/types/workshop.types';
 import useWorkshopColumns from '@/features/admin/utils/workshop-config';
 import {
-    useCancelWorkshopMutation,
-    useDeleteWorkshopMutation,
-    useFinishWorkshopMutation,
-    useGetWorkshopsQuery, useOpenWorkshopMutation,
+  useCancelWorkshopMutation,
+  useDeleteWorkshopMutation,
+  useFinishWorkshopMutation,
+  useGetWorkshopsQuery, useOpenWorkshopMutation,
 } from '@/redux/api/api.slice';
 import { openSnackBar } from '@/redux/slices/notification.slice';
 import { ListGridProps } from '@/types/data-grid.types';
@@ -41,14 +41,14 @@ const AdminWorkshopList = () => {
     setSearchParams(newSearchParams);
   };
 
-    const handleOpenWorkshop = async (id: number) => {
-        try {
-            await openWorkshop(id).unwrap();
-            dispatch(openSnackBar({ message: 'Atelier ouvert avec succès', severity: 'success' }));
-        } catch (error) {
-            dispatch(openSnackBar({ message: "Erreur lors de l'ouverture de l'atelier", severity: 'error' }));
-        }
-    };
+  const handleOpenWorkshop = async (id: number) => {
+    try {
+      await openWorkshop(id).unwrap();
+      dispatch(openSnackBar({ message: 'Atelier ouvert avec succès', severity: 'success' }));
+    } catch (error) {
+      dispatch(openSnackBar({ message: "Erreur lors de l'ouverture de l'atelier", severity: 'error' }));
+    }
+  };
 
   const handleDeleteWorkshop = async (id: number) => {
     try {
@@ -100,7 +100,7 @@ const AdminWorkshopList = () => {
   }
 
   return (
-    <Stack width={'80%'} alignItems={'left'} margin={'1rem auto'} spacing={2} direction={'column'}>
+    <Stack width={'100%'} alignItems={'left'} margin={'1rem auto'} spacing={2} direction={'column'}>
       <Box textAlign={'center'}>
         <h1>Liste des Ateliers</h1>
       </Box>
