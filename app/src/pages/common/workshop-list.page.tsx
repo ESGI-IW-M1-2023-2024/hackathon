@@ -11,7 +11,7 @@ import {
     Typography
 } from '@mui/material';
 import ColorButton from "@/features/UI/custom-mui-components/components/custom-button.component";
-import herobanner from "@/assets/homepage/herobanner.jpg";
+import WineActivities from "@/assets/workshop/wine-activities.jpg";
 import Chip from "@mui/material/Chip";
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -94,7 +94,7 @@ const WorkshopList = () => {
                 alignItems="center"
                 sx={{
                     color: "white",
-                    backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${herobanner})`,
+                    backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${WineActivities})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     minHeight: { xs: "calc(100vh - 90px)", sm: "600px" },
