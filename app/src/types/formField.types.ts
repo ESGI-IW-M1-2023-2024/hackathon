@@ -7,7 +7,7 @@ export type ChoiceItems = {
 };
 
 export interface SimpleField {
-  label: string;
+  label: string | React.ReactNode;
   fieldId?: string;
   shrink?: boolean;
 }

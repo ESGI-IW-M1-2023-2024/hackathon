@@ -23,7 +23,6 @@ import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
 import logoImg from '@/assets/common/navbar/logo.svg';
 import { LoggedUser } from '@/features/auth/types/logged-user.type';
 import { useAppSelector } from '@/redux/hooks';
-import { RootState } from '@/redux/store';
 import { Dropdown } from '@mui/base/Dropdown';
 import { Menu } from '@mui/base/Menu';
 import { MenuButton as BaseMenuButton } from '@mui/base/MenuButton';
@@ -335,7 +334,7 @@ const grey = {
 };
 
 const Listbox = styled('ul')(
-  ({ theme }) => `
+    ({ theme }) => `
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 0.875rem;
   box-sizing: border-box;
@@ -354,7 +353,7 @@ const Listbox = styled('ul')(
 );
 
 const MenuItem = styled(BaseMenuItem)(
-  ({ theme }) => `
+    ({ theme }) => `
   list-style: none;
   padding: 8px;
   border-radius: 8px;
@@ -381,7 +380,7 @@ const MenuItem = styled(BaseMenuItem)(
 );
 
 const MenuButton = styled(BaseMenuButton)(
-  ({ theme }) => `
+    ({ theme }) => `
   font-family: 'IBM Plex Sans', sans-serif;
   font-weight: 600;
   font-size: 0.875rem;

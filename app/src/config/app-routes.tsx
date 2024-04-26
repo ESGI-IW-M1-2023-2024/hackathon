@@ -26,6 +26,7 @@ import WorkshopCalendar from '@/pages/admin/workshop/calendar.page';
 import CreateWorkshop from '@/pages/admin/workshop/create.page';
 import EditWorkshop from '@/pages/admin/workshop/edit.page';
 import WorkshopBookingList from '@/pages/admin/workshop/workshop-booking-list.page';
+import CGUPage from "@/pages/common/cg.page";
 
 const AppRoutes = () => (
   <Routes>
@@ -36,6 +37,7 @@ const AppRoutes = () => (
     <Route path='/workshops' element={<WorkshopList />} />
     <Route path='/wines/:id' element={<Wine />} />
     <Route path='/workshops/:id' element={<WorkshopDetails />} />
+    <Route path='/cgu' element={<CGUPage />} />
     <Route element={<SecureRoute />}>
       <Route path='/admin' element={<Dashboard />} />
       <Route path='/admin/themes' element={<ThemesList />} />
