@@ -8,7 +8,9 @@ import DoDisturbIcon from '@mui/icons-material/DoDisturb';
 import {WorkshopStatus} from '../types/workshop.types';
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import {MeetingRoom} from "@mui/icons-material";
+
 
 const renderStatus = (status: WorkshopStatus) => {
   switch (status) {
@@ -107,6 +109,17 @@ const useWorkshopColumns = ({
       );
     }
 
+    // Booking gestion
+    if (params.row.status === WorkshopStatus.BOOKING || params.row.status === WorkshopStatus.CLOSED) {
+      icons.push(
+        <Tooltip key='manageBooking' title='Gérer les réservations'>
+          <IconButton onClick={() => navigate(`/admin/workshops/${params.row.id}/bookings`)}>
+            <ManageAccountsIcon />
+          </IconButton>
+        </Tooltip>,
+      );
+    }
+
     return icons;
   };
 
@@ -155,9 +168,8 @@ const useWorkshopColumns = ({
       field: 'actions',
       headerName: 'Actions',
       sortable: false,
-      flex: 1,
       headerAlign: 'center',
-      align: 'center',
+      width: 220,
       renderCell: (params) => {
         return actionsIcon(params);
       },
